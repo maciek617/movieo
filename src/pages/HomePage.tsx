@@ -1,15 +1,19 @@
 import React from 'react';
+// Whole swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, EffectFade, Autoplay, Lazy } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/lazy';
+
+// Images
 import bgImg from '../assets/bg-film.png';
 import bgImg1 from '../assets/bg-film2.jpg';
 import bgImg2 from '../assets/bg-film3.jpg';
-
 import star from '../assets/star.svg';
+
+// Components
 import Button from '../components/Button';
 
 function HomePage() {
