@@ -15,8 +15,11 @@ import star from '../assets/star.svg';
 
 // Components
 import Button from '../components/Button';
+import { useSelector } from 'react-redux';
 
 function HomePage() {
+  const currentUser = useSelector((state: any) => state.currentUser.value);
+
   // Here data fetched from Firebase
   const tempData = [
     {
@@ -74,11 +77,12 @@ function HomePage() {
           <div className='max-w-md mt-5'>
             <p>{slide.description}</p>
           </div>
-          <Button text='Review' icon={true} addClasses='mt-5' />
+          <Button text='Review' icon={true} addClasses='my-5 lg:my-0 lg:mt-5' />
         </div>
       </SwiperSlide>
     );
   });
+
   return (
     <div>
       <div className='h-screen relative'>
@@ -100,6 +104,16 @@ function HomePage() {
           {slides}
         </Swiper>
       </div>
+      {currentUser?.id && (
+        <p className='animate-slide-left fixed z-40 top-40 left-6 text-white text-xl md:left-24 lg:top-52 md:text-2xl lg:text-4xl'>
+          Hello,{' '}
+          <span className='font-bold'>{currentUser.user_metadata.name}</span>
+          <span className='block'>
+            What will you <span className='text-main-yellow'>review</span>{' '}
+            today?{' '}
+          </span>
+        </p>
+      )}
     </div>
   );
 }
