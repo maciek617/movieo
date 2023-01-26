@@ -13,5 +13,6 @@ export const signInUser = async (
   });
 
   dispatch(updateUser(data.user));
+  localStorage.setItem('isLoggedIn', 'true');
   if (!error) navigate('/home');
 };

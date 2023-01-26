@@ -1,10 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signoutUser } from '../helpers/SignUserOut';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../features/currentUser';
+import { NavLink } from 'react-router-dom';
+
+const activeStyle = {
+  color: '#FFC700',
+};
 
 function Navigation() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   // TODO: Add class after scroll down
   return (
     <nav className='fixed z-40 top-0 left-0 flex items-center justify-between w-full px-24 py-5'>
@@ -15,22 +22,37 @@ function Navigation() {
       </div>
       <div className='flex items-center'>
         <ul className='hidden lg:flex items-center gap-10 mr-5 text-white lg:text-lg xl:text-xl'>
-          {/* TODO: Links to pages */}
-          <li className='cursor-pointer hover:text-main-yellow transition-all'>
+          <NavLink
+            to='browse'
+            className={'cursor-pointer hover:text-main-yellow transition-all'}
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
             Browse Films
-          </li>
-          <li className='cursor-pointer hover:text-main-yellow transition-all'>
+          </NavLink>
+          <NavLink
+            to='coming'
+            className={'cursor-pointer hover:text-main-yellow transition-all'}
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
             Coming soon
-          </li>
-          <li className='cursor-pointer hover:text-main-yellow transition-all'>
+          </NavLink>
+          <NavLink
+            to='what-to-watch'
+            className={'cursor-pointer hover:text-main-yellow transition-all'}
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
             What to watch?
-          </li>
-          <li className='cursor-pointer hover:text-main-yellow transition-all'>
+          </NavLink>
+          <NavLink
+            to='blog'
+            className={'cursor-pointer hover:text-main-yellow transition-all'}
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
             Blog
-          </li>
+          </NavLink>
           <li
             className='cursor-pointer hover:text-main-yellow transition-all'
-            onClick={() => signoutUser(navigate)}
+            onClick={() => signoutUser(navigate, dispatch, updateUser)}
           >
             Logout
           </li>

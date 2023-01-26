@@ -21,5 +21,6 @@ export const registerUser = async (
   console.log(data.user);
 
   disptach(updateUser(data.user));
+  localStorage.setItem('isLoggedIn', 'true');
   if (!error) navigate('/home');
 };

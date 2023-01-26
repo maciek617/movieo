@@ -19,7 +19,6 @@ import { useSelector } from 'react-redux';
 
 function HomePage() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
-
   // Here data fetched from Firebase
   const tempData = [
     {
@@ -28,7 +27,8 @@ function HomePage() {
       type: 'Comedy',
       year: '2020',
       time: '2h 32min',
-      description: 'Some junk text to se if this works properly',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed corporis ad porro labore vero ipsum dolorum voluptates tenetur nesciunt consequuntur quia eius, aliquam ullam quaerat delectus cupiditate quam quis maiores.',
       img: bgImg,
     },
     {
@@ -46,7 +46,8 @@ function HomePage() {
       type: 'Horror',
       year: '2019',
       time: '1h 32min',
-      description: 'Some junk text to se if this works properly',
+      description:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed corporis ad porro labore vero ipsum dolorum voluptates tenetur nesciunt consequuntur quia eius...',
       img: bgImg2,
     },
   ];

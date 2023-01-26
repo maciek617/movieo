@@ -1,6 +1,15 @@
-import { supabase } from "../App";
+import { supabase } from '../App';
 
-export const signoutUser = async (navigate: any) => {
+export const signoutUser = async (
+  navigate: any,
+  dispatch: any,
+  udpateUser: any
+) => {
   const { error } = await supabase.auth.signOut();
-  if (!error) navigate('/');
+
+  if (!error) {
+    localStorage.clear();
+    dispatch(udpateUser(null));
+    navigate('/');
+  }
 };
