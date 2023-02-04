@@ -9,11 +9,16 @@ module.exports = {
       },
       animation: {
         'slide-left': 'slideLeft 0.5s ease-in-out',
+        fade: 'fade 0.1s ease-in-out',
       },
       keyframes: {
         slideLeft: {
           '0%': { opacity: '0', transform: 'translateX(-30px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        fade: {
+          '0%': { opacity: '0', display: 'none' },
+          '100%': { opacity: '1', display: 'block' },
         },
       },
     },

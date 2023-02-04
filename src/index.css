@@ -19,6 +19,10 @@
     linear-gradient(360deg, #000000 0%, rgba(63, 63, 63, 0) 100%);
 }
 
+.darken-bg {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
 .swiper-pagination-bullet {
   background-color: #ffc700;
   display: inline-block;

@@ -4,7 +4,7 @@ export const registerUser = async (
   email: string,
   password: string,
   name: string,
-  disptach: any,
+  dispatch: any,
   updateUser: any,
   navigate: any
 ) => {
@@ -17,10 +17,10 @@ export const registerUser = async (
       },
     },
   });
-  console.log(data);
-  console.log(data.user);
 
-  disptach(updateUser(data.user));
+  dispatch(updateUser(data.user));
   localStorage.setItem('isLoggedIn', 'true');
-  if (!error) navigate('/home');
+  document.cookie =
+    'wasLoggedIn=true; expires=Tue, 14 Feb 2023 12:00:00 UTCl path=/';
+  if (!error) navigate('/wait-for-email');
 };

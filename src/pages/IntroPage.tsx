@@ -1,7 +1,17 @@
 import React from 'react';
 import Button from '../components/Button';
 import IntroImg from '../assets/intro-bg.jpg';
+import CookiesInfo from '../components/CookiesInfo';
+import { useNavigate } from 'react-router-dom';
 function IntroPage() {
+  const navigate = useNavigate();
+
+  const navigateToProperTab = () => {
+    document.cookie.includes('wasLoggedIn')
+      ? navigate('/login')
+      : navigate('/signup');
+  };
+
   return (
     <div className='bg-filtr h-screen w-full text-white text-center'>
       <img
@@ -16,8 +26,9 @@ function IntroPage() {
         <h1 className='font-bold text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl'>
           Recommend, Review, Rate & Share
         </h1>
-        <Button text='Join in!' addClasses='mt-10' />
+        <Button text='Join in!' addClasses='mt-10' fn={navigateToProperTab} />
       </div>
+      <CookiesInfo />
     </div>
   );
 }

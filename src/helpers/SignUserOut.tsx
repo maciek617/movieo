@@ -9,7 +9,7 @@ export const signoutUser = async (
 
   if (!error) {
     localStorage.clear();
-    dispatch(udpateUser(null));
     navigate('/');
+    dispatch(udpateUser(null));
   }
 };

@@ -12,9 +12,11 @@ import Browse from './Browse';
 import ComingSoon from './ComingSoon';
 import WhatToWatch from './WhatToWatch';
 import Blog from './Blog';
+import WaitForEmailConfritmation from './auth/WaitForEmailConfritmation';
 
 function PagesLinks() {
   const dispatch = useDispatch();
+  
   useEffect(() => {
     const getUser = async () => {
       const {
@@ -77,6 +79,10 @@ function PagesLinks() {
         }
       ></Route>
       <Route
+        path='/wait-for-email'
+        element={<WaitForEmailConfritmation />}
+      ></Route>
+      <Route
         path='/login'
         element={
           <ProtectedRouteSignedUser user={'isLoggedIn'}>
@@ -88,7 +94,7 @@ function PagesLinks() {
   );
 }
 const ProtectedRoute = ({ user, children }: { user: any; children: any }) => {
-  if (!localStorage.getItem(user)) {
+  if (!localStorage.key(1)?.includes('auth')) {
     return <Navigate to={'/'} replace />;
   }
   return children;
@@ -101,7 +107,7 @@ const ProtectedRouteSignedUser = ({
   user: any;
   children: any;
 }) => {
-  if (localStorage.getItem(user)) {
+  if (localStorage.key(1)?.includes('auth')) {
     return <Navigate to={'/home'} replace />;
   }
   return children;

@@ -5,6 +5,7 @@ import { updateUser } from '../../features/currentUser';
 import { useState } from 'react';
 import { signInUser } from '../../helpers/SignInUser';
 import Button from '../../components/Button';
+
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -14,7 +15,10 @@ function Login() {
   const signCurrentUserIn = (e: any) => {
     e.preventDefault();
     signInUser(email, password, dispatch, updateUser, navigate);
+    document.cookie =
+      'wasLoggedIn=true; expires=Tue, 14 Feb 2023 12:00:00 UTCl path=/';
   };
+
   //   Set state of each input fields
   const updateEmailFields = (e: any, fn?: any) => {
     fn(e.target.value);

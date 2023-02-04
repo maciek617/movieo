@@ -52,6 +52,8 @@ function HomePage() {
     },
   ];
 
+  // console.log(currentUser.confirmed_at);
+
   const slides = tempData.map((slide, index) => {
     return (
       <SwiperSlide key={index}>
