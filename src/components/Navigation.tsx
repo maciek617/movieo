@@ -26,7 +26,7 @@ function Navigation() {
       <div className='flex items-center  relative'>
         <ul className='relative hidden  lg:flex items-center gap-10  text-white lg:text-md xl:text-xl'>
           <NavLink
-            to='browse'
+            to='browse/most-popular/netflix/action'
             className={'cursor-pointer hover:text-main-yellow transition-all'}
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >

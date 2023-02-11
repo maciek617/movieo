@@ -21,6 +21,9 @@ module.exports = {
           '100%': { opacity: '1', display: 'block' },
         },
       },
+      scale: {
+        '101' : '1.01'
+      }
     },
   },
   plugins: [],

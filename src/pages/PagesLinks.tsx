@@ -13,10 +13,11 @@ import ComingSoon from './ComingSoon';
 import WhatToWatch from './WhatToWatch';
 import Blog from './Blog';
 import WaitForEmailConfritmation from './auth/WaitForEmailConfritmation';
+import AddMovie from './browse-film/add-movie/AddMovie';
 
 function PagesLinks() {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     const getUser = async () => {
       const {
@@ -24,7 +25,9 @@ function PagesLinks() {
       } = await supabase.auth.getUser();
       dispatch(updateUser(user));
     };
+
     getUser();
+    
   }, []);
 
   return (
@@ -39,10 +42,18 @@ function PagesLinks() {
         }
       ></Route>
       <Route
-        path='/browse'
+        path='/browse/:m/:p/:t'
         element={
           <ProtectedRoute user={'isLoggedIn'}>
             <Browse />
+          </ProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path='/add-movie'
+        element={
+          <ProtectedRoute user={'isLoggedIn'}>
+            <AddMovie />
           </ProtectedRoute>
         }
       ></Route>

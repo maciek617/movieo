@@ -1,4 +1,5 @@
 import { supabase } from '../App';
+import { createBucket } from './createBucket';
 
 export const registerUser = async (
   email: string,
@@ -18,9 +19,12 @@ export const registerUser = async (
     },
   });
 
-  dispatch(updateUser(data.user));
-  localStorage.setItem('isLoggedIn', 'true');
-  document.cookie =
-    'wasLoggedIn=true; expires=Tue, 14 Feb 2023 12:00:00 UTCl path=/';
+  if (data.user) {
+    dispatch(updateUser(data.user));
+    localStorage.setItem('isLoggedIn', 'true');
+    document.cookie =
+      'wasLoggedIn=true; expires=Tue, 14 Feb 2023 12:00:00 UTCl path=/';
+  }
+  
   if (!error) navigate('/wait-for-email');
 };

@@ -19,6 +19,16 @@
     linear-gradient(360deg, #000000 0%, rgba(63, 63, 63, 0) 100%);
 }
 
+.bg-filtr-low {
+  position: absolute;
+  background: linear-gradient(
+      179.59deg,
+      #202020 -1.39%,
+      rgba(101, 101, 101, 0) 0%
+    ),
+    linear-gradient(360deg, #181818 0%, rgba(86, 86, 86, 0) 100%);
+}
+
 .darken-bg {
   background-color: rgba(0, 0, 0, 0.9);
 }

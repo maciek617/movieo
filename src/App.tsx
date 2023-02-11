@@ -9,6 +9,7 @@ export const supabase = createClient(
 
 function App() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
+  // TODO: only show when user confirmed their email
   return (
     <div className='App'>
       <PagesLinks />
