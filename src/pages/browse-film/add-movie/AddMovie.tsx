@@ -1,17 +1,20 @@
 import React from 'react';
 import AddMovieInput from './AddMovieInput';
-import { useState, useEffect } from 'react';
 import AddMovieTextarea from './AddMovieTextarea';
 import Button from '../../../components/Button';
 import Pill from '../../../components/Pill';
+import Modal from '../../../components/Modal';
+import AddMovieCheckbox from './AddMovieCheckbox';
+import SelectOptions from './SelectOptions';
+import AddMovieImageScreen from './AddMovieImageScreen';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../../App';
 import { useSelector } from 'react-redux';
 import { countSingleWords } from '../../../helpers/countWords';
-import Modal from '../../../components/Modal';
-import AddMovieCheckbox from './AddMovieCheckbox';
+import { uploadFile } from '../../../helpers/uploadFile';
+
 function AddMovie() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
-  // State to pass to components
   const [title, setTitle] = useState<string>('');
   const [brief, setBrief] = useState<string>('');
   const [review, setReview] = useState<string>('');
@@ -24,12 +27,11 @@ function AddMovie() {
   const [userVote, setUserVote] = useState<boolean>(false);
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [showCreatedDate, setShowCreatedDate] = useState<boolean>(false);
+  const [img, setImg] = useState<string>('');
 
   // Function that adds character string to characters array of strings
-
   const addCharacter = () => {
-    if (!character) return;
-    if (characters.length >= 10) return;
+    if (!character || characters.length >= 10) return;
     setCharacters([...characters, character]);
     setCharacter('');
   };
@@ -51,7 +53,6 @@ function AddMovie() {
 
   // TODO: After creation user, we should create a bucket to store here a images,
 
-  const testFn = () => console.log('this is from props');
   //   Add movie data without validation
   const addMovieData = async () => {
     const { error } = await supabase.from('movies').insert({
@@ -69,12 +70,11 @@ function AddMovie() {
       show_profile: showProfile,
       user_can_vote: userVote,
       show_created_date: showCreatedDate,
+      image: img,
     });
 
     if (!error) {
-      console.log('works good');
-    } else {
-      console.log(error);
+      console.log('Row created');
     }
   };
 
@@ -126,22 +126,6 @@ function AddMovie() {
     if (!error) await addMovieData();
   };
 
-  const selectOption = [
-    'Netflix',
-    'Prime Video',
-    'HBO',
-    'Hulu',
-    'Disney+',
-    'Apple TV',
-  ];
-  const selectOptions = selectOption.map((option) => {
-    return (
-      <option value={option} key={option}>
-        {option}
-      </option>
-    );
-  });
-
   // Add character on enter Press
   useEffect(() => {
     window.addEventListener('keyup', (e: any) => {
@@ -158,9 +142,15 @@ function AddMovie() {
       });
   }, [character]);
 
+  // Get bucket element
+  const getBucketItems = async (image: string) => {
+    const { data } = supabase.storage.from(currentUser.id).getPublicUrl(image);
+    return setImg(data.publicUrl);
+  };
+
   return (
     <div className='bg-main-dark px-4'>
-      <div className='container mx-auto py-20 text-white'>
+      <div className='container mx-auto py-20 text-white pt-28'>
         <AddMovieInput
           labelTitle='Production title'
           inputPlaceholder='ex. The 100'
@@ -173,11 +163,11 @@ function AddMovie() {
           <label>Select where user can watch this production.</label>
           <select
             className='bg-transparent outline-0 border border-white p-1 rounded-sm w-40'
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               setPlatform(e.target.value);
             }}
           >
-            {selectOptions}
+            <SelectOptions />
           </select>
         </div>
 
@@ -187,12 +177,19 @@ function AddMovie() {
           <input
             type='file'
             accept='image/png, image/jpeg'
-            className='w-full h-full opacity-0 absolute'
+            className='w-full h-full opacity-0 absolute cursor-pointer'
+            onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+              if (e.target.files) {
+                await uploadFile(
+                  currentUser.id,
+                  e.target.files[0]?.name,
+                  e.target.files[0]
+                );
+                getBucketItems(e.target?.files[0].name);
+              }
+            }}
           />
-          <div className='flex items-center gap-5'>
-            <p className='text-center text-2xl'>Add movie image</p>
-            <i className='fa-solid fa-image text-3xl'></i>
-          </div>
+          <AddMovieImageScreen img={img} />
         </div>
 
         <AddMovieTextarea
@@ -228,19 +225,21 @@ function AddMovie() {
           <div className='flex gap-10 flex-wrap'>{charPills}</div>
         </div>
 
-        <div>
+        <div className='my-5'>
           <p>Your overall rating</p>
-          <input
-            type='range'
-            min={0}
-            max={10}
-            step={0.5}
-            onChange={(e) => {
-              setRate(+e.target.value);
-            }}
-            value={rate}
-          />
-          <p>{rate}/10</p>
+          <div className='flex items-center gap-5'>
+            <input
+              type='range'
+              min={0}
+              max={10}
+              step={0.5}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setRate(+e.target.value);
+              }}
+              value={rate}
+            />
+            <p>{rate}/10</p>
+          </div>
         </div>
 
         <AddMovieCheckbox

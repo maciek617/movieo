@@ -27,7 +27,6 @@ function PagesLinks() {
     };
 
     getUser();
-    
   }, []);
 
   return (
