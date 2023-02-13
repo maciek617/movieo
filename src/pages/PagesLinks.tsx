@@ -40,14 +40,7 @@ function PagesLinks() {
           </ProtectedRoute>
         }
       ></Route>
-      <Route
-        path='/browse/:m/:p/:t'
-        element={
-          <ProtectedRoute user={'isLoggedIn'}>
-            <Browse />
-          </ProtectedRoute>
-        }
-      ></Route>
+      <Route path='/browse/:m/:p/:t' element={<Browse />}></Route>
       <Route
         path='/add-movie'
         element={
@@ -56,30 +49,9 @@ function PagesLinks() {
           </ProtectedRoute>
         }
       ></Route>
-      <Route
-        path='/coming'
-        element={
-          <ProtectedRoute user={'isLoggedIn'}>
-            <ComingSoon />
-          </ProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path='/what-to-watch'
-        element={
-          <ProtectedRoute user={'isLoggedIn'}>
-            <WhatToWatch />
-          </ProtectedRoute>
-        }
-      ></Route>
-      <Route
-        path='/blog'
-        element={
-          <ProtectedRoute user={'isLoggedIn'}>
-            <Blog />
-          </ProtectedRoute>
-        }
-      ></Route>
+      <Route path='/coming' element={<ComingSoon />}></Route>
+      <Route path='/what-to-watch' element={<WhatToWatch />}></Route>
+      <Route path='/blog' element={<Blog />}></Route>
       <Route
         path='/signup'
         element={

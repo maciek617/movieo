@@ -3,9 +3,6 @@ import CookiesImg from '../assets/cookies.svg';
 import Button from './Button';
 import { useState, useEffect } from 'react';
 
-interface CookieProps {
-  show: boolean;
-}
 function CookiesInfo() {
   const [showModal, setShowModal] = useState(false);
   const cookie = document.cookie.includes('acceptCookie');
@@ -16,8 +13,8 @@ function CookiesInfo() {
 
   const setAcceptCookie = () => {
     document.cookie =
-      'acceptCookie=true; expires=Tue, 14 Feb 2023 12:00:00 UTCl path=/';
-      setShowModal(false);
+      'acceptCookie=true; expires=Mon, 01 Jan 2024 12:00:00 UTCl path=/';
+    setShowModal(false);
   };
   return showModal ? (
     <div className='fixed top-0 left-0 w-full h-screen darken-bg flex items-center justify-center'>

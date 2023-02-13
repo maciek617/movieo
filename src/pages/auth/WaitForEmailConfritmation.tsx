@@ -18,7 +18,7 @@ function WaitForEmailConfritmation() {
   // const checkIfUserIsConfirmed = () => {
   //   console.log('123');
 
-  //   if (!currentUser.confirmed_at) {
+  //   if (!currentUser.confirmed_at) {}
   //     navigate('/wait-for-email');
   //     return;
   //   }

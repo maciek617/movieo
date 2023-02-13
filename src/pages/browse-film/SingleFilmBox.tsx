@@ -2,7 +2,6 @@ import React from 'react';
 
 interface SingleFilmBoxProps {
   image: any;
-  imageAlt: string;
   filmTitle: string;
   filmType: string;
   streamingPlatform: string;
@@ -15,7 +14,7 @@ function SingleFilmBox({ ...props }: SingleFilmBoxProps) {
       <div className='bg-filtr-low w-full h-full'></div>
       <img
         src={props.image}
-        alt={props.imageAlt}
+        alt='Film image cover'
         className='w-96 h-52 object-cover rounded-md shadow-lg'
       />
       <div className='absolute bottom-2 left-5 font-bold w-4/5'>

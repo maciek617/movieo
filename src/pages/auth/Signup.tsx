@@ -6,17 +6,20 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../../features/currentUser';
 import { registerUser } from '../../helpers/SignupUser';
 import bgSignupCover from '../../assets/signup-bg.jpg';
+import IconToggle from '../../components/IconToggle';
+import Modal from '../../components/Modal';
+import { validateEmail } from '../../helpers/emailValidation';
 
 function Signup() {
   const navigate = useNavigate();
   const disptach = useDispatch();
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [name, setName] = useState<string>('');
-
   const [error, setError] = useState<string>('');
-
+  const [show, setShow] = useState<boolean>(false);
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
   const signupUserWithPassword = (e: any) => {
@@ -33,6 +36,12 @@ function Signup() {
       setError('Name should be at least 3 char.');
       return;
     }
+
+    if (!validateEmail(email)) {
+      setError('It do not look like a valid email.');
+      return;
+    }
+
     if (passwordRegex.test(password)) {
       setError(
         'Password should be at least 8 characters, contains at least 1 digit, 1 special char and 1 uppercase.'
@@ -61,7 +70,7 @@ function Signup() {
         alt='signup background'
         className='absolute -z-10 h-full w-full object-cover'
       />
-      <div className='container mx-auto px-6 mt-5 text-white lg:mt-8 xl:mt-10 2xl:mt-12'>
+      <div className='container mx-auto pt-20 px-6 mt-5 text-white lg:mt-8 xl:mt-10 2xl:mt-12'>
         <h1 className='text-center text-3xl lg:text-5xl xl:text-6xl 2xl:text-8xl'>
           Signup to Movie
           <span className='text-main-yellow font-semibold'>o</span> Universe and
@@ -69,7 +78,7 @@ function Signup() {
         </h1>
         <form className='mt-7'>
           <div className='flex flex-col my-3 max-w-sm'>
-            <label htmlFor=''>Name</label>
+            <label>Name</label>
             <input
               type='text'
               className='border-2 border-black text-black px-4 py-2 outline-none rounded-lg transition-all focus:border-main-yellow focus:border-4'
@@ -79,7 +88,7 @@ function Signup() {
             />
           </div>
           <div className='flex flex-col my-3 max-w-sm'>
-            <label htmlFor=''>Email</label>
+            <label>Email</label>
             <input
               type='email'
               className='border-2 border-black text-black px-4 py-2 outline-none rounded-lg transition-all focus:border-main-yellow focus:border-4'
@@ -88,18 +97,19 @@ function Signup() {
               placeholder='Enter an e-mail'
             />
           </div>
-          <div className='flex flex-col my-3 max-w-sm'>
-            <label htmlFor=''>Password</label>
+          <div className='flex flex-col my-3 max-w-sm relative'>
+            <label>Password</label>
             <input
-              type='password'
+              type={!show ? 'password' : 'text'}
               className='border-2 border-black text-black px-4 py-2 outline-none rounded-lg transition-all focus:border-main-yellow focus:border-4'
               onChange={(e) => updateEmailFields(e, setPassword)}
               value={password}
               placeholder='Enter a password'
             />
+            <IconToggle show={show} setShow={setShow} />
           </div>
           <div className='flex flex-col my-3 max-w-sm'>
-            <label htmlFor=''>Confirm Password</label>
+            <label>Confirm Password</label>
             <input
               type='password'
               className='border-2 border-black text-black px-4 py-2 outline-none rounded-lg transition-all focus:border-main-yellow focus:border-4'
@@ -136,6 +146,7 @@ function Signup() {
           />
         </form>
       </div>
+      {error && <Modal text={error} fn={setError} error={true} />}
     </div>
   );
 }

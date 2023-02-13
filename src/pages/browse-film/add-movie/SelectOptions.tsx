@@ -1,6 +1,10 @@
 import React from 'react';
 
-function SelectOptions() {
+interface SelectOptionProps {
+  type: boolean;
+}
+
+function SelectOptions({ ...props }: SelectOptionProps) {
   const selectOption = [
     'Netflix',
     'Prime Video',
@@ -10,13 +14,32 @@ function SelectOptions() {
     'Apple TV',
   ];
 
-  const selectOptions = selectOption.map((option) => {
-    return (
-      <option value={option} key={option}>
-        {option}
-      </option>
-    );
-  });
+  const selectTypeOption = [
+    'Action',
+    'Comedy',
+    'Science Fiction',
+    'Drama',
+    'Thriller',
+    'Western',
+    'Horror',
+    'Romance',
+  ];
+
+  const selectOptions = props.type
+    ? selectTypeOption.map((option) => {
+        return (
+          <option value={option} key={option}>
+            {option}
+          </option>
+        );
+      })
+    : selectOption.map((option) => {
+        return (
+          <option value={option} key={option}>
+            {option}
+          </option>
+        );
+      });
   return <>{selectOptions}</>;
 }
 

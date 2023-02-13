@@ -6,10 +6,9 @@ import {
 } from './browse-film/categories';
 import SideCategory from './browse-film/SideCategory';
 import SingleFilmBox from './browse-film/SingleFilmBox';
-import testImg from '../assets/bg-film3.jpg';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import Spinner from '../components/Spinner';
+import Spinner from '../components/Spinner';
 import Button from '../components/Button';
 import { createBucket } from '../helpers/createBucket';
 import { useSelector } from 'react-redux';
@@ -17,13 +16,15 @@ import { supabase } from '../App';
 function Browse() {
   const navigate = useNavigate();
   const currentUser = useSelector((state: any) => state.currentUser.value);
+  const [data, setData] = useState<any>();
 
   const createNewBucket = async () => {
-    if (currentUser) {
-      const { data, error } = await supabase.storage.getBucket(currentUser?.id);
-      if (data) return;
-      createBucket(currentUser?.id);
-    }
+    if (!currentUser) return;
+
+    const { data } = await supabase.storage.getBucket(currentUser?.id);
+    if (data) return;
+
+    createBucket(currentUser?.id);
   };
 
   const [clickedMenuIndex, setClickedMenuIndex] = useState<number>(0);
@@ -59,6 +60,31 @@ function Browse() {
     }
   }, [m, t, p]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await supabase.from('movies').select();
+
+      if (!error) {
+        setData(data);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const eachFilm = data?.map((film: any) => {
+    return (
+      <SingleFilmBox
+        key={film.id}
+        image={film.image}
+        filmTitle={film.name}
+        filmType={film.type}
+        streamingPlatform={film.platform}
+        rating={film.rating}
+      />
+    );
+  });
+
   return (
     <div className='w-full bg-main-dark'>
       <div className='container mx-auto pt-20 w-full flex text-white'>
@@ -82,25 +108,13 @@ function Browse() {
         </div>
 
         <div className='main-board w-3/4 border border-black rounded-md shadow-lg mx-8'>
-          <div className='flex justify-evenly pt-10'>
-            <SingleFilmBox
-              image={testImg}
-              imageAlt='Film scene'
-              filmTitle='Anarchy: The Purge'
-              filmType='Horror'
-              streamingPlatform='Netflix'
-              rating={9.2}
-            />
-            <SingleFilmBox
-              image={testImg}
-              imageAlt='Film scene'
-              filmTitle='The 100'
-              filmType='Science Fiction'
-              streamingPlatform='Netflix'
-              rating={4.5}
-            />
-          </div>
-          {/* <Spinner /> */}
+          {!data ? (
+            <Spinner />
+          ) : (
+            <div className='flex justify-evenly pt-10 flex-wrap gap-5'>
+              {eachFilm}
+            </div>
+          )}
         </div>
 
         <div className='sidebar-right w-1/5'>

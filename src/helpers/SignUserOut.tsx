@@ -3,13 +3,12 @@ import { supabase } from '../App';
 export const signoutUser = async (
   navigate: any,
   dispatch: any,
-  udpateUser: any
+  updateUser: any
 ) => {
   const { error } = await supabase.auth.signOut();
+  if (error) return;
 
-  if (!error) {
-    localStorage.clear();
-    navigate('/');
-    dispatch(udpateUser(null));
-  }
+  localStorage.clear();
+  navigate('/');
+  dispatch(updateUser(null));
 };

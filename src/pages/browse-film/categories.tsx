@@ -16,9 +16,12 @@ export const streamingCategories = [
 export const typeCategories = [
   { name: 'Action', icon: 'fa-solid fa-location-crosshairs pr-2' },
   { name: 'Comedy', icon: 'fa-solid fa-masks-theater pr-2' },
+  { name: 'Science Fiction', icon: 'fa-solid fa-masks-theater pr-2' },
   { name: 'Drama', icon: 'fa-solid fa-circle-exclamation pr-2' },
   { name: 'Thriller', icon: 'fa-solid fa-film pr-2' },
   { name: 'Western', icon: 'fa-solid fa-hat-cowboy pr-2' },
   { name: 'Horror', icon: 'fa-solid fa-face-grin-tongue-squint pr-2' },
   { name: 'Romance', icon: 'fa-solid fa-shield-heart pr-2' },
 ];
+
+

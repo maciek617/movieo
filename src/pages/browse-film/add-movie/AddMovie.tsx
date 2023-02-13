@@ -27,6 +27,7 @@ function AddMovie() {
   const [userVote, setUserVote] = useState<boolean>(false);
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [showCreatedDate, setShowCreatedDate] = useState<boolean>(false);
+  const [type, setType] = useState<string>('');
   const [img, setImg] = useState<string>('');
 
   // Function that adds character string to characters array of strings
@@ -71,6 +72,7 @@ function AddMovie() {
       user_can_vote: userVote,
       show_created_date: showCreatedDate,
       image: img,
+      type: type,
     });
 
     if (!error) {
@@ -167,7 +169,19 @@ function AddMovie() {
               setPlatform(e.target.value);
             }}
           >
-            <SelectOptions />
+            <SelectOptions type={false} />
+          </select>
+        </div>
+
+        <div className='flex flex-col mt-10'>
+          <label>Select type of this production.</label>
+          <select
+            className='bg-transparent outline-0 border border-white p-1 rounded-sm w-40'
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              setType(e.target.value);
+            }}
+          >
+            <SelectOptions type={true} />
           </select>
         </div>
 
@@ -269,7 +283,7 @@ function AddMovie() {
           <Button text='I need help' addClasses='ml-10' />
         </div>
       </div>
-      {error && <Modal text={error} fn={setError} />}
+      {error && <Modal text={error} fn={setError} error={true} />}
     </div>
   );
 }

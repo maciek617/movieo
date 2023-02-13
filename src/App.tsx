@@ -13,7 +13,7 @@ function App() {
   return (
     <div className='App'>
       <PagesLinks />
-      {currentUser && <Navigation />}
+      <Navigation user={currentUser}/>
     </div>
   );
 }

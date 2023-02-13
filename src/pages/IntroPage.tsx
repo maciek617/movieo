@@ -19,7 +19,7 @@ function IntroPage() {
         alt='Background image'
         className='h-full w-full absolute -z-10 object-cover'
       />
-      <div className='mt-52'>
+      <div className='mt-80'>
         <p className='text-6xl md:text-8xl font-semibold'>
           Movie<span className='text-main-yellow'>o</span>
         </p>
