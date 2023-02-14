@@ -1,4 +1,8 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
+import { supabase } from '../../../App';
+import { useSelector } from 'react-redux';
+import { countSingleWords } from '../../../helpers/countWords';
+import { uploadFile } from '../../../helpers/uploadFile';
 import AddMovieInput from './AddMovieInput';
 import AddMovieTextarea from './AddMovieTextarea';
 import Button from '../../../components/Button';
@@ -7,11 +11,8 @@ import Modal from '../../../components/Modal';
 import AddMovieCheckbox from './AddMovieCheckbox';
 import SelectOptions from './SelectOptions';
 import AddMovieImageScreen from './AddMovieImageScreen';
-import { useState, useEffect } from 'react';
-import { supabase } from '../../../App';
-import { useSelector } from 'react-redux';
-import { countSingleWords } from '../../../helpers/countWords';
-import { uploadFile } from '../../../helpers/uploadFile';
+import Spinner from '../../../components/Spinner';
+import { useNavigate } from 'react-router-dom';
 
 function AddMovie() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
@@ -27,9 +28,11 @@ function AddMovie() {
   const [userVote, setUserVote] = useState<boolean>(false);
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [showCreatedDate, setShowCreatedDate] = useState<boolean>(false);
-  const [type, setType] = useState<string>('');
+  const [type, setType] = useState<string>('Action');
   const [img, setImg] = useState<string>('');
+  const [showSpinner, setShowSpinner] = useState<boolean>(false);
 
+  const navigate = useNavigate();
   // Function that adds character string to characters array of strings
   const addCharacter = () => {
     if (!character || characters.length >= 10) return;
@@ -56,6 +59,9 @@ function AddMovie() {
 
   //   Add movie data without validation
   const addMovieData = async () => {
+    // show spinner
+    setShowSpinner(true);
+
     const { error } = await supabase.from('movies').insert({
       id: Math.floor(Math.random() * 10000),
       name: title,
@@ -76,6 +82,8 @@ function AddMovie() {
     });
 
     if (!error) {
+      setShowSpinner(false);
+      navigate('/browse/most-popular/netflix/action');
       console.log('Row created');
     }
   };
@@ -284,6 +292,11 @@ function AddMovie() {
         </div>
       </div>
       {error && <Modal text={error} fn={setError} error={true} />}
+      {showSpinner && (
+        <div className='z-50 fixed top-0 left-0 w-full h-screen flex items-center justify-center darken-bg'>
+          <Spinner isDark={true} />
+        </div>
+      )}
     </div>
   );
 }

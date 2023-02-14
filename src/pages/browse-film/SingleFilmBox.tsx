@@ -24,7 +24,6 @@ function SingleFilmBox({ ...props }: SingleFilmBoxProps) {
         </p>
         <div className='flex justify-between items-center w-full'>
           <p className='py-1 font-normal'>{props.rating}/10</p>
-          <i className='fa-solid fa-heart transition-all hover:scale-125'></i>
         </div>
       </div>
     </div>

@@ -6,17 +6,17 @@ export const menuCategories = [
 ];
 export const streamingCategories = [
   { name: 'Netflix', icon: 'fa-solid fa-video pr-2' },
-  { name: 'Prime Video', icon: 'fa-solid fa-video pr-2' },
-  { name: 'HBO', icon: 'fa-solid fa-video pr-2' },
+  { name: 'Prime video', icon: 'fa-solid fa-video pr-2' },
+  { name: 'Hbo', icon: 'fa-solid fa-video pr-2' },
   { name: 'Hulu', icon: 'fa-solid fa-video pr-2' },
   { name: 'Disney+', icon: 'fa-solid fa-video pr-2' },
-  { name: 'Apple TV', icon: 'fa-solid fa-video pr-2' },
+  { name: 'Apple tv', icon: 'fa-solid fa-video pr-2' },
 ];
 
 export const typeCategories = [
   { name: 'Action', icon: 'fa-solid fa-location-crosshairs pr-2' },
   { name: 'Comedy', icon: 'fa-solid fa-masks-theater pr-2' },
-  { name: 'Science Fiction', icon: 'fa-solid fa-masks-theater pr-2' },
+  { name: 'Science fiction', icon: 'fa-solid fa-masks-theater pr-2' },
   { name: 'Drama', icon: 'fa-solid fa-circle-exclamation pr-2' },
   { name: 'Thriller', icon: 'fa-solid fa-film pr-2' },
   { name: 'Western', icon: 'fa-solid fa-hat-cowboy pr-2' },

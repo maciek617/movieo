@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../features/currentUser';
 import { NavLink, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import Button from './Button';
 
 const activeStyle = {
   color: '#FFC700',
@@ -103,7 +104,11 @@ function Navigation({ ...props }: NavigationProps) {
             </li>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <Link to={document.cookie.includes('wasLoggedIn') ? 'login' : 'signup'}>
+          <Button text='Get started' />
+        </Link>
+      )}
     </nav>
   );
 }

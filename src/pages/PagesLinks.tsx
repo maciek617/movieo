@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { supabase } from '../App';
+import { supabase } from '../App'
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../features/currentUser';
+import { Navigate } from 'react-router-dom';;
 import HomePage from './HomePage';
 import IntroPage from './IntroPage';
 import Signup from './auth/Signup';
 import Login from './auth/Login';
-import { useDispatch } from 'react-redux';
-import { updateUser } from '../features/currentUser';
-import { Navigate } from 'react-router-dom';
 import Browse from './Browse';
 import ComingSoon from './ComingSoon';
 import WhatToWatch from './WhatToWatch';

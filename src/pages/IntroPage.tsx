@@ -1,8 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import IntroImg from '../assets/intro-bg.jpg';
 import CookiesInfo from '../components/CookiesInfo';
-import { useNavigate } from 'react-router-dom';
+
 function IntroPage() {
   const navigate = useNavigate();
 

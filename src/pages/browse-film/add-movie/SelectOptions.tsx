@@ -8,16 +8,16 @@ function SelectOptions({ ...props }: SelectOptionProps) {
   const selectOption = [
     'Netflix',
     'Prime Video',
-    'HBO',
+    'Hbo',
     'Hulu',
     'Disney+',
-    'Apple TV',
+    'Apple tv',
   ];
 
   const selectTypeOption = [
     'Action',
     'Comedy',
-    'Science Fiction',
+    'Science fiction',
     'Drama',
     'Thriller',
     'Western',

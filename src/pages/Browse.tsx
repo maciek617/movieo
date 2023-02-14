@@ -13,6 +13,7 @@ import Button from '../components/Button';
 import { createBucket } from '../helpers/createBucket';
 import { useSelector } from 'react-redux';
 import { supabase } from '../App';
+
 function Browse() {
   const navigate = useNavigate();
   const currentUser = useSelector((state: any) => state.currentUser.value);
@@ -31,9 +32,10 @@ function Browse() {
   const [clickedPlatformIndex, setClickedPlatformIndex] = useState<number>(0);
   const [clickedTypeIndex, setClickedTypeIndex] = useState<number>(0);
 
-  const [m, setM] = useState<string>('');
-  const [p, setP] = useState<string>('');
-  const [t, setT] = useState<string>('');
+  // Initial string types
+  const [m, setM] = useState<string>('most-popular');
+  const [p, setP] = useState<string>('netflix');
+  const [t, setT] = useState<string>('action');
 
   useEffect(() => {
     setM(
@@ -54,21 +56,41 @@ function Browse() {
   }, [clickedMenuIndex, clickedPlatformIndex, clickedTypeIndex]);
 
   useEffect(() => {
-    if (m && p && t) {
-      navigate('/browse/' + m + '/' + p + '/' + t);
-      // Fetch data from database, based on these parameters m,p,t, after navigation
-    }
-  }, [m, t, p]);
-
-  useEffect(() => {
+    setData([]);
     const fetchData = async () => {
-      const { data, error } = await supabase.from('movies').select();
+      const { data, error } = await supabase
+        .from('movies')
+        .select('*')
+        .eq('type', t.charAt(0).toUpperCase() + t.slice(1))
+        .eq('platform', p.charAt(0).toUpperCase() + p.slice(1))
+        .limit(10);
 
       if (!error) {
         setData(data);
       }
     };
 
+    if (m || p || t) {
+      navigate('/browse/' + m + '/' + p + '/' + t);
+      // Fetch data from database, based on these parameters m,p,t, after navigation
+      fetchData();
+    }
+  }, [m, t, p]);
+
+  useEffect(() => {
+    setData([]);
+    const fetchData = async () => {
+      const { data, error } = await supabase
+        .from('movies')
+        .select('*')
+        .eq('type', t.charAt(0).toUpperCase() + t.slice(1))
+        .eq('platform', p.charAt(0).toUpperCase() + p.slice(1))
+        .limit(10);
+
+      if (!error) {
+        setData(data);
+      }
+    };
     fetchData();
   }, []);
 
@@ -96,20 +118,28 @@ function Browse() {
             setClickedIndex={setClickedMenuIndex}
           />
           {currentUser?.id && (
-            <Link to={'/add-movie'}>
+            <div>
+              <Link to={'/add-movie'}>
+                <Button
+                  text='Add movie'
+                  icon={true}
+                  addClasses='mt-5'
+                  fn={createNewBucket}
+                />
+              </Link>
               <Button
-                text='Add movie'
-                icon={true}
+                text='Report a problem'
                 addClasses='mt-5'
-                fn={createNewBucket}
               />
-            </Link>
+            </div>
           )}
         </div>
 
         <div className='main-board w-3/4 border border-black rounded-md shadow-lg mx-8'>
-          {!data ? (
-            <Spinner />
+          {!data || data.length < 1 ? (
+            <div className='pt-10'>
+              <Spinner />
+            </div>
           ) : (
             <div className='flex justify-evenly pt-10 flex-wrap gap-5'>
               {eachFilm}
