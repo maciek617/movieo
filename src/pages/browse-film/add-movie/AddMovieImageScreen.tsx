@@ -1,8 +1,7 @@
-import React from 'react';
-
 interface AddMovieImageScreenProps {
   img: string;
 }
+
 function AddMovieImageScreen({ ...props }: AddMovieImageScreenProps) {
   return !props.img ? (
     <div className='flex items-center gap-5'>

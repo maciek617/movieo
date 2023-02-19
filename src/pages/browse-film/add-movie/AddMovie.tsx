@@ -50,7 +50,7 @@ function AddMovie() {
   const charPills = characters.map((char, index) => {
     return (
       <div key={index} onClick={() => removePills(index)}>
-        <Pill text={char} />
+        <Pill text={char} icon={true} />
       </div>
     );
   });
@@ -59,11 +59,10 @@ function AddMovie() {
 
   //   Add movie data without validation
   const addMovieData = async () => {
-    // show spinner
     setShowSpinner(true);
 
     const { error } = await supabase.from('movies').insert({
-      id: Math.floor(Math.random() * 10000),
+      id: Math.floor(Math.random() * 10000), //random id handle the same generated id
       name: title,
       brief: brief,
       description: review,

@@ -1,5 +1,4 @@
 import { supabase } from '../App';
-
 export const registerUser = async (
   email: string,
   password: string,
@@ -17,12 +16,12 @@ export const registerUser = async (
       },
     },
   });
-
   if (data.user) {
     dispatch(updateUser(data.user));
+
     localStorage.setItem('isLoggedIn', 'true');
     document.cookie =
-      'wasLoggedIn=true; expires=Tue, 14 Feb 2023 12:00:00 UTCl path=/';
+      'wasLoggedIn=true; expires=Mon, 01 Feb 2024 12:00:00 UTCl path=/';
   }
 
   if (!error) navigate('/wait-for-email');

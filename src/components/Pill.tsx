@@ -2,6 +2,7 @@ import React from 'react';
 
 interface PillProps {
   text: string;
+  icon: boolean
 }
 
 function Pill({ ...props }: PillProps) {
@@ -9,9 +10,11 @@ function Pill({ ...props }: PillProps) {
     <div className='bg-red-900 px-4 py-1 rounded-md cursor-pointer'>
       <p>
         {props.text}{' '}
-        <span>
-          <i className='fa-solid fa-minus cursor-pointer'></i>
-        </span>
+        {props.icon && (
+          <span>
+            <i className='fa-solid fa-minus cursor-pointer'></i>
+          </span>
+        )}
       </p>
     </div>
   );

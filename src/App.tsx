@@ -13,6 +13,7 @@ export const supabase = createClient(
 function App() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
 
+
   return (
     <div className='App'>
       <PagesLinks />

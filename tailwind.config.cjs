@@ -7,6 +7,9 @@ module.exports = {
         'main-yellow': '#FFC700',
         'main-dark': '#222222',
       },
+      minHeight: {
+        'min-h-screen': '100vh',
+      },
       animation: {
         'slide-left': 'slideLeft 0.5s ease-in-out',
         fade: 'fade 0.1s ease-in-out',
@@ -22,8 +25,8 @@ module.exports = {
         },
       },
       scale: {
-        '101' : '1.01'
-      }
+        101: '1.01',
+      },
     },
   },
   plugins: [],

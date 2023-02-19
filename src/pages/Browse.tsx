@@ -96,14 +96,15 @@ function Browse() {
 
   const eachFilm = data?.map((film: any) => {
     return (
-      <SingleFilmBox
-        key={film.id}
-        image={film.image}
-        filmTitle={film.name}
-        filmType={film.type}
-        streamingPlatform={film.platform}
-        rating={film.rating}
-      />
+      <Link to={'/movie/' + film.id} key={film.id}>
+        <SingleFilmBox
+          image={film.image}
+          filmTitle={film.name}
+          filmType={film.type}
+          streamingPlatform={film.platform}
+          rating={film.rating}
+        />
+      </Link>
     );
   });
 
@@ -127,10 +128,7 @@ function Browse() {
                   fn={createNewBucket}
                 />
               </Link>
-              <Button
-                text='Report a problem'
-                addClasses='mt-5'
-              />
+              <Button text='Report a problem' addClasses='mt-5' />
             </div>
           )}
         </div>

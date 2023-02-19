@@ -2,17 +2,17 @@ import React from 'react';
 import Button from '../../components/Button';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../features/currentUser';
 import { registerUser } from '../../helpers/SignupUser';
 import bgSignupCover from '../../assets/signup-bg.jpg';
 import IconToggle from '../../components/IconToggle';
 import Modal from '../../components/Modal';
 import { validateEmail } from '../../helpers/emailValidation';
-
 function Signup() {
   const navigate = useNavigate();
   const disptach = useDispatch();
+  const currentUser = useSelector((state: any) => state.currentUser.value);
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');

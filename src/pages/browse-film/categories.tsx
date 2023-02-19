@@ -3,6 +3,7 @@ export const menuCategories = [
   { name: 'Recent', icon: 'fa-solid fa-tower-broadcast pr-2' },
   { name: 'Top rated', icon: 'fa-solid fa-face-smile pr-2' },
   { name: 'Liked movies', icon: 'fa-solid fa-heart pr-2' },
+  { name: 'All movies', icon: 'fa-solid fa-heart pr-2' },
 ];
 export const streamingCategories = [
   { name: 'Netflix', icon: 'fa-solid fa-video pr-2' },
@@ -23,5 +24,3 @@ export const typeCategories = [
   { name: 'Horror', icon: 'fa-solid fa-face-grin-tongue-squint pr-2' },
   { name: 'Romance', icon: 'fa-solid fa-shield-heart pr-2' },
 ];
-
-

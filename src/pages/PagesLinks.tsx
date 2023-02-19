@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { supabase } from '../App'
+import { supabase } from '../App';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../features/currentUser';
-import { Navigate } from 'react-router-dom';;
+import { Navigate } from 'react-router-dom';
 import HomePage from './HomePage';
 import IntroPage from './IntroPage';
 import Signup from './auth/Signup';
@@ -14,6 +14,7 @@ import WhatToWatch from './WhatToWatch';
 import Blog from './Blog';
 import WaitForEmailConfritmation from './auth/WaitForEmailConfritmation';
 import AddMovie from './browse-film/add-movie/AddMovie';
+import SingleFilms from './film/SingleFilms';
 
 function PagesLinks() {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function PagesLinks() {
           </ProtectedRoute>
         }
       ></Route>
+      <Route path='/movie/:id' element={<SingleFilms />}></Route>
       <Route path='/coming' element={<ComingSoon />}></Route>
       <Route path='/what-to-watch' element={<WhatToWatch />}></Route>
       <Route path='/blog' element={<Blog />}></Route>
