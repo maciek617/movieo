@@ -29,7 +29,7 @@ function SingleFilms() {
 
   return (
     <div className='pt-32 px-6 bg-main-dark min-h-screen'>
-      {filmData ? (
+      {filmData[0] || filmData[0]?.id ? (
         <div className=' container mx-auto'>
           <div className='w-full h-96 flex justify-around gap-10 text-white'>
             <LeftSideInfo image={filmData[0]?.image} type={filmData[0]?.type} />

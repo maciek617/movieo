@@ -144,7 +144,7 @@ function HomePage() {
         </Swiper>
       </div>
       {currentUser?.id && (
-        <p className='animate-slide-left fixed z-40 top-40 left-6 text-white text-xl md:left-24 lg:top-52 md:text-2xl lg:text-4xl'>
+        <p className='animate-slide-left absolute z-40 top-40 left-6 text-white text-xl md:left-24 lg:top-52 md:text-2xl lg:text-4xl'>
           Hello,{' '}
           <span className='font-bold'>{currentUser.user_metadata.name}</span>
           <span className='block'>

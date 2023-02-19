@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signoutUser } from '../helpers/SignUserOut';
 import { useDispatch } from 'react-redux';
@@ -21,6 +20,7 @@ function Navigation({ ...props }: NavigationProps) {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [changeBgColor, setChangeBgColor] = useState<boolean>(false);
 
+  // Add class on scroll to navigation
   useEffect(() => {
     window.addEventListener('scroll', () => {
       window.scrollY > 25 ? setChangeBgColor(true) : setChangeBgColor(false);
@@ -33,11 +33,24 @@ function Navigation({ ...props }: NavigationProps) {
     };
   }, []);
 
+  // Stop displaying profile dropdown when user clicks outside of the area
+  useEffect(() => {
+    window.addEventListener('click', (e: any) => {
+      !e.target.classList.contains('profile') && setShowDropdown(false);
+    });
+
+    return () => {
+      window.addEventListener('click', (e: any) => {
+        !e.target.classList.contains('profile') && setShowDropdown(false);
+      });
+    };
+  }, []);
+
   return (
     <nav
       className={`${
         changeBgColor ? 'darken-bg' : 'bg-main-dark'
-      } fixed z-40 top-0 left-0 flex items-center justify-between w-full px-6 py-5 md:px-24`}
+      } fixed z-40 top-0 left-0 flex items-center justify-between w-full px-6 py-5 transition-all md:px-24`}
     >
       <div>
         <Link to={'/home'}>
@@ -82,7 +95,7 @@ function Navigation({ ...props }: NavigationProps) {
         <div className='relative'>
           <div
             onClick={() => setShowDropdown(!showDropdown)}
-            className=' w-7 h-7 rounded-full border-2 border-main-yellow cursor-pointer lg:w-9 lg:h-9 xl:w-11 xl:h-11'
+            className='profile w-7 h-7 rounded-full border-2 border-main-yellow cursor-pointer lg:w-9 lg:h-9 xl:w-11 xl:h-11'
           ></div>
           <div
             className={`text-white bg-gray-700 absolute top-full right-0 w-32 rounded-sm mt-3 shadow ${
