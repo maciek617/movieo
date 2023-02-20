@@ -14,9 +14,10 @@ function LeftSideInfo({ ...props }: LeftSideInfoProps) {
       <div className='bg-main-yellow absolute top-3 right-3 rounded-lg shadow'>
         <p className='py-2 px-6 text-main-dark'>{props.type}</p>
       </div>
+      <div className='bg-main-dark text-white absolute top-3 left-3 rounded-lg shadow-xl'>
+        <p className='py-2 px-6 font-bold text-sm'>2021</p>
+      </div>
     </div>
   );
 }
-// filmData[0]?.image
-// filmData[0]?.type
 export default LeftSideInfo;
