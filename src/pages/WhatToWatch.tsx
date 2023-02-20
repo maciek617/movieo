@@ -1,14 +1,19 @@
 import Button from '../components/Button';
 import { supabase } from '../App';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SingleFilmBox from './browse-film/SingleFilmBox';
 import FAQ from '../components/FAQ';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function WhatToWatch() {
-  const [randomMovie, setRandomMovie] = useState<any>({});
   const currentUser = useSelector((state: any) => state.currentUser.value);
+  const [generationDate, setGenerationDate] = useState<any>(null);
+  const [randomMovie, setRandomMovie] = useState<any>({});
+  const [tomorrow, setTomorrow] = useState<any>(new Date());
+  const [hours, setHours] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+
   const fetchData = async () => {
     const { data, error } = await supabase.from('movies').select();
     if (error) return;
@@ -34,28 +39,78 @@ function WhatToWatch() {
     },
   ];
 
+  const pickRandomMovie = async () => {
+    if (generationDate !== null) return;
+    await fetchData();
+    setTomorrow(tomorrow.setDate(tomorrow.getDate() + 1));
+    updateGenerationDate(tomorrow);
+  };
+
+  const updateGenerationDate = async (tomorrow: any) => {
+    const { error } = await supabase
+      .from('users')
+      .update({ date_to_next_generation: tomorrow })
+      .eq('id', currentUser.id);
+  };
+
+  useEffect(() => {
+    const fetchNextGenerationDate = async () => {
+      const { data, error } = await supabase
+        .from('users')
+        .select('date_to_next_generation')
+        .eq('id', currentUser?.id);
+
+      if (error) return;
+      setGenerationDate(data[0].date_to_next_generation);
+    };
+
+    currentUser?.id && fetchNextGenerationDate();
+  }, [currentUser?.id]);
+
+  useEffect(() => {
+    const updateTime = () => {
+      if (!generationDate) return;
+      setHours(
+        Math.floor(
+          ((Date.parse(generationDate) - new Date().getTime()) /
+            1000 /
+            60 /
+            60) %
+            60
+        )
+      );
+      setMinutes(
+        Math.floor(
+          ((Date.parse(generationDate) - new Date().getTime()) / 1000 / 60) % 60
+        )
+      );
+    };
+    updateTime();
+  }, [generationDate]);
+
   return currentUser?.id ? (
     <div className='min-h-screen h-full bg-main-dark pt-32'>
       <div className='bg-main-dark text-white'>
-        {/* Update counter on page refresh */}
-        <p className='text-center py-10'>
-          Your next generation will be in: {17} hrs {23} min {11} sec.
-        </p>
-        {!randomMovie?.id ? (
+        {generationDate !== null ? (
+          <p className='text-center py-10'>
+            Your next generation will be in: {hours && hours} hours{' '}
+            {minutes && minutes} minutes.
+          </p>
+        ) : (
           <div className='flex items-center justify-center flex-col'>
             <h1 className='text-2xl max-w-4xl text-center'>
               You cannot decide what to review or watch? We're same but, we
               provided movie picker just click button below and start exploring!
             </h1>
-            {/* Why to use what to watch functionality? */}
-            {/* 3 random generate per 24h (store date to next update in local storage and later in database to reduce traffic in database), display time when is not the right time to next generation, prevent from abusing, disable button, change classes */}
             <Button
               text={'Pick random movie'}
               addClasses='mt-10'
-              fn={fetchData}
+              fn={pickRandomMovie}
             />
           </div>
-        ) : (
+        )}
+
+        {randomMovie?.id && (
           <div className='flex flex-col items-center justify-center'>
             <h1 className='py-4 text-4xl'>
               Your randomly picked movie is right below:
@@ -69,7 +124,7 @@ function WhatToWatch() {
             />
             <div className='flex items-center gap-5'>
               <Button text='Go to review' addClasses='mt-5' icon={true} />
-              <Button text='Refresh' addClasses='mt-5' />
+              <Button text='Go home' addClasses='mt-5' />
             </div>
           </div>
         )}
