@@ -21,7 +21,17 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
       </p>
       <div className='flex gap-5'>
         {props.actors?.map((actor: any) => {
-          return <Pill text={actor} key={actor} icon={false} />;
+          return (
+            <a
+              key={actor}
+              href={
+                'https://en.wikipedia.org/wiki/' + actor.replaceAll(' ', '_')
+              }
+              target='_blank'
+            >
+              <Pill text={actor} icon={false} />
+            </a>
+          );
         })}
       </div>
       <LinkButtons platform={props.platform} user_id={props.user_id} />

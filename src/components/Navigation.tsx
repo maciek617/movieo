@@ -95,8 +95,12 @@ function Navigation({ ...props }: NavigationProps) {
         <div className='relative'>
           <div
             onClick={() => setShowDropdown(!showDropdown)}
-            className='profile w-7 h-7 rounded-full border-2 border-main-yellow cursor-pointer lg:w-9 lg:h-9 xl:w-11 xl:h-11'
-          ></div>
+            className='profile w-7 h-7 rounded-full border-2 flex items-center justify-center border-main-yellow cursor-pointer lg:w-9 lg:h-9 xl:w-11 xl:h-11'
+          >
+            <p className='profile text-white font-bold text-xl'>
+              {props.user?.user_metadata?.name[0]}
+            </p>
+          </div>
           <div
             className={`text-white bg-gray-700 absolute top-full right-0 w-32 rounded-sm mt-3 shadow ${
               showDropdown ? 'animate-fade' : 'hidden'

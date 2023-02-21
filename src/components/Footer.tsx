@@ -1,7 +1,14 @@
+import { supabase } from '../App';
 import { Link } from 'react-router-dom';
 import Button from './Button';
+import { useState } from 'react';
+import { validateEmail } from '../helpers/emailValidation';
+import Modal from './Modal';
 
 function Footer() {
+  const [email, setEmail] = useState<string>('');
+  const [emailError, setEmailError] = useState<string>('');
+  const [greetText, setGreetText] = useState<string>('');
   const mainLinks = ['Home', 'Coming soon', 'What to watch?', 'Blog', 'About'];
   const policyLinks = [
     'Terms and Conditions',
@@ -22,6 +29,37 @@ function Footer() {
         </Link>
       );
     });
+  };
+
+  const addEmailToNewsletter = async () => {
+    setGreetText('');
+    if (!email) {
+      setEmailError('You cannot leave this empty!');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setEmailError('It looks like a NOT valid e-mail. Try again!');
+      return;
+    }
+
+    const { error } = await supabase
+      .from('newsletter')
+      .insert({ email: email });
+
+    if (error) {
+      setEmailError(
+        error.code === '23505'
+          ? 'This e-mail is in our newsletter'
+          : error.message
+      );
+    } else {
+      setEmailError('');
+      setEmail('');
+      setGreetText(
+        'Your e-mail has been added to our newsletter! We wont spam. Do not worry about it!'
+      );
+    }
   };
 
   return (
@@ -60,14 +98,27 @@ function Footer() {
               type='text'
               placeholder='Enter your e-mail...'
               className='h-10 px-4 py-2 text-black outline-0 border-0 mr-4 mb-4 xl:mb-0'
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
             />
-            <Button text='Subscribe' icon={true} />
+            {emailError && (
+              <p className='pb-3 text-red-400 animate-pulse'>{emailError}</p>
+            )}
+            <Button text='Subscribe' icon={true} fn={addEmailToNewsletter} />
           </div>
         </div>
       </div>
       <div className='text-center text-gray-400'>
         <p>All rights reserved &copy; 2023 | Movieo</p>
       </div>
+      {greetText && (
+        <Modal
+          text={
+            'Your e-mail has been added to our newsletter! We wont spam. Do not worry about it!'
+          }
+          fn={setGreetText}
+        />
+      )}
     </div>
   );
 }

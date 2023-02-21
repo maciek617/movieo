@@ -36,6 +36,9 @@ function Browse() {
   const [m, setM] = useState<string>('most-popular');
   const [p, setP] = useState<string>('netflix');
   const [t, setT] = useState<string>('action');
+  const [timeCount, setTimeCount] = useState<number>(0);
+
+  const incrementTime = () => setTimeCount((prev) => prev++);
 
   useEffect(() => {
     setM(
@@ -74,8 +77,14 @@ function Browse() {
       navigate('/browse/' + m + '/' + p + '/' + t);
       // Fetch data from database, based on these parameters m,p,t, after navigation
       fetchData();
+
+  
     }
   }, [m, t, p]);
+
+
+
+
 
   useEffect(() => {
     setData([]);
@@ -90,6 +99,7 @@ function Browse() {
       if (!error) {
         setData(data);
       }
+      console.log(error);
     };
     fetchData();
   }, []);
