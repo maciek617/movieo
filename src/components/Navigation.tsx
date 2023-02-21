@@ -106,7 +106,7 @@ function Navigation({ ...props }: NavigationProps) {
               showDropdown ? 'animate-fade' : 'hidden'
             }`}
           >
-            <Link to={'/profile/123123123'}>
+            <Link to={'/profile/' + props.user?.id}>
               <p className='p-2 hover:text-main-yellow transition-all'>
                 <i className='fa-solid fa-user mr-2'></i>
                 Profile

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { supabase } from '../App';
 import { useDispatch } from 'react-redux';
@@ -15,6 +15,7 @@ import Blog from './Blog';
 import WaitForEmailConfritmation from './auth/WaitForEmailConfritmation';
 import AddMovie from './browse-film/add-movie/AddMovie';
 import SingleFilms from './film/SingleFilms';
+import Profile from './profile/Profile';
 
 function PagesLinks() {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ function PagesLinks() {
       <Route path='/coming' element={<ComingSoon />}></Route>
       <Route path='/what-to-watch' element={<WhatToWatch />}></Route>
       <Route path='/blog' element={<Blog />}></Route>
+      <Route path='/profile/:id' element={<Profile />}></Route>
       <Route
         path='/signup'
         element={

@@ -84,7 +84,7 @@ function Footer() {
           </div>
         </div>
         <div>
-          <p className='text-xl'>Social</p>
+          <p className='text-xl'>Social media</p>
           <div className='flex gap-3 text-xl my-3'>
             <i className='fa-brands fa-instagram cursor-pointer hover:text-main-yellow'></i>
             <i className='fa-brands fa-facebook cursor-pointer hover:text-main-yellow'></i>
