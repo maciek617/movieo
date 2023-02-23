@@ -79,7 +79,7 @@ function HomePage() {
         comments: [],
         badge: 'User',
         date_to_next_generation: null,
-        last_active: null,
+        last_active: new Date(),
       });
     }
   };

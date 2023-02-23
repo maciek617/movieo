@@ -1,5 +1,9 @@
 import Button from '../../components/Button';
-
+import { supabase } from '../../App';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import moment from 'moment';
 interface LeftSideProfileProps {
   image: string;
   name: string;
@@ -7,6 +11,23 @@ interface LeftSideProfileProps {
 }
 
 function LeftSideProfile({ ...props }: LeftSideProfileProps) {
+  const currentUser = useSelector((state: any) => state.currentUser.value);
+  const { id } = useParams();
+  const [lastActive, setLastActive] = useState<any>();
+  useEffect(() => {
+    const getLastActiveTime = async () => {
+      const { data, error } = await supabase
+        .from('users')
+        .select('last_active')
+        .eq('id', id);
+
+      if (error) return;
+      setLastActive(moment(data[0].last_active).fromNow());
+    };
+
+    getLastActiveTime();
+  }, [id]);
+
   return (
     <div className='w-full max-w-xs'>
       <div className='relative max-w-xs w-full'>
@@ -29,7 +50,7 @@ function LeftSideProfile({ ...props }: LeftSideProfileProps) {
         <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
           <i className='fa-solid fa-clock'></i> last active
         </p>
-        <p className='text-2xl'>2 days ago</p>
+        <p className='text-2xl'>{lastActive}</p>
       </div>
       <div className='mt-5 text-xl'>
         <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
@@ -42,8 +63,11 @@ function LeftSideProfile({ ...props }: LeftSideProfileProps) {
           <i className='fa-brands fa-tiktok cursor-pointer'></i>
         </div>
       </div>
-      <Button text='Edit profile' icon={true} addClasses='mt-5' />
-      <Button text='Report user' addClasses='mt-5 block' />
+      {currentUser?.id === id ? (
+        <Button text='Edit profile' icon={true} addClasses='mt-5' />
+      ) : (
+        <Button text='Report user' addClasses='mt-5 block' />
+      )}
     </div>
   );
 }

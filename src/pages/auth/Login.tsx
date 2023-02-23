@@ -14,7 +14,7 @@ function Login() {
   const [password, setPassword] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
 
-  const signCurrentUserIn = (e: any) => {
+  const signCurrentUserIn = async (e: any) => {
     e.preventDefault();
     signInUser(email, password, dispatch, updateUser, navigate);
     document.cookie =

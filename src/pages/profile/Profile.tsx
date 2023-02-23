@@ -29,7 +29,7 @@ function Profile() {
         <LeftSideProfile
           name={userData?.name}
           image='https://images.pexels.com/photos/13043541/pexels-photo-13043541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
-          badge='User'
+          badge={userData?.badge}
         />
         <RightSideProfile
           brief='Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil harum

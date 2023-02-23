@@ -7,7 +7,10 @@ function FAQ({ ...props }: FAQProps) {
   const [clickedIndex, setClickedIndex] = useState<number>(0);
   const allFaqs = props.faqs.map((fq, index) => {
     return (
-      <div key={index} className='max-w-2xl w-full text-left mx-auto my-10'>
+      <div
+        key={index}
+        className='max-w-2xl w-full text-left mx-auto my-10 hover:text-main-yellow'
+      >
         <p
           onClick={() => setClickedIndex(index)}
           className='cursor-pointer text-xl font-semibold flex items-center justify-between'
