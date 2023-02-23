@@ -43,3 +43,7 @@
 .main-board {
   height: 200vh;
 }
+
+.coming-soon-date {
+  text-shadow: 4px 4px 16px black;
+}

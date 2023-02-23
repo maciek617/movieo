@@ -102,7 +102,7 @@ function Navigation({ ...props }: NavigationProps) {
             </p>
           </div>
           <div
-            className={`text-white bg-gray-700 absolute top-full right-0 w-32 rounded-sm mt-3 shadow ${
+            className={`text-white bg-gray-700 absolute top-full right-0 w-40 rounded-sm mt-3 shadow ${
               showDropdown ? 'animate-fade' : 'hidden'
             }`}
           >
@@ -110,6 +110,18 @@ function Navigation({ ...props }: NavigationProps) {
               <p className='p-2 hover:text-main-yellow transition-all'>
                 <i className='fa-solid fa-user mr-2'></i>
                 Profile
+              </p>
+            </Link>
+            <Link to={'/profile/' + props.user?.id}>
+              <p className='p-2 hover:text-main-yellow transition-all'>
+                <i className='fa-solid fa-magnifying-glass mr-2'></i>
+                My Reviews
+              </p>
+            </Link>
+            <Link to={'/profile/' + props.user?.id}>
+              <p className='p-2 hover:text-main-yellow transition-all'>
+                <i className='fa-solid fa-headset mr-2'></i>
+                Support
               </p>
             </Link>
             <li

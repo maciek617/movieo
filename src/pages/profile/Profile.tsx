@@ -31,7 +31,16 @@ function Profile() {
           image='https://images.pexels.com/photos/13043541/pexels-photo-13043541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
           badge='User'
         />
-        <RightSideProfile />
+        <RightSideProfile
+          brief='Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil harum
+          velit ut deleniti ullam beatae magnam laboriosam repudiandae accusamus
+          iste rerum adipisci dolores culpa aliquid ad sit, non deserunt
+          eligendi.'
+          hobby={['Riding a bike', 'Swimming', 'Yoga']}
+          posts={userData?.posts?.length}
+          comments={userData?.comments?.length}
+          comment='This is the latest comment'
+        />
       </div>
     </div>
   );

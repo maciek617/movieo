@@ -88,8 +88,6 @@ function HomePage() {
     insertData();
   });
 
-  // console.log(currentUser.confirmed_at);
-
   const slides = tempData.map((slide, index) => {
     return (
       <SwiperSlide key={index}>
@@ -153,6 +151,26 @@ function HomePage() {
           </span>
         </p>
       )}
+
+      <div className='flex justify-center gap-10 py-20 bg-main-dark'>
+        <div className='bg-main-yellow 400 max-w-2xl w-full text-center py-32 rounded'>
+          <p className='font-bold text-4xl'>Reviews</p>
+          <p className='text-8xl font-thin'>
+            <span className='font-bold'>+</span>1000
+          </p>
+        </div>
+        <div className='bg-main-yellow 400 max-w-2xl w-full text-center py-32 rounded'>
+          <p className='font-bold text-4xl'>Users</p>
+          <p className='text-8xl font-thin'>
+            <span className='font-bold'>+</span>100
+          </p>
+        </div>
+      </div>
+
+      <div className='bg-main-dark flex items-center justify-center flex-col'>
+        <h1 className='text-white text-4xl'>What are you waiting for?</h1>
+        <Button text='Start exploring!' addClasses='my-5' />
+      </div>
     </div>
   );
 }

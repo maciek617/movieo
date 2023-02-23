@@ -1,34 +1,44 @@
 import SingleFilmBox from '../browse-film/SingleFilmBox';
 
-function RightSideProfile() {
+interface RightSideProfileProps {
+  posts: number;
+  comments: number;
+  brief: string;
+  hobby: Array<string>;
+  comment: string;
+}
+
+function RightSideProfile({ ...props }: RightSideProfileProps) {
   return (
     <div>
       <div>
         <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
           <i className='fa-solid fa-briefcase'></i> brief
         </p>
-        <p className='text-md max-w-3xl'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil harum
-          velit ut deleniti ullam beatae magnam laboriosam repudiandae accusamus
-          iste rerum adipisci dolores culpa aliquid ad sit, non deserunt
-          eligendi.
-        </p>
+        <p className='text-md max-w-3xl'>{props.brief}</p>
       </div>
       {/* Hobby optional */}
       <div className='mt-5'>
         <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
           <i className='fa-solid fa-gamepad'></i> hobby
         </p>
-        <p className='text-md max-w-3xl'>Swimming</p>
+        {/* <p className='text-md max-w-3xl'>Swimming</p>
         <p className='text-md max-w-3xl'>Riding a bike</p>
-        <p className='text-md max-w-3xl'>Listening to music</p>
+        <p className='text-md max-w-3xl'>Listening to music</p> */}
+        {props.hobby.map((hobby) => {
+          return (
+            <p key={hobby} className='text-md max-w-3xl'>
+              {hobby}
+            </p>
+          );
+        })}
       </div>
       <div className='mt-5'>
         <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
           <i className='fa-solid fa-chart-line'></i> statistics
         </p>
-        <p className='text-md max-w-3xl'>Posts: </p>
-        <p className='text-md max-w-3xl'>Comments: </p>
+        <p className='text-md max-w-3xl'>Posts: {props.posts} </p>
+        <p className='text-md max-w-3xl'>Comments: {props.comments} </p>
         <p className='text-md max-w-3xl'>Total active time: </p>
       </div>
       <div className='mt-5'>
@@ -52,8 +62,9 @@ function RightSideProfile() {
           <i className='fa-solid fa-comment'></i> latest comment
         </p>
         <p>
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam,
-          perferendis?"
+          {/* "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam,
+          perferendis?" */}
+          {props.comment}
         </p>
       </div>
     </div>

@@ -40,7 +40,7 @@ function WhatToWatch() {
   ];
 
   const pickRandomMovie = async () => {
-    if (generationDate !== null) return;
+    if (generationDate !== null || generationDate > 0) return;
     await fetchData();
     setTomorrow(tomorrow.setDate(tomorrow.getDate() + 1));
     updateGenerationDate(tomorrow);
@@ -91,7 +91,7 @@ function WhatToWatch() {
   return currentUser?.id ? (
     <div className='min-h-screen h-full bg-main-dark pt-32'>
       <div className='bg-main-dark text-white'>
-        {generationDate !== null ? (
+        {generationDate !== null || generationDate > 0 ? (
           <p className='text-center py-10'>
             Your next generation will be in: {hours && hours} hours{' '}
             {minutes && minutes} minutes.
