@@ -14,6 +14,7 @@ function LeftSideProfile({ ...props }: LeftSideProfileProps) {
   const currentUser = useSelector((state: any) => state.currentUser.value);
   const { id } = useParams();
   const [lastActive, setLastActive] = useState<any>();
+  
   useEffect(() => {
     const getLastActiveTime = async () => {
       const { data, error } = await supabase
