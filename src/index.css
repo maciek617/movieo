@@ -47,3 +47,12 @@
 .coming-soon-date {
   text-shadow: 4px 4px 16px black;
 }
+
+.rating {
+  direction: rtl;
+}
+
+.fa-star:hover,
+.fa-star:hover ~ .fa-star {
+  color: #ffc700;
+}

@@ -1,33 +1,37 @@
-import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 interface CommentProps {
   name: string;
   userId: string;
   what: string;
   when: string;
-  userImage: any;
+  userImage: string;
   deleteComment: any;
+  currentUserId: string;
 }
 function Comment({ ...props }: CommentProps) {
-  const currentUser = useSelector((state: any) => state.currentUser.value);
-
   return (
     <div className='flex py-5'>
-      {props.userImage ? (
-        <img src={props.userImage} alt='Profile picture' />
-      ) : (
-        <div className='w-10 h-10 rounded-full flex items-center justify-center border border-main-yellow text-white'>
-          {props.name.charAt(0)}
-        </div>
-      )}
+      <Link to={'/profile/' + props.userId}>
+        {props.userImage ? (
+          <img src={props.userImage} alt='Profile picture' />
+        ) : (
+          <div className='w-10 h-10 rounded-full flex items-center justify-center border border-main-yellow text-white'>
+            {props.name.charAt(0)}
+          </div>
+        )}
+      </Link>
       <div className='w-4/5 ml-5'>
         <div className='flex items-center justify-between'>
-          <p className='text-white text-sm font-semibold'>
-            {props.name}{' '}
-            <span className='tracking-wider text-gray-500 text-sm font-thin ml-5'>
-              {props.when}
-            </span>
-          </p>
-          {currentUser?.id === props.userId && (
+          <Link to={'/profile/' + props.userId}>
+            <p className='text-white text-sm font-semibold'>
+              {props.name}{' '}
+              <span className='tracking-wider text-gray-500 text-sm font-thin ml-5'>
+                {props.when}
+              </span>
+            </p>
+          </Link>
+          {props.currentUserId === props.userId && (
             <p
               onClick={() => props.deleteComment()}
               className='text-white cursor-pointer'

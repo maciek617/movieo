@@ -2,16 +2,20 @@ import Button from '../../components/Button';
 import Comment from './Comment';
 import { useState, useEffect } from 'react';
 import { countSingleWords } from '../../helpers/countWords';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../App';
 import moment from 'moment';
 
-function FilmComments() {
+interface FilmCommentsProps {
+  userId: string;
+  userImage: string;
+  userName: string;
+}
+
+function FilmComments({ ...props }: FilmCommentsProps) {
   const { id } = useParams();
   const [commentText, setCommentText] = useState<string>('');
   const [filmComments, setFilmComments] = useState<any>([]);
-  const currentUser = useSelector((state: any) => state.currentUser.value);
 
   useEffect(() => {
     const fetchCommentsData = async () => {
@@ -20,6 +24,7 @@ function FilmComments() {
         .select('comments')
         .eq('id', id);
 
+      if (error) return;
       if (data) setFilmComments(data[0].comments);
     };
 
@@ -33,11 +38,11 @@ function FilmComments() {
       .update({
         comments: [
           {
-            name: currentUser?.user_metadata?.name,
+            name: props.userName,
             when: new Date(),
             what: commentText,
-            userId: currentUser?.id,
-            userImage: currentUser?.image ? currentUser?.image : null,
+            userId: props.userId,
+            userImage: props.userImage,
           },
           ...filmComments,
         ],
@@ -45,7 +50,7 @@ function FilmComments() {
       .eq('id', id)
       .select();
 
-    if (data) {
+    if (data && !error) {
       setFilmComments(data[0].comments);
       setCommentText('');
     }
@@ -62,7 +67,7 @@ function FilmComments() {
       .eq('id', id)
       .select();
 
-    if (data) setFilmComments(data[0].comments);
+    if (data && !error) setFilmComments(data[0].comments);
   };
 
   const allComments = filmComments.map((comment: any, index: number) => {
@@ -75,6 +80,7 @@ function FilmComments() {
         userImage={comment.userImage}
         what={comment.what}
         deleteComment={() => deleteComment(index)}
+        currentUserId={props.userId}
       />
     );
   });
@@ -84,11 +90,11 @@ function FilmComments() {
       <p className='text-3xl text-white'>Comments:</p>
       <div className='mt-5 my-10 flex border-b border-gray-600 pb-5 w-4/5 flex-col'>
         <div className='flex'>
-          {currentUser?.image ? (
-            <img src={currentUser.image} />
+          {props.userImage ? (
+            <img src={props.userImage} />
           ) : (
             <div className='mr-5 w-10 h-10 rounded-full border border-main-yellow flex items-center justify-center text-white'>
-              {currentUser?.user_metadata?.name.charAt(0)}
+              {props.userName.charAt(0)}
             </div>
           )}
           <input
