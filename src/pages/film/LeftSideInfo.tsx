@@ -1,6 +1,8 @@
 interface LeftSideInfoProps {
   image: string;
   type: string;
+  year: string;
+  time: string;
 }
 function LeftSideInfo({ ...props }: LeftSideInfoProps) {
   return (
@@ -15,7 +17,10 @@ function LeftSideInfo({ ...props }: LeftSideInfoProps) {
         <p className='py-2 px-6 text-main-dark'>{props.type}</p>
       </div>
       <div className='bg-main-dark text-white absolute top-3 left-3 rounded-lg shadow-xl'>
-        <p className='py-2 px-6 font-bold text-sm'>2021</p>
+        <p className='py-2 px-6 font-bold text-sm'>{props.year}</p>
+      </div>
+      <div className='bg-red-400 text-white absolute bottom-3 left-3 rounded-lg shadow-xl'>
+        <p className='py-2 px-6 font-bold text-sm'>{Math.floor(+props.time / 60)}h {Math.floor(+props.time % 60)}min</p>
       </div>
     </div>
   );

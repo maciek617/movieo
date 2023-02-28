@@ -4,6 +4,7 @@ interface ComingSoonProps {
   filmDate: number;
   filmTitle: string;
 }
+
 function ComingSoonFilm({ ...props }: ComingSoonProps) {
   return (
     <div>

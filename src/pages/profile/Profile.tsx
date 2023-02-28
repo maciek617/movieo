@@ -37,8 +37,8 @@ function Profile() {
           iste rerum adipisci dolores culpa aliquid ad sit, non deserunt
           eligendi.'
           hobby={['Riding a bike', 'Swimming', 'Yoga']}
-          posts={userData?.posts?.length}
-          comments={userData?.comments?.length}
+          posts={userData?.post_length}
+          comments={userData?.comments_length}
           comment='This is the latest comment'
         />
       </div>

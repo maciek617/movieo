@@ -31,7 +31,12 @@ function SingleFilms() {
       {filmData ? (
         <div className=' container mx-auto'>
           <div className='w-full h-96 flex justify-around gap-10 text-white'>
-            <LeftSideInfo image={filmData?.image} type={filmData?.type} />
+            <LeftSideInfo
+              image={filmData?.image}
+              type={filmData?.type}
+              year={filmData?.year}
+              time={filmData?.time}
+            />
             <RightSideInfo
               name={filmData?.name}
               brief={filmData?.brief}
@@ -43,6 +48,8 @@ function SingleFilms() {
           <DownSideInfo
             desc={filmData?.description}
             showComments={filmData?.show_comments}
+            showCreated={filmData?.show_created_date}
+            createdDate={filmData?.created_at}
           />
         </div>
       ) : (

@@ -1,15 +1,19 @@
+import Spinner from '../components/Spinner';
 import ComingSoonFilm from './coming-soon/ComingSoonFilm';
 import { useEffect, useState } from 'react';
 
 function ComingSoon() {
-  const [upcomingMovies, setUpcomingMovies] = useState<any>();
+  const [upcomingMovies, setUpcomingMovies] = useState<any>([]);
+
+  // TODO: Sort array based on release date
   useEffect(() => {
     const fetchUpcomingMovies = async () => {
       const res = await fetch(
-        'https://api.themoviedb.org/3/movie/upcoming?api_key=bfcd499477623cb97e74b8ea8f48f0fd'
+        'https://api.themoviedb.org/3/movie/upcoming?api_key=' +
+          import.meta.env.VITE_API_KEY
       );
       const movies = await res.json();
-      setUpcomingMovies(movies.results.reverse());
+      setUpcomingMovies(movies.results);
     };
 
     fetchUpcomingMovies();
@@ -27,8 +31,13 @@ function ComingSoon() {
   });
 
   return (
-    <div className='py-32 min-h-screen bg-main-dark flex gap-20 justify-center flex-wrap'>
-      {movies}
+    // { movies: <Spinner /> }
+    <div className='min-h-screen bg-main-dark py-32'>
+      {movies ? (
+        <div className='flex gap-20 justify-center flex-wrap'>{movies}</div>
+      ) : (
+        <Spinner isDark={true} />
+      )}
     </div>
   );
 }

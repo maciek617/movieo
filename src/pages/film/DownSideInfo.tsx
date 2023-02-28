@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 interface DownSideInfoProps {
   desc: string;
   showComments: boolean;
+  showCreated: boolean;
+  createdDate: string;
 }
 function DownSideInfo({ ...props }: DownSideInfoProps) {
   const currentUser = useSelector((state: any) => state.currentUser.value);
@@ -13,7 +15,11 @@ function DownSideInfo({ ...props }: DownSideInfoProps) {
 
   return (
     <>
-      <FilmDescription desc={props.desc} />
+      <FilmDescription
+        desc={props.desc}
+        showCreated={props.showCreated}
+        createdDate={props.createdDate}
+      />
       {props.showComments && currentUser?.id ? (
         <FilmComments
           userId={currentUser?.id}

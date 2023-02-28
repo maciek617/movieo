@@ -12,7 +12,7 @@ import AddMovieCheckbox from './AddMovieCheckbox';
 import SelectOptions from './SelectOptions';
 import AddMovieImageScreen from './AddMovieImageScreen';
 import Spinner from '../../../components/Spinner';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function AddMovie() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
@@ -29,13 +29,18 @@ function AddMovie() {
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [showCreatedDate, setShowCreatedDate] = useState<boolean>(false);
   const [type, setType] = useState<string>('Action');
+  const [year, setYear] = useState<string>('');
+  const [time, setTime] = useState<string>('');
   const [img, setImg] = useState<string>('');
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
+  const [userPostLength, setUserPostLength] = useState<number>(0);
 
   const navigate = useNavigate();
   // Function that adds character string to characters array of strings
   const addCharacter = () => {
     if (!character || characters.length >= 10) return;
+    if (characters.includes(character)) return;
+
     setCharacters([...characters, character]);
     setCharacter('');
   };
@@ -67,6 +72,7 @@ function AddMovie() {
       brief: brief,
       description: review,
       user_id: currentUser?.id,
+      email: currentUser?.email,
       actors: characters,
       platform: platform,
       rating: rate,
@@ -78,18 +84,32 @@ function AddMovie() {
       show_created_date: showCreatedDate,
       image: img,
       type: type,
+      year: year,
+      time: +time,
     });
 
     if (!error) {
-      setShowSpinner(false);
-      navigate('/browse/most-popular/netflix/action');
-      console.log('Row created');
+      const { data } = await supabase
+        .from('users')
+        .select('post_length')
+        .eq('id', currentUser?.id);
+
+      if (data) {
+        const { error } = await supabase
+          .from('users')
+          .update({ post_length: data[0]?.post_length + 1 })
+          .eq('id', currentUser?.id);
+
+        if (!error) {
+          setShowSpinner(false);
+          navigate('/browse/most-popular/netflix/action');
+        }
+      }
     }
   };
 
   // Set movie with validation
   const setNewMovie = async () => {
-    console.log('function called');
     if (!title || !brief || !review || !characters || !platform) {
       setError('All fields must be filled.');
       return;
@@ -97,6 +117,16 @@ function AddMovie() {
 
     if (title.length < 3) {
       setError('Title should be at least 3 characters long.');
+      return;
+    }
+
+    if (+year < 0) {
+      setError('Year of release cannot be less than 0.');
+      return;
+    }
+
+    if (+time < 0) {
+      setError('Duration of production cannot be less than 0.');
       return;
     }
 
@@ -139,6 +169,7 @@ function AddMovie() {
   useEffect(() => {
     window.addEventListener('keyup', (e: any) => {
       if (e.key === 'Enter') {
+        console.log(character);
         addCharacter();
       }
     });
@@ -190,6 +221,25 @@ function AddMovie() {
           >
             <SelectOptions type={true} />
           </select>
+        </div>
+
+        <div className='flex flex-col mt-10'>
+          <AddMovieInput
+            inputType='number'
+            labelTitle='Write a release year of this production'
+            inputPlaceholder='ex. 2023'
+            functionHandler={setYear}
+            textHandler={year}
+          />
+        </div>
+        <div className='flex flex-col mt-10'>
+          <AddMovieInput
+            inputType='number'
+            labelTitle='Write a duration of this production (in minutes)'
+            inputPlaceholder='ex. 140'
+            functionHandler={setTime}
+            textHandler={time}
+          />
         </div>
 
         {/* Input or textarea */}
@@ -286,7 +336,9 @@ function AddMovie() {
 
         <div className='mt-10 flex flex-wrap'>
           <Button text='Add Movie' fn={setNewMovie} icon={true} />
-          <Button text='Cancel' addClasses='ml-10' />
+          <Link to={'/browse/most-popular/netflix/action'}>
+            <Button text='Cancel' addClasses='ml-10' />
+          </Link>
           <Button text='I need help' addClasses='ml-10' />
         </div>
       </div>
