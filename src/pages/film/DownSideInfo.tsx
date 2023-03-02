@@ -11,7 +11,6 @@ interface DownSideInfoProps {
 }
 function DownSideInfo({ ...props }: DownSideInfoProps) {
   const currentUser = useSelector((state: any) => state.currentUser.value);
-  console.log(currentUser?.user_metadata?.name);
 
   return (
     <>

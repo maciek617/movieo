@@ -1,4 +1,3 @@
-import React from 'react';
 import { countSingleWords } from '../../../helpers/countWords';
 
 interface AddMovieTextareaProps {
@@ -9,8 +8,6 @@ interface AddMovieTextareaProps {
   maxChar: number;
   big: boolean;
 }
-
-// TODO: Track enters and save with it to database and after all resolve
 
 function AddMovieTextarea({ ...props }: AddMovieTextareaProps) {
   return (

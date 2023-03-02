@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../../App';
 import LeftSideProfile from './LeftSideProfile';
 import RightSideProfile from './RightSideProfile';
+import Spinner from '../../components/Spinner';
 
 function Profile() {
   const { id } = useParams();
@@ -15,33 +16,33 @@ function Profile() {
         .select('*')
         .eq('id', id);
 
-      if (error) return;
-      if (data) {
-        setUserData(data[0]);
-      }
+      if (!data && error) return;
+      setUserData(data[0]);
     };
+
     fetchUserData();
   }, [id]);
 
   return (
     <div className='pt-32 min-h-screen bg-main-dark text-white'>
-      <div className='container mx-auto flex justify-center gap-10 items-start'>
-        <LeftSideProfile
-          name={userData?.name}
-          image='https://images.pexels.com/photos/13043541/pexels-photo-13043541.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
-          badge={userData?.badge}
-        />
-        <RightSideProfile
-          brief='Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil harum
-          velit ut deleniti ullam beatae magnam laboriosam repudiandae accusamus
-          iste rerum adipisci dolores culpa aliquid ad sit, non deserunt
-          eligendi.'
-          hobby={['Riding a bike', 'Swimming', 'Yoga']}
-          posts={userData?.post_length}
-          comments={userData?.comments_length}
-          comment='This is the latest comment'
-        />
-      </div>
+      {userData ? (
+        <div className='container mx-auto flex justify-center gap-10 items-start'>
+          <LeftSideProfile
+            name={userData?.name}
+            image={userData?.image}
+            badge={userData?.badge}
+          />
+          <RightSideProfile
+            brief={userData?.brief}
+            hobby={userData?.hobbies}
+            posts={userData?.post_length}
+            comments={userData?.comments_length}
+            comment={userData?.last_comment}
+          />
+        </div>
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 }

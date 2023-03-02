@@ -1,4 +1,5 @@
 import SingleFilmBox from '../browse-film/SingleFilmBox';
+import ProfileSingleField from './ProfileSingleField';
 
 interface RightSideProfileProps {
   posts: number;
@@ -9,35 +10,35 @@ interface RightSideProfileProps {
 }
 
 function RightSideProfile({ ...props }: RightSideProfileProps) {
+  const allHobbies = props.hobby
+    ? props.hobby
+    : ['Add hobby 1', 'Add hobby 2', 'Add hobby 3'];
+
+  const hobbies = allHobbies.map((hobby: string) => {
+    return (
+      <p key={hobby} className='text-md max-w-3xl'>
+        {hobby}
+      </p>
+    );
+  });
   return (
     <div>
-      <div>
-        <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
-          <i className='fa-solid fa-briefcase'></i> brief
-        </p>
-        <p className='text-md max-w-3xl'>{props.brief}</p>
-      </div>
-      {/* Hobby optional */}
+      <ProfileSingleField
+        title='brief'
+        title_depth={props.brief}
+        bigFont={false}
+      />
       <div className='mt-5'>
         <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
           <i className='fa-solid fa-gamepad'></i> hobby
         </p>
-        {/* <p className='text-md max-w-3xl'>Swimming</p>
-        <p className='text-md max-w-3xl'>Riding a bike</p>
-        <p className='text-md max-w-3xl'>Listening to music</p> */}
-        {props.hobby.map((hobby) => {
-          return (
-            <p key={hobby} className='text-md max-w-3xl'>
-              {hobby}
-            </p>
-          );
-        })}
+        {hobbies}
       </div>
       <div className='mt-5'>
         <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
           <i className='fa-solid fa-chart-line'></i> statistics
         </p>
-        <p className='text-md max-w-3xl'>Posts: {props.posts} </p>
+        <p className='text-md max-w-3xl'>Reviews: {props.posts} </p>
         <p className='text-md max-w-3xl'>Comments: {props.comments} </p>
         <p className='text-md max-w-3xl'>Total active time: </p>
       </div>
@@ -57,21 +58,14 @@ function RightSideProfile({ ...props }: RightSideProfileProps) {
           />
         </div>
       </div>
-      <div className='mt-5'>
-        <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
-          <i className='fa-solid fa-comment'></i> latest comment
-        </p>
-        <p>
-          {/* "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam,
-          perferendis?" */}
-          {props.comment}
-        </p>
-      </div>
+      <ProfileSingleField
+        title='latest comment'
+        title_depth={`"${
+          props.comment ? props.comment : 'User did not comment any review.'
+        }"`}
+      />
     </div>
   );
 }
 
-// Joined date, Social media box
-
 export default RightSideProfile;
-// Post stats posts length, comments length, last active functionality

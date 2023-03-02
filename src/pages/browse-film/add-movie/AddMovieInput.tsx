@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface AddMovieInputProps {
   labelTitle: string;
   inputType: string;
@@ -7,8 +5,6 @@ interface AddMovieInputProps {
   functionHandler: any;
   textHandler: string;
 }
-
-// Refs vs setState pass refs through parent component or share state through one level
 
 function AddMovieInput({ ...props }: AddMovieInputProps) {
   return (

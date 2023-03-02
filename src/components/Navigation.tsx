@@ -73,7 +73,7 @@ function Navigation({ ...props }: NavigationProps) {
             className={'cursor-pointer hover:text-main-yellow transition-all'}
             style={({ isActive }) => (isActive ? activeStyle : undefined)}
           >
-            Coming soon
+            Upcoming movies
           </NavLink>
           <NavLink
             to='what-to-watch'

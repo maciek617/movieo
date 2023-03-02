@@ -34,7 +34,9 @@ function ComingSoon() {
     // { movies: <Spinner /> }
     <div className='min-h-screen bg-main-dark py-32'>
       {movies ? (
-        <div className='flex gap-20 justify-center flex-wrap'>{movies}</div>
+        <div className='flex gap-20 justify-center flex-wrap container mx-auto'>
+          {movies}
+        </div>
       ) : (
         <Spinner isDark={true} />
       )}

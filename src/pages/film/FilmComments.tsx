@@ -52,8 +52,31 @@ function FilmComments({ ...props }: FilmCommentsProps) {
 
     if (data && !error) {
       setFilmComments(data[0].comments);
+      await getAndUpdateUserCommentsLength();
+      await updateLastUserComment();
       setCommentText('');
     }
+  };
+
+  const getAndUpdateUserCommentsLength = async () => {
+    const { data } = await supabase
+      .from('users')
+      .select('comments_length')
+      .eq('id', props.userId);
+
+    if (data) {
+      const { error } = await supabase
+        .from('users')
+        .update({ comments_length: data[0]?.comments_length + 1 })
+        .eq('id', props.userId);
+    }
+  };
+
+  const updateLastUserComment = async () => {
+    const { error } = await supabase
+      .from('users')
+      .update({ last_comment: commentText })
+      .eq('id', props.userId);
   };
 
   const deleteComment = async (index: number) => {
