@@ -21,6 +21,8 @@ function App() {
     };
   }, [location]);
 
+  console.log(currentUser);
+  
   return (
     <div className='App'>
       <PagesLinks />

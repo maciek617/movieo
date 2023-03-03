@@ -5,10 +5,12 @@ import Spinner from '../../components/Spinner';
 import RightSideInfo from './RightSideInfo';
 import LeftSideInfo from './LeftSideInfo';
 import DownSideInfo from './DownSideInfo';
+import { useSelector } from 'react-redux';
 
 function SingleFilms() {
   const { id } = useParams();
   const [filmData, setFilmData] = useState<any>({});
+  const currentUser = useSelector((state: any) => state.currentUser.value);
 
   useEffect(() => {
     const fetchData = async (filmId: string) => {
@@ -17,6 +19,8 @@ function SingleFilms() {
         .select('*')
         .eq('id', filmId);
 
+      console.log('fireeeed');
+
       if (data && !error) setFilmData(data[0]);
     };
 
@@ -24,7 +28,7 @@ function SingleFilms() {
     return () => {
       fetchData(id);
     };
-  }, []);
+  }, [id]);
 
   return (
     <div className='pt-32 px-6 bg-main-dark min-h-screen'>
@@ -43,6 +47,10 @@ function SingleFilms() {
               actors={filmData?.actors}
               platform={filmData?.platform}
               user_id={filmData?.user_id}
+              currentUserId={currentUser?.id}
+              routeId={id}
+              allUsersRates={filmData?.rates?.length}
+              ratingScore={filmData?.rating?.toFixed(1)}
             />
           </div>
           <DownSideInfo

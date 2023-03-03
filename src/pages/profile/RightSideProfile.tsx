@@ -61,7 +61,9 @@ function RightSideProfile({ ...props }: RightSideProfileProps) {
       <ProfileSingleField
         title='latest comment'
         title_depth={`"${
-          props.comment ? props.comment : 'User did not comment any review.'
+          props.comment !== '[]'
+            ? props.comment
+            : 'User did not comment any review.'
         }"`}
       />
     </div>

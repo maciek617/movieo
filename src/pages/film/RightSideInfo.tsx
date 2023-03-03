@@ -8,6 +8,10 @@ interface RightSideInfoProps {
   actors: any;
   platform: string;
   user_id: string;
+  currentUserId: string;
+  routeId: string | undefined;
+  allUsersRates: number;
+  ratingScore: number;
 }
 
 function RightSideInfo({ ...props }: RightSideInfoProps) {
@@ -17,7 +21,8 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
       <p className='text-sm pt-3'>{props.brief}</p>
       <p className='py-6 text-2xl'>
         <i className='fa-solid fa-star text-main-yellow mr-2'></i>
-        9.5/10 <span className='text-sm'>(122)</span>
+        {props.ratingScore} / 5{' '}
+        <span className='text-sm'>({props.allUsersRates})</span>
       </p>
       <div className='flex gap-5'>
         {props.actors?.map((actor: any) => {
@@ -34,8 +39,12 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
           );
         })}
       </div>
-      <LinkButtons platform={props.platform} user_id={props.user_id} />
-      <Rating />
+      <LinkButtons
+        platform={props.platform}
+        user_id={props.user_id}
+        currentUserId={props.currentUserId}
+      />
+      <Rating userId={props.currentUserId} routeId={props.routeId} />
     </div>
   );
 }

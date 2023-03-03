@@ -21,7 +21,6 @@ function Browse() {
 
   const createNewBucket = async () => {
     if (!currentUser) return;
-
     const { data } = await supabase.storage.getBucket(currentUser?.id);
     if (data) return;
 
@@ -36,9 +35,6 @@ function Browse() {
   const [m, setM] = useState<string>('most-popular');
   const [p, setP] = useState<string>('netflix');
   const [t, setT] = useState<string>('action');
-  const [timeCount, setTimeCount] = useState<number>(0);
-
-  const incrementTime = () => setTimeCount((prev) => prev++);
 
   useEffect(() => {
     setM(
@@ -77,14 +73,8 @@ function Browse() {
       navigate('/browse/' + m + '/' + p + '/' + t);
       // Fetch data from database, based on these parameters m,p,t, after navigation
       fetchData();
-
-  
     }
   }, [m, t, p]);
-
-
-
-
 
   useEffect(() => {
     setData([]);
@@ -96,10 +86,8 @@ function Browse() {
         .eq('platform', p.charAt(0).toUpperCase() + p.slice(1))
         .limit(10);
 
-      if (!error) {
-        setData(data);
-      }
-      console.log(error);
+      if (error && !data) return;
+      setData(data);
     };
     fetchData();
   }, []);
@@ -112,7 +100,7 @@ function Browse() {
           filmTitle={film.name}
           filmType={film.type}
           streamingPlatform={film.platform}
-          rating={film.rating}
+          rating={film.rating.toFixed(1)}
         />
       </Link>
     );

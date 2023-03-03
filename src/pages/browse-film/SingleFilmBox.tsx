@@ -21,7 +21,7 @@ function SingleFilmBox({ ...props }: SingleFilmBoxProps) {
           {props.filmType} | {props.streamingPlatform}
         </p>
         <div className='flex justify-between items-center w-full'>
-          <p className='py-1 font-normal'>{props.rating}/10</p>
+          <p className='py-1 font-normal'>{props.rating} / 5</p>
         </div>
       </div>
     </div>

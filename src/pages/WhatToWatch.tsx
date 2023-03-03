@@ -62,7 +62,7 @@ function WhatToWatch() {
         .select('date_to_next_generation')
         .eq('id', currentUser?.id);
 
-      if (error) return;
+      if (error && !data) return;
       setGenerationDate(data[0].date_to_next_generation);
     };
 

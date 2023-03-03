@@ -4,6 +4,7 @@ import Button from '../../components/Button';
 interface LinkButtonsProps {
   platform: string;
   user_id: string;
+  currentUserId: string;
 }
 function LinkButtons({ ...props }: LinkButtonsProps) {
   return (
@@ -14,6 +15,11 @@ function LinkButtons({ ...props }: LinkButtonsProps) {
       <Link to={'/profile/' + props.user_id}>
         <Button text={`Author's profile`} icon={true} />
       </Link>
+      {props.currentUserId === props.user_id && (
+        <Link to={'/home'}>
+          <Button text='Edit' addClasses='ml-5' />
+        </Link>
+      )}
     </div>
   );
 }

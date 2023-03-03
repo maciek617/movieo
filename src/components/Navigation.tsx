@@ -40,7 +40,7 @@ function Navigation({ ...props }: NavigationProps) {
     });
 
     return () => {
-      window.addEventListener('click', (e: any) => {
+      window.removeEventListener('click', (e: any) => {
         !e.target.classList.contains('profile') && setShowDropdown(false);
       });
     };

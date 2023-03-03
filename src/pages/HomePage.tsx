@@ -68,6 +68,8 @@ function HomePage() {
     await getData();
 
     if (userData) {
+      console.log('work');
+
       const { error } = await supabase.from('users').insert({
         id: currentUser?.id,
         created_at: currentUser?.created_at,
@@ -76,11 +78,16 @@ function HomePage() {
         provider: currentUser?.app_metadata.provider,
         last_update: currentUser?.updated_at,
         liked_movies: [],
-        comments: [],
+        last_comment: [],
         badge: 'User',
         date_to_next_generation: null,
         last_active: new Date(),
+        image: null,
+        brief: 'You can add brief in update profile page.',
+        post_length: 0,
+        comments_length: 0,
       });
+      console.log(error);
     }
   };
 

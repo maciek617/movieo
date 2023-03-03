@@ -64,12 +64,14 @@ function FilmComments({ ...props }: FilmCommentsProps) {
       .select('comments_length')
       .eq('id', props.userId);
 
-    if (data) {
-      const { error } = await supabase
-        .from('users')
-        .update({ comments_length: data[0]?.comments_length + 1 })
-        .eq('id', props.userId);
-    }
+    if (!data) return;
+
+    const { error } = await supabase
+      .from('users')
+      .update({ comments_length: data[0]?.comments_length + 1 })
+      .eq('id', props.userId);
+
+    if (error) return;
   };
 
   const updateLastUserComment = async () => {
@@ -77,6 +79,8 @@ function FilmComments({ ...props }: FilmCommentsProps) {
       .from('users')
       .update({ last_comment: commentText })
       .eq('id', props.userId);
+
+    if (error) return;
   };
 
   const deleteComment = async (index: number) => {
