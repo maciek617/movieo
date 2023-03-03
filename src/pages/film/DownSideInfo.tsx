@@ -8,6 +8,7 @@ interface DownSideInfoProps {
   showComments: boolean;
   showCreated: boolean;
   createdDate: string;
+  creatorId: string;
 }
 function DownSideInfo({ ...props }: DownSideInfoProps) {
   const currentUser = useSelector((state: any) => state.currentUser.value);
@@ -24,6 +25,7 @@ function DownSideInfo({ ...props }: DownSideInfoProps) {
           userId={currentUser?.id}
           userImage={currentUser?.image ? currentUser?.image : ''}
           userName={currentUser?.user_metadata?.name}
+          creatorId={props.creatorId}
         />
       ) : (
         <div>

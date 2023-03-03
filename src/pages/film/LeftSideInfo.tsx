@@ -8,7 +8,6 @@ interface LeftSideInfoProps {
 }
 function LeftSideInfo({ ...props }: LeftSideInfoProps) {
   const [loaded, setLoaded] = useState(false);
-  console.log(loaded);
 
   return (
     <div className='w-full relative'>

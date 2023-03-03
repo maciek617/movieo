@@ -60,6 +60,7 @@ function SingleFilms() {
             showComments={filmData?.show_comments}
             showCreated={filmData?.show_created_date}
             createdDate={filmData?.created_at}
+            creatorId={filmData?.user_id}
           />
         </div>
       ) : (

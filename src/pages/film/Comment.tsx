@@ -8,6 +8,7 @@ interface CommentProps {
   userImage: string;
   deleteComment: any;
   currentUserId: string;
+  creatorId: string;
 }
 function Comment({ ...props }: CommentProps) {
   return (
@@ -29,6 +30,11 @@ function Comment({ ...props }: CommentProps) {
               <span className='tracking-wider text-gray-500 text-sm font-thin ml-5'>
                 {props.when}
               </span>
+              {props.userId === props.creatorId && (
+                <span className='ml-5 text-main-yellow'>
+                  <i className='fa-solid fa-check'></i> Author
+                </span>
+              )}
             </p>
           </Link>
           {props.currentUserId === props.userId && (

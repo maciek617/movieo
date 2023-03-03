@@ -76,7 +76,7 @@ function AddMovie() {
       actors: characters,
       platform: platform,
       rating: rate,
-      rates: [{}],
+      rates: [{ id: currentUser?.id, rate: rate }],
       comments: [],
       show_comments: showComments,
       show_profile: showProfile,
@@ -285,14 +285,14 @@ function AddMovie() {
             <input
               type='range'
               min={0}
-              max={10}
-              step={0.5}
+              max={5}
+              step={1}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setRate(+e.target.value);
               }}
               value={rate}
             />
-            <p>{rate}/10</p>
+            <p>{rate} / 5</p>
           </div>
         </div>
 

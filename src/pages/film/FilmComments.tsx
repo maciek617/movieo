@@ -10,6 +10,7 @@ interface FilmCommentsProps {
   userId: string;
   userImage: string;
   userName: string;
+  creatorId: string;
 }
 
 function FilmComments({ ...props }: FilmCommentsProps) {
@@ -108,6 +109,7 @@ function FilmComments({ ...props }: FilmCommentsProps) {
         what={comment.what}
         deleteComment={() => deleteComment(index)}
         currentUserId={props.userId}
+        creatorId={props.creatorId}
       />
     );
   });

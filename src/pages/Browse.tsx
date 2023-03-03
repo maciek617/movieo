@@ -60,8 +60,18 @@ function Browse() {
       const { data, error } = await supabase
         .from('movies')
         .select('*')
-        .eq('type', t.charAt(0).toUpperCase() + t.slice(1))
-        .eq('platform', p.charAt(0).toUpperCase() + p.slice(1))
+        .eq(
+          'type',
+          t !== 'science-fiction'
+            ? t.charAt(0).toUpperCase() + t.slice(1)
+            : 'Science fiction'
+        )
+        .eq(
+          'platform',
+          p !== 'prime-video'
+            ? p.charAt(0).toUpperCase() + p.slice(1)
+            : 'Prime Video'
+        )
         .limit(10);
 
       if (!error) {
@@ -82,8 +92,18 @@ function Browse() {
       const { data, error } = await supabase
         .from('movies')
         .select('*')
-        .eq('type', t.charAt(0).toUpperCase() + t.slice(1))
-        .eq('platform', p.charAt(0).toUpperCase() + p.slice(1))
+        .eq(
+          'type',
+          t !== 'science-fiction'
+            ? t.charAt(0).toUpperCase() + t.slice(1)
+            : 'Science fiction'
+        )
+        .eq(
+          'platform',
+          p !== 'prime-video'
+            ? p.charAt(0).toUpperCase() + p.slice(1)
+            : 'Prime Video'
+        )
         .limit(10);
 
       if (error && !data) return;

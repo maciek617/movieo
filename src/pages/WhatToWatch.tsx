@@ -123,6 +123,7 @@ function WhatToWatch() {
               filmType={randomMovie.type}
               streamingPlatform={randomMovie.platform}
               rating={randomMovie.rating}
+              user_can_vote={randomMovie.user_can_vote}
             />
             <div className='flex items-center gap-5'>
               <Button text='Go to review' addClasses='mt-5' icon={true} />
