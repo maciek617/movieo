@@ -10,7 +10,10 @@ interface LinkButtonsProps {
 function LinkButtons({ ...props }: LinkButtonsProps) {
   return (
     <div className='mt-10'>
-      <a href={`https://www.${props.platform}.com`} target='_blank'>
+      <a
+        href={`https://www.${props.platform.replaceAll(' ', '')}.com`}
+        target='_blank'
+      >
         <Button text={props.platform} icon={true} addClasses='mr-5' />
       </a>
       {props.show_profile && (
