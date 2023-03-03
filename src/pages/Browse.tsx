@@ -101,6 +101,7 @@ function Browse() {
           filmType={film.type}
           streamingPlatform={film.platform}
           rating={film.rating.toFixed(1)}
+          user_can_vote={film.user_can_vote}
         />
       </Link>
     );

@@ -5,6 +5,7 @@ interface LinkButtonsProps {
   platform: string;
   user_id: string;
   currentUserId: string;
+  show_profile: boolean;
 }
 function LinkButtons({ ...props }: LinkButtonsProps) {
   return (
@@ -12,9 +13,11 @@ function LinkButtons({ ...props }: LinkButtonsProps) {
       <a href={`https://www.${props.platform}.com`} target='_blank'>
         <Button text={props.platform} icon={true} addClasses='mr-5' />
       </a>
-      <Link to={'/profile/' + props.user_id}>
-        <Button text={`Author's profile`} icon={true} />
-      </Link>
+      {props.show_profile && (
+        <Link to={'/profile/' + props.user_id}>
+          <Button text={`Author's profile`} icon={true} />
+        </Link>
+      )}
       {props.currentUserId === props.user_id && (
         <Link to={'/home'}>
           <Button text='Edit' addClasses='ml-5' />

@@ -33,13 +33,13 @@ function AddMovie() {
   const [time, setTime] = useState<string>('');
   const [img, setImg] = useState<string>('');
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
-  const [userPostLength, setUserPostLength] = useState<number>(0);
 
   const navigate = useNavigate();
   // Function that adds character string to characters array of strings
   const addCharacter = () => {
     if (!character || characters.length >= 10) return;
     if (characters.includes(character)) return;
+    if (/\d/.test(character)) return;
 
     setCharacters([...characters, character]);
     setCharacter('');
@@ -164,23 +164,6 @@ function AddMovie() {
 
     if (!error) await addMovieData();
   };
-
-  // Add character on enter Press
-  useEffect(() => {
-    window.addEventListener('keyup', (e: any) => {
-      if (e.key === 'Enter') {
-        console.log(character);
-        addCharacter();
-      }
-    });
-
-    return () =>
-      window.removeEventListener('keyup', (e: any) => {
-        if (e.key === 'Enter') {
-          addCharacter();
-        }
-      });
-  }, [character]);
 
   // Get bucket element
   const getBucketItems = async (image: string) => {

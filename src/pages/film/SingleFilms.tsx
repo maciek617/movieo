@@ -32,8 +32,8 @@ function SingleFilms() {
 
   return (
     <div className='pt-32 px-6 bg-main-dark min-h-screen'>
-      {filmData ? (
-        <div className=' container mx-auto'>
+      {filmData.image ? (
+        <div className='container mx-auto'>
           <div className='w-full h-96 flex justify-around gap-10 text-white'>
             <LeftSideInfo
               image={filmData?.image}
@@ -51,6 +51,8 @@ function SingleFilms() {
               routeId={id}
               allUsersRates={filmData?.rates?.length}
               ratingScore={filmData?.rating?.toFixed(1)}
+              user_can_vote={filmData?.user_can_vote}
+              show_profile={filmData?.show_profile}
             />
           </div>
           <DownSideInfo

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 interface RatingProps {
   routeId: string | undefined;
   userId: string;
+  user_can_vote: boolean;
 }
 function Rating({ ...props }: RatingProps) {
   const [rate, setRate] = useState(0);
@@ -83,9 +84,13 @@ function Rating({ ...props }: RatingProps) {
 
   return (
     <div className='flex'>
-      <div className='rating mt-10 text-xl gap-2 flex cursor-pointer text-white hover'>
-        {star}
-      </div>
+      {props.user_can_vote ? (
+        <div className='rating mt-10 text-xl gap-2 flex cursor-pointer text-white hover'>
+          {star}
+        </div>
+      ) : (
+        <p className='text-red-400 mt-5'>User did not allow to vote</p>
+      )}
     </div>
   );
 }

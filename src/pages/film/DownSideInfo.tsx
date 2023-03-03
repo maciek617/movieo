@@ -27,7 +27,7 @@ function DownSideInfo({ ...props }: DownSideInfoProps) {
         />
       ) : (
         <div>
-          <p className='text-red-400'>
+          <p className='text-red-400 mt-5'>
             {currentUser?.id
               ? 'User do not allow to comment this review.'
               : 'You have to be logged in to comment.'}

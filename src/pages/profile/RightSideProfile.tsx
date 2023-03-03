@@ -55,6 +55,7 @@ function RightSideProfile({ ...props }: RightSideProfileProps) {
             filmType={'Science Fiction'}
             streamingPlatform={'Apple TV'}
             rating={8.3}
+            user_can_vote={true}
           />
         </div>
       </div>
