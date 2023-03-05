@@ -16,6 +16,7 @@ import WaitForEmailConfritmation from './auth/WaitForEmailConfritmation';
 import AddMovie from './browse-film/add-movie/AddMovie';
 import SingleFilms from './film/SingleFilms';
 import Profile from './profile/Profile';
+import EditReview from './film/film_edit/EditReview';
 
 function PagesLinks() {
   const dispatch = useDispatch();
@@ -74,6 +75,14 @@ function PagesLinks() {
           <ProtectedRouteSignedUser user={'isLoggedIn'}>
             <Login />
           </ProtectedRouteSignedUser>
+        }
+      ></Route>
+      <Route
+        path='/movie/:id/edit'
+        element={
+          <ProtectedRoute user={'isLoggedIn'}>
+            <EditReview />
+          </ProtectedRoute>
         }
       ></Route>
     </Routes>

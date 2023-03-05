@@ -6,7 +6,9 @@ interface LinkButtonsProps {
   user_id: string;
   currentUserId: string;
   show_profile: boolean;
+  routeId: string | undefined;
 }
+
 function LinkButtons({ ...props }: LinkButtonsProps) {
   return (
     <div className='mt-10'>
@@ -22,7 +24,7 @@ function LinkButtons({ ...props }: LinkButtonsProps) {
         </Link>
       )}
       {props.currentUserId === props.user_id && (
-        <Link to={'/home'}>
+        <Link to={'/movie/' + props.routeId + '/edit'}>
           <Button text='Edit' addClasses='ml-5' />
         </Link>
       )}

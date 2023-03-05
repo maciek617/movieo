@@ -2,6 +2,7 @@ interface AddMovieCheckboxProps {
   labelText: string;
   id: string;
   fn?: any;
+  isChecked?: boolean;
 }
 function AddMovieCheckbox({ ...props }: AddMovieCheckboxProps) {
   return (
@@ -12,6 +13,7 @@ function AddMovieCheckbox({ ...props }: AddMovieCheckboxProps) {
         className='my-2'
         id={props.id}
         onChange={() => props.fn((prev: boolean) => !prev)}
+        checked={props.isChecked}
       />
     </div>
   );

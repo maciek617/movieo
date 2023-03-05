@@ -48,6 +48,7 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
         user_id={props.user_id}
         currentUserId={props.currentUserId}
         show_profile={props.show_profile}
+        routeId={props.routeId}
       />
       {props.currentUserId ? (
         <Rating

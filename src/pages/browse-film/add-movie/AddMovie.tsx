@@ -165,6 +165,10 @@ function AddMovie() {
     if (!error) await addMovieData();
   };
 
+  const getNameFromUrl = () => {
+    console.log(img.lastIndexOf('/'));
+    console.log(img.slice(img.lastIndexOf('/') + 1));
+  };
   // Get bucket element
   const getBucketItems = async (image: string) => {
     const { data } = supabase.storage.from(currentUser.id).getPublicUrl(image);
@@ -234,17 +238,28 @@ function AddMovie() {
             className='w-full h-full opacity-0 absolute cursor-pointer'
             onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
               if (e.target.files) {
+                if (img) {
+                  const { data, error } = await supabase.storage
+                    .from(currentUser?.id)
+                    .remove([img.slice(img.lastIndexOf('/') + 1)]);
+
+                  console.log(error);
+                }
+
                 await uploadFile(
                   currentUser.id,
                   e.target.files[0]?.name,
                   e.target.files[0]
                 );
+
                 getBucketItems(e.target?.files[0].name);
               }
             }}
           />
           <AddMovieImageScreen img={img} />
         </div>
+
+        <div onClick={() => getNameFromUrl()}>test</div>
 
         <AddMovieTextarea
           labelTitle='Enter a brief (min. 20 words, max. 100 words)'
