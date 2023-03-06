@@ -18,21 +18,16 @@ function SingleFilms() {
         .from('movies')
         .select('*')
         .eq('id', filmId);
-
-      console.log('fireeeed');
-
       if (data && !error) setFilmData(data[0]);
     };
 
     if (!id) return;
-    return () => {
-      fetchData(id);
-    };
-  }, [id]);
+    fetchData(id);
+  }, []);
 
   return (
     <div className='pt-32 px-6 bg-main-dark min-h-screen'>
-      {filmData.image ? (
+      {filmData?.image ? (
         <div className='container mx-auto'>
           <div className='w-full h-96 flex justify-around gap-10 text-white'>
             <LeftSideInfo

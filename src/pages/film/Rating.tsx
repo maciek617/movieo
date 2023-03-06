@@ -1,5 +1,6 @@
 import { supabase } from '../../App';
 import { useState, useEffect } from 'react';
+import Tooltip from '../../components/Tooltip';
 interface RatingProps {
   routeId: string | undefined;
   userId: string;
@@ -10,6 +11,7 @@ function Rating({ ...props }: RatingProps) {
   const [allRates, setAllRates] = useState<any>();
   const [voted, setVoted] = useState(false);
   const [usersRating, setUsersRating] = useState<any>(0);
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const starsArr = [5, 4, 3, 2, 1];
 
   useEffect(() => {
@@ -62,6 +64,7 @@ function Rating({ ...props }: RatingProps) {
         .update({ rates: [...allRates, { id: props.userId, rate: userRate }] })
         .eq('id', props.routeId);
 
+      if (error) return;
       await updateSingleRating(userRate);
     }
   };
@@ -74,6 +77,7 @@ function Rating({ ...props }: RatingProps) {
           setRate(star);
           setVoted(true);
           updateRating(star);
+          setShowTooltip(true);
         }}
         className={`fa-solid fa-star ${
           rate + 1 > star ? 'text-main-yellow' : ''
@@ -85,9 +89,19 @@ function Rating({ ...props }: RatingProps) {
   return (
     <div className='flex'>
       {props.user_can_vote ? (
-        <div className='rating mt-10 text-xl gap-2 flex cursor-pointer text-white hover'>
-          {star}
-        </div>
+        <>
+          {showTooltip && (
+            <Tooltip
+              text='Rate completed!'
+              variant='green'
+              isShow={showTooltip}
+              closeTooltip={setShowTooltip}
+            />
+          )}
+          <div className='rating mt-10 text-xl gap-2 flex cursor-pointer text-white hover'>
+            {star}
+          </div>
+        </>
       ) : (
         <p className='text-red-400 mt-5'>User did not allow to vote</p>
       )}

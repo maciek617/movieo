@@ -5,7 +5,7 @@ import { countSingleWords } from '../../helpers/countWords';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../App';
 import moment from 'moment';
-
+import Tooltip from '../../components/Tooltip';
 interface FilmCommentsProps {
   userId: string;
   userImage: string;
@@ -17,7 +17,7 @@ function FilmComments({ ...props }: FilmCommentsProps) {
   const { id } = useParams();
   const [commentText, setCommentText] = useState<string>('');
   const [filmComments, setFilmComments] = useState<any>([]);
-
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
   useEffect(() => {
     const fetchCommentsData = async () => {
       const { data, error } = await supabase
@@ -56,6 +56,7 @@ function FilmComments({ ...props }: FilmCommentsProps) {
       await getAndUpdateUserCommentsLength();
       await updateLastUserComment();
       setCommentText('');
+      setShowTooltip(true);
     }
   };
 
@@ -116,6 +117,14 @@ function FilmComments({ ...props }: FilmCommentsProps) {
 
   return (
     <div className='mt-10'>
+      {showTooltip && (
+        <Tooltip
+          text='Comment added!'
+          variant='green'
+          isShow={showTooltip}
+          closeTooltip={setShowTooltip}
+        />
+      )}
       <p className='text-3xl text-white'>Comments:</p>
       <div className='mt-5 my-10 flex border-b border-gray-600 pb-5 w-4/5 flex-col'>
         <div className='flex'>

@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-
 interface CommentProps {
   name: string;
   userId: string;

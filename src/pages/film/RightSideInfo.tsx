@@ -1,6 +1,8 @@
 import Pill from '../../components/Pill';
 import Rating from './Rating';
 import LinkButtons from './LinkButtons';
+import Tooltip from '../../components/Tooltip';
+import { useState } from 'react';
 
 interface RightSideInfoProps {
   name: string;
@@ -17,9 +19,22 @@ interface RightSideInfoProps {
 }
 
 function RightSideInfo({ ...props }: RightSideInfoProps) {
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
   return (
     <div className='w-full'>
-      <p className='text-3xl font-bold'>{props.name}</p>
+      {showTooltip && (
+        <Tooltip text='Copied!' variant='green' closeTooltip={setShowTooltip} isShow={showTooltip}/>
+      )}
+      <div className='flex items-center justify-between'>
+        <p className='text-3xl font-bold'>{props.name}</p>
+        <i
+          onClick={() => {
+            navigator.clipboard.writeText(window.location.href);
+            setShowTooltip(true);
+          }}
+          className='fa-solid fa-share cursor-pointer text-main-yellow text-xl mr-3'
+        ></i>
+      </div>
       <p className='text-sm pt-3'>{props.brief}</p>
       {props.user_can_vote && (
         <p className='py-6 text-2xl'>

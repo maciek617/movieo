@@ -12,12 +12,22 @@ module.exports = {
       },
       animation: {
         'slide-left': 'slideLeft 0.5s ease-in-out',
+        'slide-right': 'slideRight 0.5s ease-in-out',
+        'slide-out': 'slideOut 0.5s ease-in-out',
         fade: 'fade 0.1s ease-in-out',
       },
       keyframes: {
         slideLeft: {
           '0%': { opacity: '0', transform: 'translateX(-30px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideRight: {
+          '0%': { opacity: '0', transform: 'translateX(30px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideOut: {
+          '0%': { opacity: '1', transform: 'translateX(0)' },
+          '100%': { opacity: '0', transform: 'translateX(30px)' },
         },
         fade: {
           '0%': { opacity: '0', display: 'none' },
