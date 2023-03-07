@@ -17,7 +17,7 @@ function SingleFilmBox({ ...props }: SingleFilmBoxProps) {
       <img
         src={props.image}
         alt='Film image cover'
-        className={`w-96 h-52 object-cover shadow-lg ${
+        className={`w-80 h-96 object-cover shadow-lg ${
           loaded ? 'block' : 'hidden'
         }`}
         onLoad={() => setLoaded(true)}

@@ -1,16 +1,9 @@
-import React from 'react';
-// Whole swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, EffectFade, Autoplay, Lazy } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/lazy';
-
-// Images
-import bgImg from '../assets/bg-film.png';
-import bgImg1 from '../assets/bg-film2.jpg';
-import bgImg2 from '../assets/bg-film3.jpg';
 import star from '../assets/star.svg';
 
 // Components
@@ -18,41 +11,18 @@ import Button from '../components/Button';
 import { useSelector } from 'react-redux';
 import { supabase } from '../App';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 function HomePage() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
   const [userData, setUserData] = useState(false);
-  // Here data fetched from Firebase
-  const tempData = [
-    {
-      title: 'Sex Education',
-      rating: 9.1,
-      type: 'Comedy',
-      year: '2020',
-      time: '2h 32min',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed corporis ad porro labore vero ipsum dolorum voluptates tenetur nesciunt consequuntur quia eius, aliquam ullam quaerat delectus cupiditate quam quis maiores.',
-      img: bgImg,
-    },
-    {
-      title: 'The 100',
-      rating: 9.9,
-      type: 'Science Fiction',
-      year: '2014',
-      time: '12h 12min',
-      description: 'Some junk text to se if this works properly',
-      img: bgImg1,
-    },
-    {
-      title: 'Anarchy',
-      rating: 4.3,
-      type: 'Horror',
-      year: '2019',
-      time: '1h 32min',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed corporis ad porro labore vero ipsum dolorum voluptates tenetur nesciunt consequuntur quia eius...',
-      img: bgImg2,
-    },
-  ];
+  const [threeFilmsData, setThreeFilmsData] = useState<any>();
+  const [expandBrief, setExpandBrief] = useState<boolean>(false);
+  const getThreeFilmsReviewData = async () => {
+    const { data, error } = await supabase.from('movies').select('*').limit(3);
+
+    if (!data && error) return;
+    setThreeFilmsData(data);
+  };
 
   const getData = async () => {
     const { data, error } = await supabase
@@ -68,8 +38,6 @@ function HomePage() {
     await getData();
 
     if (userData) {
-      console.log('work');
-
       const { error } = await supabase.from('users').insert({
         id: currentUser?.id,
         created_at: currentUser?.created_at,
@@ -87,21 +55,21 @@ function HomePage() {
         post_length: 0,
         comments_length: 0,
       });
-      console.log(error);
     }
   };
 
   useEffect(() => {
     insertData();
-  });
+    getThreeFilmsReviewData();
+  }, []);
 
-  const slides = tempData.map((slide, index) => {
+  const slides = threeFilmsData?.map((slide: any, index: any) => {
     return (
       <SwiperSlide key={index}>
         <div className='h-screen'>
           <div className='bg-filtr h-full w-full'></div>
           <img
-            src={slide.img}
+            src={slide.image}
             alt='background image'
             className='h-full w-full object-cover swiper-lazy'
           />
@@ -109,19 +77,37 @@ function HomePage() {
 
         <div className='max-w-xl w-full text-white absolute bottom-10 left-0 px-6 md:bottom-24 md:left-16 lg:bottom-48 lg:left-24 lg:px-0'>
           <h1 className='text-3xl lg:text-7xl font-bold'>{slide.title}</h1>
-          <div className='text-xs flex items-center justify-between mt-5 font-semibold md:text-base lg:text-lg'>
+          <div className='max-w-xs text-xs flex items-center justify-between mt-5 font-semibold md:text-base lg:text-lg'>
             <div className='flex items-center'>
               <img src={star} alt='star icon' className='mr-2' />
-              <p>{slide.rating}/10</p>
+              <p>{slide.rating} / 5</p>
             </div>
-            <p>{slide.type}</p>
-            <p>{slide.year}</p>
-            <p>{slide.time}</p>
+            <p className='flex items-center justify-center'>
+              <i className='fa-solid fa-circle mr-3 text-xxxs text-main-yellow'></i>
+              {slide.type}
+            </p>
+            <p className='flex items-center justify-center'>
+              <i className='fa-solid fa-circle mr-3 text-xxxs text-main-yellow'></i>
+              {slide.year}
+            </p>
           </div>
-          <div className='max-w-md mt-5'>
-            <p>{slide.description}</p>
+          <div className='max-w-md mt-5 transition-all'>
+            <p
+              className='cursor-pointer'
+              onClick={() => setExpandBrief((prev) => (prev = !prev))}
+            >
+              {expandBrief
+                ? slide.brief
+                : slide.brief.split(' ').slice(0, 20).join(' ') + '...'}
+            </p>
           </div>
-          <Button text='Review' icon={true} addClasses='my-5 lg:my-0 lg:mt-5' />
+          <Link to={'/movie/' + slide.id}>
+            <Button
+              text='Review'
+              icon={true}
+              addClasses='my-5 lg:my-0 lg:mt-5'
+            />
+          </Link>
         </div>
       </SwiperSlide>
     );
@@ -159,7 +145,7 @@ function HomePage() {
         </p>
       )}
 
-      <div className='flex justify-center gap-10 py-20 bg-main-dark'>
+      <div className='flex justify-center gap-10 py-20 bg-main-dark px-6'>
         <div className='bg-main-yellow 400 max-w-2xl w-full text-center py-32 rounded'>
           <p className='font-bold text-4xl'>Reviews</p>
           <p className='text-8xl font-thin'>

@@ -37,6 +37,9 @@ module.exports = {
       scale: {
         101: '1.01',
       },
+      fontSize: {
+        xxxs: '6px',
+      },
     },
   },
   plugins: [],

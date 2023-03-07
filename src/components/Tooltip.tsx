@@ -16,6 +16,7 @@ function Tooltip({ ...props }: TooltipProps) {
 
   useEffect(() => {
     const addOutAnimationClass = setTimeout(() => {
+      tooltipContainer.current.classList.remove('animate-slide-right');
       tooltipContainer.current.classList.add('animate-slide-out');
     }, 5000);
 
@@ -32,18 +33,19 @@ function Tooltip({ ...props }: TooltipProps) {
   return (
     <div
       ref={tooltipContainer}
-      className={`animate-slide-right fixed w-52 h-12 bg-main-dark top-32 right-10 rounded-full flex items-center justify-center border-2 ${
+      className={`animate-slide-right fixed w-52 h-12 bg-main-dark top-32 right-10 rounded-md flex items-center justify-center border-2 ${
         variants[props.variant]
       }`}
     >
       <i
         onClick={() => {
+          tooltipContainer.current.classList.remove('animate-slide-right');
           tooltipContainer.current.classList.add('animate-slide-out');
           setTimeout(() => {
             props.closeTooltip(false);
           }, 400);
         }}
-        className='fa-solid fa-xmark absolute top-2 right-5 cursor-pointer'
+        className='fa-solid fa-xmark absolute top-1 right-3 cursor-pointer'
       ></i>
       <p>{props.text}</p>
     </div>

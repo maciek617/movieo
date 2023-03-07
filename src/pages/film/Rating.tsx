@@ -12,6 +12,7 @@ function Rating({ ...props }: RatingProps) {
   const [voted, setVoted] = useState(false);
   const [usersRating, setUsersRating] = useState<any>(0);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
+  const [showWrongTooltip, setShowWrongTooltip] = useState<boolean>(false);
   const starsArr = [5, 4, 3, 2, 1];
 
   useEffect(() => {
@@ -59,6 +60,7 @@ function Rating({ ...props }: RatingProps) {
 
   const updateRating = async (userRate: number) => {
     if (!voted && !allRates.some((e: any) => e.id === props.userId)) {
+      setShowWrongTooltip(false);
       const { error } = await supabase
         .from('movies')
         .update({ rates: [...allRates, { id: props.userId, rate: userRate }] })
@@ -66,6 +68,9 @@ function Rating({ ...props }: RatingProps) {
 
       if (error) return;
       await updateSingleRating(userRate);
+      setShowTooltip(true);
+    } else {
+      setShowWrongTooltip(true);
     }
   };
 
@@ -77,7 +82,6 @@ function Rating({ ...props }: RatingProps) {
           setRate(star);
           setVoted(true);
           updateRating(star);
-          setShowTooltip(true);
         }}
         className={`fa-solid fa-star ${
           rate + 1 > star ? 'text-main-yellow' : ''
@@ -96,6 +100,14 @@ function Rating({ ...props }: RatingProps) {
               variant='green'
               isShow={showTooltip}
               closeTooltip={setShowTooltip}
+            />
+          )}
+          {showWrongTooltip && (
+            <Tooltip
+              text='Cant vote twice!'
+              variant='red'
+              isShow={showWrongTooltip}
+              closeTooltip={setShowWrongTooltip}
             />
           )}
           <div className='rating mt-10 text-xl gap-2 flex cursor-pointer text-white hover'>

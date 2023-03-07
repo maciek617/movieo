@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface IconToggleProps {
   show: boolean;
   setShow: any;
