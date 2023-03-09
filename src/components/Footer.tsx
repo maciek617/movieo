@@ -4,7 +4,7 @@ import Button from './Button';
 import { useState } from 'react';
 import { validateEmail } from '../helpers/emailValidation';
 import Modal from './Modal';
-
+import Tooltip from './Tooltip';
 function Footer() {
   const [email, setEmail] = useState<string>('');
   const [emailError, setEmailError] = useState<string>('');
@@ -97,12 +97,20 @@ function Footer() {
             <input
               type='text'
               placeholder='Enter your e-mail...'
-              className='h-10 px-4 py-2 text-black outline-0 border-0 mr-4 mb-4 xl:mb-0'
+              className={`h-10 px-4 py-2 text-black outline-0 border-0 mr-4 mb-4 ${
+                emailError ? 'border-4 border-red-400' : null
+              }   xl:mb-0`}
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
+
             {emailError && (
-              <p className='pb-3 text-red-400 animate-pulse'>{emailError}</p>
+              <Tooltip
+                variant='red'
+                text='Something wrong!'
+                isShow={emailError ? true : false}
+                closeTooltip={setEmailError}
+              />
             )}
             <Button text='Subscribe' icon={true} fn={addEmailToNewsletter} />
           </div>
@@ -111,12 +119,13 @@ function Footer() {
       <div className='text-center text-gray-400'>
         <p>All rights reserved &copy; 2023 | Movieo</p>
       </div>
+
       {greetText && (
-        <Modal
-          text={
-            'Your e-mail has been added to our newsletter! We wont spam. Do not worry about it!'
-          }
-          fn={setGreetText}
+        <Tooltip
+          variant='green'
+          text='Email added!'
+          isShow={greetText ? true : false}
+          closeTooltip={setGreetText}
         />
       )}
     </div>

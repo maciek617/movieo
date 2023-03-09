@@ -17,6 +17,8 @@ import AddMovie from './browse-film/add-movie/AddMovie';
 import SingleFilms from './film/SingleFilms';
 import Profile from './profile/Profile';
 import EditReview from './film/film_edit/EditReview';
+import ReportPage from './report/ReportPage';
+import Support from './Support';
 
 function PagesLinks() {
   const dispatch = useDispatch();
@@ -82,6 +84,22 @@ function PagesLinks() {
         element={
           <ProtectedRoute user={'isLoggedIn'}>
             <EditReview />
+          </ProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path='/report'
+        element={
+          <ProtectedRoute user={'isLoggedIn'}>
+            <ReportPage />
+          </ProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path='/support'
+        element={
+          <ProtectedRoute user={'isLoggedIn'}>
+            <Support />
           </ProtectedRoute>
         }
       ></Route>

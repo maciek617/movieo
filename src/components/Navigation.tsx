@@ -118,7 +118,7 @@ function Navigation({ ...props }: NavigationProps) {
                 My Reviews
               </p>
             </Link>
-            <Link to={'/profile/' + props.user?.id}>
+            <Link to={'/support'}>
               <p className='p-2 hover:text-main-yellow transition-all'>
                 <i className='fa-solid fa-headset mr-2'></i>
                 Support

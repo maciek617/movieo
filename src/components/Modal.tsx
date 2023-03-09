@@ -29,7 +29,7 @@ function Modal({ ...props }: ModalProps) {
     });
 
     return () => {
-      window.addEventListener('keyup', (e: any) => {
+      window.removeEventListener('keyup', (e: any) => {
         clickEsc(e) ? props.fn('') : null;
       });
     };

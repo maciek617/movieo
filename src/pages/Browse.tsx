@@ -147,7 +147,9 @@ function Browse() {
                   fn={createNewBucket}
                 />
               </Link>
-              <Button text='Report a problem' addClasses='mt-5' />
+              <Link to={'/report'}>
+                <Button text='Report a problem' addClasses='mt-5' />
+              </Link>
             </div>
           )}
         </div>
