@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 function ComingSoon() {
   const [upcomingMovies, setUpcomingMovies] = useState<any>([]);
 
-  // TODO: Sort array based on release date
   useEffect(() => {
     const fetchUpcomingMovies = async () => {
       const res = await fetch(
@@ -19,19 +18,26 @@ function ComingSoon() {
     fetchUpcomingMovies();
   }, []);
 
-  const movies = upcomingMovies?.map((movie: any, index: number) => {
+  const sortedByDateUpcomingMovies = upcomingMovies?.sort((a: any, b: any) => {
     return (
-      <ComingSoonFilm
-        key={movie.title}
-        filmTitle={movie.title}
-        filmImage={'http://image.tmdb.org/t/p/w500/' + movie.poster_path}
-        filmDate={Date.parse(movie.release_date)}
-      />
+      new Date(b?.release_date).valueOf() - new Date(a?.release_date).valueOf()
     );
   });
 
+  const movies = sortedByDateUpcomingMovies?.map(
+    (movie: any, index: number) => {
+      return (
+        <ComingSoonFilm
+          key={movie.title}
+          filmTitle={movie.title}
+          filmImage={'http://image.tmdb.org/t/p/w500/' + movie.poster_path}
+          filmDate={Date.parse(movie.release_date)}
+        />
+      );
+    }
+  );
+
   return (
-    // { movies: <Spinner /> }
     <div className='min-h-screen bg-main-dark py-32'>
       {movies ? (
         <div className='flex gap-20 justify-center flex-wrap container mx-auto'>
@@ -43,7 +49,5 @@ function ComingSoon() {
     </div>
   );
 }
-
-// TODO: .Env file with api key with stored infos about upcoming movies
 
 export default ComingSoon;

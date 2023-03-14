@@ -8,7 +8,6 @@ interface SupportBoxesProps {
 
 function SupportBoxes({ ...props }: SupportBoxesProps) {
   const dispatch = useDispatch();
-
   const updateDisplayBox = (title: string) =>
     dispatch(updateDisplayState(title));
 
