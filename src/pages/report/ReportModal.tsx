@@ -2,7 +2,7 @@ import Button from '../../components/Button';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../App';
 import { useSelector } from 'react-redux';
-
+import moment from 'moment';
 interface ReportModalProps {
   closeModal: any;
   showTooltip: any;
@@ -50,6 +50,7 @@ function ReportModal({ ...props }: ReportModalProps) {
       type: categoryProblem,
       problem: problem,
       user_id: currentUser?.id,
+      date: moment(new Date()).format('L'),
     });
 
     props.closeModal(false);

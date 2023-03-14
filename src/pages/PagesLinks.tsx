@@ -19,6 +19,7 @@ import Profile from './profile/Profile';
 import EditReview from './film/film_edit/EditReview';
 import ReportPage from './report/ReportPage';
 import Support from './Support';
+import SupportPageTicket from './support-page/SupportPageTicket';
 
 function PagesLinks() {
   const dispatch = useDispatch();
@@ -100,6 +101,14 @@ function PagesLinks() {
         element={
           <ProtectedRoute user={'isLoggedIn'}>
             <Support />
+          </ProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path='/support/:id'
+        element={
+          <ProtectedRoute user={'isLoggedIn'}>
+            <SupportPageTicket />
           </ProtectedRoute>
         }
       ></Route>

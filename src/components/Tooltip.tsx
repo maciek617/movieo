@@ -33,7 +33,7 @@ function Tooltip({ ...props }: TooltipProps) {
   return (
     <div
       ref={tooltipContainer}
-      className={`animate-slide-right fixed w-52 h-12 bg-main-dark top-32 right-10 rounded-md flex items-center justify-center border-2 ${
+      className={`z-[51] animate-slide-right fixed w-52 h-12 bg-main-dark top-32 right-10 rounded-md flex items-center justify-center border-2 ${
         variants[props.variant]
       }`}
     >

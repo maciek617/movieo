@@ -1,4 +1,5 @@
 import { supabase } from '../App';
+
 export const registerUser = async (
   email: string,
   password: string,
@@ -13,6 +14,7 @@ export const registerUser = async (
     options: {
       data: {
         name: name,
+        img: '',
       },
     },
   });
