@@ -76,7 +76,7 @@ function HomePage() {
         </div>
 
         <div className='max-w-xl w-full text-white absolute bottom-10 left-0 px-6 md:bottom-24 md:left-16 lg:bottom-48 lg:left-24 lg:px-0'>
-          <h1 className='text-3xl lg:text-7xl font-bold'>{slide.name}</h1>
+          <h1 className='text-3xl lg:text-5xl font-bold 2xl:text-6xl'>{slide.name}</h1>
           <div className='max-w-xs text-xs flex items-center justify-between mt-5 font-semibold md:text-base lg:text-lg'>
             <div className='flex items-center'>
               <img src={star} alt='star icon' className='mr-2' />
