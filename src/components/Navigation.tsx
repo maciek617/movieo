@@ -91,7 +91,7 @@ function Navigation({ ...props }: NavigationProps) {
           </NavLink>
         </ul>
       </div>
-      {props.user ? (
+      {props.user || localStorage.getItem('isLoggedIn') ? (
         <div className='relative'>
           <div
             onClick={() => setShowDropdown(!showDropdown)}

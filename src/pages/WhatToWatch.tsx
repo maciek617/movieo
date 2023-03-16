@@ -5,6 +5,7 @@ import SingleFilmBox from './browse-film/SingleFilmBox';
 import FAQ from '../components/FAQ';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 function WhatToWatch() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
@@ -14,6 +15,7 @@ function WhatToWatch() {
   const [today, setToday] = useState(new Date());
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
+  const [pageLoad, setPageLoad] = useState<boolean>(false);
 
   const fetchData = async () => {
     const { data, error } = await supabase.from('movies').select();
@@ -21,6 +23,7 @@ function WhatToWatch() {
 
     // Get random movie and save it to randomMovie variable
     setRandomMovie(data[Math.floor(Math.random() * data.length)]);
+    setPageLoad(true);
   };
 
   const faqBase = [
@@ -64,6 +67,7 @@ function WhatToWatch() {
 
       if (error && !data) return;
       setGenerationDate(data[0].date_to_next_generation);
+      setPageLoad(true);
     };
 
     currentUser?.id && fetchNextGenerationDate();
@@ -90,54 +94,71 @@ function WhatToWatch() {
     updateTime();
   }, [generationDate]);
 
-  return currentUser?.id ? (
+  return currentUser?.id || localStorage.getItem('isLoggedIn') ? (
     <div className='min-h-screen h-full bg-main-dark pt-32'>
-      <div className='bg-main-dark text-white'>
-        {generationDate !== null && Date.parse(generationDate) - +today > 0 ? (
-          <p className='text-center py-10'>
-            Your next generation will be in: {hours && hours} hours{' '}
-            {minutes && minutes} minutes.
-          </p>
-        ) : (
-          <div className='flex items-center justify-center flex-col'>
-            <h1 className='text-2xl max-w-4xl text-center'>
-              You cannot decide what to review or watch? We're same but, we
-              provided movie picker just click button below and start exploring!
-            </h1>
-            <Button
-              text={'Pick random movie'}
-              addClasses='mt-10'
-              fn={pickRandomMovie}
-            />
-          </div>
-        )}
+      <div className={`${pageLoad ? 'block' : 'hidden'}`}>
+        <div className='bg-main-dark text-white'>
+          {generationDate !== null &&
+            Date.parse(generationDate) - +today > 0 && (
+              <p className='text-center py-10'>
+                Your next generation will be in: {hours && hours} hours{' '}
+                {minutes && minutes} minutes.
+              </p>
+            )}
 
-        {randomMovie?.id && (
-          <div className='flex flex-col items-center justify-center'>
-            <h1 className='py-4 text-4xl'>
-              Your randomly picked movie is right below:
-            </h1>
-            <SingleFilmBox
-              filmTitle={randomMovie.name}
-              image={randomMovie.image}
-              filmType={randomMovie.type}
-              streamingPlatform={randomMovie.platform}
-              rating={randomMovie.rating}
-              user_can_vote={randomMovie.user_can_vote}
-            />
-            <div className='flex items-center gap-5'>
-              <Button text='Go to review' addClasses='mt-5' icon={true} />
-              <Button text='Go home' addClasses='mt-5' />
+          {(generationDate !== null &&
+            Date.parse(generationDate) - +today > 0) ||
+            (!randomMovie?.id && (
+              <div className='flex items-center justify-center flex-col'>
+                <h1 className='text-2xl max-w-4xl text-center mt-32'>
+                  You cannot decide what to review or watch? We're same but, we
+                  provided movie picker just click button below and start
+                  exploring!
+                </h1>
+                <Button
+                  text={'Pick random movie'}
+                  addClasses='mt-10'
+                  fn={pickRandomMovie}
+                />
+              </div>
+            ))}
+
+          {randomMovie?.id && (
+            <div className='flex flex-col items-center justify-center'>
+              <h1 className='py-4 text-4xl'>
+                Your randomly picked movie is right below:
+              </h1>
+              <SingleFilmBox
+                filmTitle={randomMovie.name}
+                image={randomMovie.image}
+                filmType={randomMovie.type}
+                streamingPlatform={randomMovie.platform}
+                rating={randomMovie.rating}
+                user_can_vote={randomMovie.user_can_vote}
+              />
+              <div className='flex items-center gap-5'>
+                <Link to={'/movie/' + randomMovie.id}>
+                  <Button text='Go to review' addClasses='mt-5' icon={true} />
+                </Link>
+                <Link to={'/home'}>
+                  <Button text='Go home' addClasses='mt-5' />
+                </Link>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+        <div className='bg-main-dark text-white py-20'>
+          <FAQ faqs={faqBase} />
+        </div>
       </div>
-      <div className='bg-main-dark text-white py-20'>
-        <FAQ faqs={faqBase} />
-      </div>
+      {!pageLoad && <Spinner isDark={true} />}
     </div>
   ) : (
-    <div className='h-screen bg-main-dark text-white flex items-center justify-center flex-col'>
+    <div
+      className={`h-screen bg-main-dark text-white flex items-center justify-center flex-col ${
+        pageLoad || !localStorage.getItem('isLoggedIn') ? 'block' : 'hidden'
+      }`}
+    >
       <h1 className='text-2xl text-center'>
         You have to be logged in to use this feature.
       </h1>
