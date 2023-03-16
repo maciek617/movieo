@@ -12,11 +12,14 @@ import { useSelector } from 'react-redux';
 import { supabase } from '../App';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 function HomePage() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
   const [userData, setUserData] = useState(false);
   const [threeFilmsData, setThreeFilmsData] = useState<any>();
   const [expandBrief, setExpandBrief] = useState<boolean>(false);
+  const [imageLoad, setImageLoad] = useState<boolean>(false);
+
   const getThreeFilmsReviewData = async () => {
     const { data, error } = await supabase.from('movies').select('*').limit(3);
 
@@ -67,16 +70,25 @@ function HomePage() {
     return (
       <SwiperSlide key={index}>
         <div className='h-screen'>
-          <div className='bg-filtr h-full w-full'></div>
+          <div
+            className={`bg-filtr h-full w-full ${
+              imageLoad ? 'block' : 'hidden'
+            }`}
+          ></div>
           <img
             src={slide.image}
             alt='background image'
-            className='h-full w-full object-cover swiper-lazy'
+            className={`h-full w-full object-cover ${
+              imageLoad ? 'block' : 'hidden'
+            }`}
+            onLoad={() => setImageLoad(true)}
           />
         </div>
 
         <div className='max-w-xl w-full text-white absolute bottom-10 left-0 px-6 md:bottom-24 md:left-16 lg:bottom-48 lg:left-24 lg:px-0'>
-          <h1 className='text-3xl lg:text-5xl font-bold 2xl:text-6xl'>{slide.name}</h1>
+          <h1 className='text-3xl lg:text-5xl font-bold 2xl:text-6xl'>
+            {slide.name}
+          </h1>
           <div className='max-w-xs text-xs flex items-center justify-between mt-5 font-semibold md:text-base lg:text-lg'>
             <div className='flex items-center'>
               <img src={star} alt='star icon' className='mr-2' />
@@ -114,56 +126,63 @@ function HomePage() {
   });
 
   return (
-    <div>
-      <div className='h-screen relative'>
-        <Swiper
-          modules={[EffectFade, Pagination, Autoplay, Lazy]}
-          spaceBetween={0}
-          effect={'fade'}
-          slidesPerView={1}
-          allowTouchMove={false}
-          lazy={true}
-          autoplay={{
-            delay: 10000,
-          }}
-          pagination={{
-            clickable: true,
-            dynamicBullets: true,
-          }}
-        >
-          {slides}
-        </Swiper>
+    <div className='min-h-screen bg-main-dark relative'>
+      <div className={`${imageLoad ? 'block' : 'hidden'}`}>
+        <div className='h-screen relative'>
+          <Swiper
+            modules={[EffectFade, Pagination, Autoplay, Lazy]}
+            spaceBetween={0}
+            effect={'fade'}
+            slidesPerView={1}
+            allowTouchMove={false}
+            lazy={true}
+            autoplay={{
+              delay: 10000,
+            }}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+            }}
+          >
+            {slides}
+          </Swiper>
+        </div>
+        {currentUser?.id && (
+          <p className='animate-slide-left absolute z-40 top-40 left-6 text-white text-xl md:left-24 lg:top-52 md:text-2xl lg:text-4xl'>
+            Hello,{' '}
+            <span className='font-bold'>{currentUser.user_metadata.name}</span>
+            <span className='block'>
+              What will you <span className='text-main-yellow'>review</span>{' '}
+              today?{' '}
+            </span>
+          </p>
+        )}
+
+        <div className='flex justify-center gap-10 py-20 bg-main-dark px-6'>
+          <div className='bg-main-yellow 400 max-w-2xl w-full text-center py-32 rounded'>
+            <p className='font-bold text-4xl'>Reviews</p>
+            <p className='text-8xl font-thin'>
+              <span className='font-bold'>+</span>1000
+            </p>
+          </div>
+          <div className='bg-main-yellow 400 max-w-2xl w-full text-center py-32 rounded'>
+            <p className='font-bold text-4xl'>Users</p>
+            <p className='text-8xl font-thin'>
+              <span className='font-bold'>+</span>100
+            </p>
+          </div>
+        </div>
+
+        <div className='bg-main-dark flex items-center justify-center flex-col'>
+          <h1 className='text-white text-4xl'>What are you waiting for?</h1>
+          <Button text='Start exploring!' addClasses='my-5' />
+        </div>
       </div>
-      {currentUser?.id && (
-        <p className='animate-slide-left absolute z-40 top-40 left-6 text-white text-xl md:left-24 lg:top-52 md:text-2xl lg:text-4xl'>
-          Hello,{' '}
-          <span className='font-bold'>{currentUser.user_metadata.name}</span>
-          <span className='block'>
-            What will you <span className='text-main-yellow'>review</span>{' '}
-            today?{' '}
-          </span>
-        </p>
+      {!imageLoad && (
+        <div className='absolute z-50 top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+          <Spinner isDark={true} />
+        </div>
       )}
-
-      <div className='flex justify-center gap-10 py-20 bg-main-dark px-6'>
-        <div className='bg-main-yellow 400 max-w-2xl w-full text-center py-32 rounded'>
-          <p className='font-bold text-4xl'>Reviews</p>
-          <p className='text-8xl font-thin'>
-            <span className='font-bold'>+</span>1000
-          </p>
-        </div>
-        <div className='bg-main-yellow 400 max-w-2xl w-full text-center py-32 rounded'>
-          <p className='font-bold text-4xl'>Users</p>
-          <p className='text-8xl font-thin'>
-            <span className='font-bold'>+</span>100
-          </p>
-        </div>
-      </div>
-
-      <div className='bg-main-dark flex items-center justify-center flex-col'>
-        <h1 className='text-white text-4xl'>What are you waiting for?</h1>
-        <Button text='Start exploring!' addClasses='my-5' />
-      </div>
     </div>
   );
 }

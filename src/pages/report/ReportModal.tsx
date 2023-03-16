@@ -21,21 +21,17 @@ function ReportModal({ ...props }: ReportModalProps) {
       e.target.classList.contains('darken-bg') ? props.closeModal(false) : null;
     });
 
+    window.addEventListener('keyup', (e: any) => {
+      e.key === 'Escape' ? props.closeModal(false) : null;
+    });
+
     return () => {
       window.removeEventListener('click', (e: any) => {
         e.target.classList.contains('darken-bg')
           ? props.closeModal(false)
           : null;
       });
-    };
-  }, []);
 
-  useEffect(() => {
-    window.addEventListener('keyup', (e: any) => {
-      e.key === 'Escape' ? props.closeModal(false) : null;
-    });
-
-    return () => {
       window.removeEventListener('keyup', (e: any) => {
         e.key === 'Escape' ? props.closeModal(false) : null;
       });
@@ -44,6 +40,7 @@ function ReportModal({ ...props }: ReportModalProps) {
 
   const createATicket = async () => {
     if (!problem.length) return;
+    if (problem.length > 500) return;
 
     await supabase.from('reports').insert({
       id: Math.floor(Math.random() * 100000),

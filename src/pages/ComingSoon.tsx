@@ -39,7 +39,7 @@ function ComingSoon() {
 
   return (
     <div className='min-h-screen bg-main-dark py-32'>
-      {movies ? (
+      {movies?.length ? (
         <div className='flex gap-20 justify-center flex-wrap container mx-auto'>
           {movies}
         </div>
