@@ -5,21 +5,24 @@ export const signInUser = async (
   password: string,
   dispatch: any,
   updateUser: any,
-  navigate: any
+  navigate: any,
+  setError: any
 ) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
   });
 
+  error && setError(error.message);
+
+  // console.log('work');
   const updateUserLastActive = async () => {
     const { error } = await supabase
       .from('users')
       .update({ last_active: new Date() })
       .eq('id', data.user?.id);
 
-      console.log('work');
-      
+    return error;
   };
 
   dispatch(updateUser(data.user));

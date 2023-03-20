@@ -6,6 +6,8 @@ import { signInUser } from '../../helpers/SignInUser';
 import Button from '../../components/Button';
 import { Link } from 'react-router-dom';
 import IconToggle from '../../components/IconToggle';
+import { validateEmail } from '../../helpers/emailValidation';
+import Modal from '../../components/Modal';
 
 function Login() {
   const dispatch = useDispatch();
@@ -13,10 +15,23 @@ function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const signCurrentUserIn = async (e: any) => {
     e.preventDefault();
-    signInUser(email, password, dispatch, updateUser, navigate);
+    setError('');
+
+    if (!email && !password) {
+      setError('All fields must be filled.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      setError('It looks like invalid e-mail.');
+      return;
+    }
+
+    signInUser(email, password, dispatch, updateUser, navigate, setError);
     document.cookie =
       'wasLoggedIn=true; expires=Tue, 14 Feb 2023 12:00:00 UTCl path=/';
   };
@@ -78,6 +93,7 @@ function Login() {
           </p>
         </div>
       </form>
+      {error && <Modal text={error} fn={setError} />}
     </div>
   );
 }

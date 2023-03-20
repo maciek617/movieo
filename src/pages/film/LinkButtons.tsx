@@ -18,7 +18,7 @@ function LinkButtons({ ...props }: LinkButtonsProps) {
       >
         <Button text={props.platform} icon={true} addClasses='mr-5' />
       </a>
-      {props.show_profile && (
+      {props.show_profile && props.currentUserId !== props.user_id && (
         <Link to={'/profile/' + props.user_id}>
           <Button text={`Author's profile`} icon={true} />
         </Link>

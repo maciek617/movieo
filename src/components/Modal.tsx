@@ -50,7 +50,7 @@ function Modal({ ...props }: ModalProps) {
           className='fa-solid fa-xmark cursor-pointer absolute top-2 right-4 text-2xl'
         ></i>
         <p className='pt-5 pb-10 text-xl font-semibold text-center'>
-          "{props.text}"
+          {props.text}
         </p>
       </div>
     </div>

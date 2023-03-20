@@ -24,7 +24,6 @@ function EditReview() {
   const [characters, setCharacters] = useState<Array<string>>([]);
   const [platform, setPlatform] = useState<string>('Netflix');
   const [error, setError] = useState<string>('');
-  const [rate, setRate] = useState<number>(5);
   const [showComments, setShowComments] = useState<boolean>(false);
   const [userVote, setUserVote] = useState<boolean>(false);
   const [showProfile, setShowProfile] = useState<boolean>(false);
@@ -61,7 +60,6 @@ function EditReview() {
       setShowCreatedDate(data[0].show_created_date);
       setShowProfile(data[0].show_profile);
       setUserVote(data[0].user_can_vote);
-      setRate(data[0].rating);
     };
     if (!currentUser?.id) return;
     getSingleReviewData();
@@ -104,7 +102,6 @@ function EditReview() {
         description: review,
         actors: characters,
         platform: platform,
-        rating: rate,
         show_comments: showComments,
         show_profile: showProfile,
         user_can_vote: userVote,
@@ -297,25 +294,8 @@ function EditReview() {
             <Button text='+' addClasses='mt-4 ml-10' fn={addCharacter} />
           </div>
 
-          <div className='mt-5'>
-            <div className='flex gap-10 flex-wrap'>{charPills}</div>
-          </div>
-
           <div className='my-5'>
-            <p>Your overall rating</p>
-            <div className='flex items-center gap-5'>
-              <input
-                type='range'
-                min={0}
-                max={5}
-                step={1}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setRate(+e.target.value);
-                }}
-                value={rate}
-              />
-              <p>{rate} / 5</p>
-            </div>
+            <div className='flex gap-10 flex-wrap'>{charPills}</div>
           </div>
 
           <AddMovieCheckbox

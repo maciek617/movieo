@@ -17,7 +17,7 @@ function AddMovieTextarea({ ...props }: AddMovieTextareaProps) {
       >
         <label className='font-semibold text-xl mb-3'>{props.labelTitle}</label>
         <textarea
-          className='text-white w-full border-0 border-b-2 border-white bg-transparent outline-0 max-h-56 min-h-[30px]'
+          className='text-white w-full border-0 border-b-2 border-white bg-transparent outline-0 max-h-56 min-h-[100px]'
           placeholder={props.textareaPlaceholder}
           onChange={(e: any) => props.functionHandler(e.target.value)}
           value={props.textHandlerValue}
