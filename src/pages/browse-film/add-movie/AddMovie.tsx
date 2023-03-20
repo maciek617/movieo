@@ -165,10 +165,7 @@ function AddMovie() {
     if (!error) await addMovieData();
   };
 
-  const getNameFromUrl = () => {
-    console.log(img.lastIndexOf('/'));
-    console.log(img.slice(img.lastIndexOf('/') + 1));
-  };
+
   // Get bucket element
   const getBucketItems = async (image: string) => {
     const { data } = supabase.storage.from(currentUser.id).getPublicUrl(image);
@@ -259,7 +256,7 @@ function AddMovie() {
           <AddMovieImageScreen img={img} />
         </div>
 
-        <div onClick={() => getNameFromUrl()}>test</div>
+        
 
         <AddMovieTextarea
           labelTitle='Enter a brief (min. 20 words, max. 100 words)'

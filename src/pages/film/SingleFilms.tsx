@@ -23,7 +23,7 @@ function SingleFilms() {
 
     if (!id) return;
     fetchData(id);
-  }, []);
+  }, [id]);
 
   return (
     <div className='pt-32 px-6 bg-main-dark min-h-screen'>
@@ -56,6 +56,8 @@ function SingleFilms() {
             showCreated={filmData?.show_created_date}
             createdDate={filmData?.created_at}
             creatorId={filmData?.user_id}
+            filmType={filmData?.type}
+            id={id}
           />
         </div>
       ) : (

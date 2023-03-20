@@ -7,23 +7,29 @@ interface SingleFilmBoxProps {
   streamingPlatform: string;
   rating: number;
   user_can_vote: boolean;
+  small?: boolean;
 }
 
 function SingleFilmBox({ ...props }: SingleFilmBoxProps) {
   const [loaded, setLoaded] = useState(false);
+
   return (
     <div className='relative border-2 border-main-yellow rounded-md hover:cursor-pointer transition-all hover:scale-101'>
       <div className='bg-filtr-low w-full h-full'></div>
       <img
         src={props.image}
         alt='Film image cover'
-        className={`w-80 h-96 object-cover shadow-lg ${
-          loaded ? 'block' : 'hidden'
-        }`}
+        className={`${
+          props.small ? 'w-52 h-52' : 'w-80 h-96'
+        } object-cover shadow-lg ${loaded ? 'block' : 'hidden'}`}
         onLoad={() => setLoaded(true)}
       />
       {!loaded && (
-        <div className='w-96 h-52 object-cover shadow-lg pt-10'>
+        <div
+          className={`${
+            props.small ? 'w-52 h-52' : 'w-96 h-52'
+          } object-cover shadow-lg pt-10`}
+        >
           <Spinner />
         </div>
       )}
