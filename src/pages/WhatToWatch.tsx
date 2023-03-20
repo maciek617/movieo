@@ -66,7 +66,7 @@ function WhatToWatch() {
         .eq('id', currentUser?.id);
 
       if (error && !data) return;
-      setGenerationDate(data[0].date_to_next_generation);
+      setGenerationDate(data[0]?.date_to_next_generation);
       setPageLoad(true);
     };
 
@@ -94,7 +94,7 @@ function WhatToWatch() {
     updateTime();
   }, [generationDate]);
 
-  return currentUser?.id || localStorage.getItem('isLoggedIn') ? (
+  return currentUser?.confirmed_at || localStorage.getItem('isLoggedIn') ? (
     <div className='min-h-screen h-full bg-main-dark pt-32'>
       <div className={`${pageLoad ? 'block' : 'hidden'}`}>
         <div className='bg-main-dark text-white'>

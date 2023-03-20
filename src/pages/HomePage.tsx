@@ -27,42 +27,42 @@ function HomePage() {
     setThreeFilmsData(data);
   };
 
-  const getData = async () => {
-    const { data, error } = await supabase
-      .from('users')
-      .select('id')
-      .eq('id', currentUser?.id);
+  // const getData = async () => {
+  //   const { data, error } = await supabase
+  //     .from('users')
+  //     .select('id')
+  //     .eq('id', currentUser?.id);
 
-    setUserData(data?.length === 0);
-  };
+  //   setUserData(data?.length === 0);
+  // };
 
-  const insertData = async () => {
-    if (!currentUser?.id) return;
-    await getData();
+  // const insertData = async () => {
+  //   if (!currentUser?.id) return;
+  //   await getData();
 
-    if (userData) {
-      const { error } = await supabase.from('users').insert({
-        id: currentUser?.id,
-        created_at: currentUser?.created_at,
-        name: currentUser?.user_metadata.name,
-        email: currentUser?.email,
-        provider: currentUser?.app_metadata.provider,
-        last_update: currentUser?.updated_at,
-        liked_movies: [],
-        last_comment: [],
-        badge: 'User',
-        date_to_next_generation: null,
-        last_active: new Date(),
-        image: null,
-        brief: 'You can add brief in update profile page.',
-        post_length: 0,
-        comments_length: 0,
-      });
-    }
-  };
+  //   if (userData) {
+  //     const { error } = await supabase.from('users').insert({
+  //       id: currentUser?.id,
+  //       created_at: currentUser?.created_at,
+  //       name: currentUser?.user_metadata.name,
+  //       email: currentUser?.email,
+  //       provider: currentUser?.app_metadata.provider,
+  //       last_update: currentUser?.updated_at,
+  //       liked_movies: [],
+  //       last_comment: [],
+  //       badge: 'User',
+  //       date_to_next_generation: null,
+  //       last_active: new Date(),
+  //       image: null,
+  //       brief: 'You can add brief in update profile page.',
+  //       post_length: 0,
+  //       comments_length: 0,
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
-    insertData();
+    // insertData();
     getThreeFilmsReviewData();
   }, []);
 

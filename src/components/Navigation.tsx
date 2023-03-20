@@ -91,7 +91,9 @@ function Navigation({ ...props }: NavigationProps) {
           </NavLink>
         </ul>
       </div>
-      {props.user || localStorage.getItem('isLoggedIn') ? (
+      {props.user?.confirmed_at ||
+      (localStorage.getItem('isLoggedIn') && props.user?.confirmed_at) ||
+      localStorage.getItem('sb-uzlcyjmxvoczytwcmscx-auth-token') ? (
         <div className='relative'>
           <div
             onClick={() => setShowDropdown(!showDropdown)}

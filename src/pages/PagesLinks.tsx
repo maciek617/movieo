@@ -20,6 +20,7 @@ import EditReview from './film/film_edit/EditReview';
 import ReportPage from './report/ReportPage';
 import Support from './Support';
 import SupportPageTicket from './support-page/SupportPageTicket';
+import { useSelector } from 'react-redux';
 
 function PagesLinks() {
   const dispatch = useDispatch();
@@ -59,7 +60,14 @@ function PagesLinks() {
       <Route path='/coming' element={<ComingSoon />}></Route>
       <Route path='/what-to-watch' element={<WhatToWatch />}></Route>
       <Route path='/blog' element={<Blog />}></Route>
-      <Route path='/profile/:id' element={<Profile />}></Route>
+      <Route
+        path='/profile/:id'
+        element={
+          <ProtectedRoute user={'isLoggedIn'}>
+            <Profile />
+          </ProtectedRoute>
+        }
+      ></Route>
       <Route
         path='/signup'
         element={
@@ -115,10 +123,18 @@ function PagesLinks() {
     </Routes>
   );
 }
+
 const ProtectedRoute = ({ user, children }: { user: any; children: any }) => {
-  if (!localStorage.key(1)?.includes('auth')) {
+  const currentUser = useSelector((state: any) => state.currentUser.value);
+
+  if (currentUser !== null && !currentUser?.confirmed_at) {
+    return <Navigate to={'/wait-for-email'} replace />;
+  }
+
+  if (!localStorage.getItem('sb-uzlcyjmxvoczytwcmscx-auth-token')) {
     return <Navigate to={'/'} replace />;
   }
+
   return children;
 };
 
