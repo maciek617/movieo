@@ -9,6 +9,7 @@ import ProfileImage from '../ProfileImage';
 import ManThinkingImage from '../../../assets/man-thinking-to-start-a-startup.svg';
 import Pill from '../../../components/Pill';
 import Tooltip from '../../../components/Tooltip';
+import Modal from '../../../components/Modal';
 
 function EditProfile() {
   const { id } = useParams();
@@ -24,6 +25,8 @@ function EditProfile() {
   const [twitter, setTwitter] = useState<string>('');
   const [tiktok, setTiktok] = useState<string>('');
   const [img, setImg] = useState<any>();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [userDataInDeleteReq, setUserDataInDeleteReq] = useState<any>(['0']);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,6 +109,29 @@ function EditProfile() {
     );
 
     await getBucketItems(e.target.files[0]?.name);
+  };
+
+  const deleteUser = async () => {
+    if (userDataInDeleteReq?.includes(currentUser?.id)) return;
+
+    const checkIfUserExistInReq = async () => {
+      const { data, error } = await supabase
+        .from('delete_account_req')
+        .select('user_id');
+
+      if (!data || error) return error;
+
+      setUserDataInDeleteReq(data[0].user_id);
+    };
+
+    await checkIfUserExistInReq();
+
+    const { error } = await supabase
+      .from('delete_account_req')
+      .update({ user_id: [...userDataInDeleteReq, currentUser?.id] })
+      .eq('id', 1);
+
+    if (!error) setShowModal(!showModal);
   };
 
   return (
@@ -348,6 +374,10 @@ function EditProfile() {
           />
           <p className='text-sm mt-2'>*This action cannot be undone!</p>
         </div>
+        <div>
+          <p className='text-red-400'>*Delete my account</p>
+          <Button text='Delete my account' fn={deleteUser} />
+        </div>
       </div>
       {showTooltip && (
         <Tooltip
@@ -355,6 +385,12 @@ function EditProfile() {
           text='Changes saved!'
           isShow={showTooltip}
           closeTooltip={setShowTooltip}
+        />
+      )}
+      {showModal && (
+        <Modal
+          text='Your submission has been sent. Your account would be deleted in 24 hours.'
+          fn={setShowModal}
         />
       )}
     </div>

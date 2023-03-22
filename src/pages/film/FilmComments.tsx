@@ -1,11 +1,11 @@
-import Button from '../../components/Button';
-import Comment from './Comment';
 import { useState, useEffect } from 'react';
 import { countSingleWords } from '../../helpers/countWords';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../App';
 import moment from 'moment';
 import Tooltip from '../../components/Tooltip';
+import Button from '../../components/Button';
+import Comment from './Comment';
 interface FilmCommentsProps {
   userId: string;
   userImage: string;
@@ -18,6 +18,7 @@ function FilmComments({ ...props }: FilmCommentsProps) {
   const [commentText, setCommentText] = useState<string>('');
   const [filmComments, setFilmComments] = useState<any>([]);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchCommentsData = async () => {
       const { data, error } = await supabase
