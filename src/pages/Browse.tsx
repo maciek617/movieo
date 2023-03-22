@@ -4,15 +4,15 @@ import {
   streamingCategories,
   typeCategories,
 } from './browse-film/categories';
-import SideCategory from './browse-film/SideCategory';
-import SingleFilmBox from './browse-film/SingleFilmBox';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Spinner from '../components/Spinner';
-import Button from '../components/Button';
 import { createBucket } from '../helpers/createBucket';
 import { useSelector } from 'react-redux';
 import { supabase } from '../App';
+import SideCategory from './browse-film/SideCategory';
+import SingleFilmBox from './browse-film/SingleFilmBox';
+import Spinner from '../components/Spinner';
+import Button from '../components/Button';
 
 function Browse() {
   const navigate = useNavigate();

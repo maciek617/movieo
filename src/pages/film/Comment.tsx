@@ -14,7 +14,7 @@ function Comment({ ...props }: CommentProps) {
     <div className='flex py-5'>
       <Link to={'/profile/' + props.userId}>
         {props.userImage ? (
-          <img src={props.userImage} alt='Profile picture' />
+          <img src={props.userImage} alt='Profile picture' className='w-10 h-10 rounded-full object-cover' />
         ) : (
           <div className='w-10 h-10 rounded-full flex items-center justify-center border border-main-yellow text-white'>
             {props.name.charAt(0)}

@@ -1,18 +1,18 @@
-import Button from '../../components/Button';
-import Modal from '../../components/Modal';
 import { validateEmail } from '../../helpers/emailValidation';
 import { useState } from 'react';
 import { supabase } from '../../App';
 import { countSingleWords } from '../../helpers/countWords';
 import moment from 'moment';
 import Tooltip from '../../components/Tooltip';
+import Button from '../../components/Button';
+import Modal from '../../components/Modal';
 
 function SupportContactForm() {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string>('');
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string>('');
 
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,9 +29,9 @@ function SupportContactForm() {
     }
 
     if (countSingleWords(message) > 500) {
-       setError('Message cannot have more than 500 words.');
-       return;
-     }
+      setError('Message cannot have more than 500 words.');
+      return;
+    }
 
     const { error } = await supabase.from('contact').insert({
       id: Math.floor(Math.random() * 10000),
@@ -63,7 +63,9 @@ function SupportContactForm() {
               type='text'
               placeholder='John...'
               className='text-black px-4 py-2 w-full'
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setName(e.target.value)
+              }
               value={name}
             />
           </div>
@@ -74,7 +76,9 @@ function SupportContactForm() {
               type='email'
               placeholder='John...'
               className='text-black px-4 py-2 w-full'
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
               value={email}
             />
           </div>
@@ -84,7 +88,9 @@ function SupportContactForm() {
             <textarea
               placeholder='John...'
               className='text-black px-4 py-2 w-full'
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                setMessage(e.target.value)
+              }
               value={message}
             />
             <p className='mt-1'>{countSingleWords(message)} / 500</p>
@@ -94,7 +100,7 @@ function SupportContactForm() {
       </form>
 
       {error && <Modal text={error} fn={setError} />}
-      
+
       {showTooltip && (
         <Tooltip
           text='Message Sent!'

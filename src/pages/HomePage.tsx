@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 function HomePage() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
-  const [userData, setUserData] = useState(false);
   const [threeFilmsData, setThreeFilmsData] = useState<any>();
   const [expandBrief, setExpandBrief] = useState<boolean>(false);
   const [imageLoad, setImageLoad] = useState<boolean>(false);
@@ -23,46 +22,11 @@ function HomePage() {
   const getThreeFilmsReviewData = async () => {
     const { data, error } = await supabase.from('movies').select('*').limit(3);
 
-    if (!data && error) return;
+    if (!data || error) return;
     setThreeFilmsData(data);
   };
 
-  // const getData = async () => {
-  //   const { data, error } = await supabase
-  //     .from('users')
-  //     .select('id')
-  //     .eq('id', currentUser?.id);
-
-  //   setUserData(data?.length === 0);
-  // };
-
-  // const insertData = async () => {
-  //   if (!currentUser?.id) return;
-  //   await getData();
-
-  //   if (userData) {
-  //     const { error } = await supabase.from('users').insert({
-  //       id: currentUser?.id,
-  //       created_at: currentUser?.created_at,
-  //       name: currentUser?.user_metadata.name,
-  //       email: currentUser?.email,
-  //       provider: currentUser?.app_metadata.provider,
-  //       last_update: currentUser?.updated_at,
-  //       liked_movies: [],
-  //       last_comment: [],
-  //       badge: 'User',
-  //       date_to_next_generation: null,
-  //       last_active: new Date(),
-  //       image: null,
-  //       brief: 'You can add brief in update profile page.',
-  //       post_length: 0,
-  //       comments_length: 0,
-  //     });
-  //   }
-  // };
-
   useEffect(() => {
-    // insertData();
     getThreeFilmsReviewData();
   }, []);
 

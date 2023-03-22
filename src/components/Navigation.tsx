@@ -19,6 +19,7 @@ function Navigation({ ...props }: NavigationProps) {
   const dispatch = useDispatch();
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [changeBgColor, setChangeBgColor] = useState<boolean>(false);
+  // console.log(props.user);
 
   // Add class on scroll to navigation
   useEffect(() => {
@@ -94,13 +95,21 @@ function Navigation({ ...props }: NavigationProps) {
       {props.user?.confirmed_at ||
       (localStorage.getItem('isLoggedIn') && props.user?.confirmed_at) ||
       localStorage.getItem('sb-uzlcyjmxvoczytwcmscx-auth-token') ? (
-        <div className='relative'>
-          <div
-            onClick={() => setShowDropdown(!showDropdown)}
-            className='profile w-7 h-7 rounded-full border-2 flex items-center justify-center border-main-yellow cursor-pointer lg:w-9 lg:h-9 xl:w-11 xl:h-11'
-          >
+        <div
+          className='profile relative'
+          onClick={() => setShowDropdown(!showDropdown)}
+        >
+          <div className=' w-7 h-7 rounded-full border-2 flex items-center justify-center border-main-yellow cursor-pointer lg:w-9 lg:h-9 xl:w-11 xl:h-11'>
             <p className='profile text-white font-bold text-xl'>
-              {props.user?.user_metadata?.name[0]}
+              {props.user?.user_metadata.img ? (
+                <img
+                  src={props.user?.user_metadata.img}
+                  alt='profile picture'
+                  className='profile mr-5 w-10 h-10 rounded-full object-cover'
+                />
+              ) : (
+                props.user?.user_metadata?.name[0]
+              )}
             </p>
           </div>
           <div

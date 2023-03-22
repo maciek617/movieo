@@ -1,10 +1,10 @@
-import PagesLinks from './pages/PagesLinks';
-import Navigation from './components/Navigation';
+import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { useSelector } from 'react-redux';
-import Footer from './components/Footer';
-import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import PagesLinks from './pages/PagesLinks';
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
 
 export const supabase = createClient(
   'https://uzlcyjmxvoczytwcmscx.supabase.co',
@@ -12,7 +12,7 @@ export const supabase = createClient(
 );
 
 function App() {
-  const [userData, setUserData] = useState<any>();
+  const [userExist, setUserExist] = useState<boolean>(false);
   const currentUser = useSelector((state: any) => state.currentUser.value);
   const location = useLocation();
 
@@ -22,14 +22,15 @@ function App() {
       .select('id')
       .eq('id', currentUser?.id);
 
-    return data?.length === 0 ? setUserData(0) : setUserData(data?.[0]);
+    data?.length === 0 ? setUserExist(true) : setUserExist(false);
+
+    return error;
   };
 
   const insertData = async () => {
     if (!currentUser?.id) return;
-    await getData();
 
-    if (userData === 0) {
+    if (userExist) {
       const { error } = await supabase.from('users').insert({
         id: currentUser?.id,
         created_at: currentUser?.created_at,
@@ -46,9 +47,14 @@ function App() {
         brief: 'You can add brief in update profile page.',
         post_length: 0,
         comments_length: 0,
+        facebook: 'https://www.facebook.com',
+        instagram: 'https://www.instagram.com',
+        twitter: 'https://www.twitter.com',
+        tiktok: 'https://www.tiktok.com',
       });
 
       localStorage.setItem('user_created', 'true');
+      return error;
     }
   };
 
@@ -60,9 +66,10 @@ function App() {
 
   useEffect(() => {
     if (!currentUser?.confirmed_at || !localStorage.getItem('user_created')) {
+      getData();
       insertData();
     }
-  });
+  }, []);
 
   return (
     <div className='App'>

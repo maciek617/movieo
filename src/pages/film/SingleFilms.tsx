@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../App';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Spinner from '../../components/Spinner';
 import RightSideInfo from './RightSideInfo';
 import LeftSideInfo from './LeftSideInfo';
 import DownSideInfo from './DownSideInfo';
-import { useSelector } from 'react-redux';
 
 function SingleFilms() {
   const { id } = useParams();

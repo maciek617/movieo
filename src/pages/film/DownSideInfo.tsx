@@ -74,7 +74,11 @@ function DownSideInfo({ ...props }: DownSideInfoProps) {
           )}
           <FilmComments
             userId={currentUser?.id}
-            userImage={currentUser?.image ? currentUser?.image : ''}
+            userImage={
+              currentUser?.user_metadata.img
+                ? currentUser?.user_metadata.img
+                : ''
+            }
             userName={currentUser?.user_metadata?.name}
             creatorId={props.creatorId}
           />

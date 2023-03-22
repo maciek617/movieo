@@ -21,6 +21,7 @@ import ReportPage from './report/ReportPage';
 import Support from './Support';
 import SupportPageTicket from './support-page/SupportPageTicket';
 import { useSelector } from 'react-redux';
+import EditProfile from './profile/edit-profile/EditProfile';
 
 function PagesLinks() {
   const dispatch = useDispatch();
@@ -65,6 +66,14 @@ function PagesLinks() {
         element={
           <ProtectedRoute user={'isLoggedIn'}>
             <Profile />
+          </ProtectedRoute>
+        }
+      ></Route>
+      <Route
+        path='/profile/:id/edit'
+        element={
+          <ProtectedRoute user={'isLoggedIn'}>
+            <EditProfile />
           </ProtectedRoute>
         }
       ></Route>

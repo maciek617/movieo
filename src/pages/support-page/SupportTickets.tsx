@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../App';
 import { useSelector } from 'react-redux';
-import Spinner from '../../components/Spinner';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../../components/Spinner';
 interface SupportTicketsProps {
   currentBox: string;
 }
@@ -19,7 +19,7 @@ function SupportTickets({ ...props }: SupportTicketsProps) {
         .select('*')
         .eq('user_id', currentUser?.id);
 
-      if (!data && error) return;
+      if (!data || error) return;
 
       setTicketData(data.reverse());
     };

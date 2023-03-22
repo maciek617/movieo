@@ -129,7 +129,10 @@ function FilmComments({ ...props }: FilmCommentsProps) {
       <div className='mt-5 my-10 flex border-b border-gray-600 pb-5 w-4/5 flex-col'>
         <div className='flex'>
           {props.userImage ? (
-            <img src={props.userImage} />
+            <img
+              src={props.userImage}
+              className='mr-5 w-10 h-10 rounded-full object-cover'
+            />
           ) : (
             <div className='mr-5 w-10 h-10 rounded-full border border-main-yellow flex items-center justify-center text-white'>
               {props.userName.charAt(0)}

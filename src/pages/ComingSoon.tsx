@@ -24,18 +24,16 @@ function ComingSoon() {
     );
   });
 
-  const movies = sortedByDateUpcomingMovies?.map(
-    (movie: any, index: number) => {
-      return (
-        <ComingSoonFilm
-          key={movie.title}
-          filmTitle={movie.title}
-          filmImage={'http://image.tmdb.org/t/p/w500/' + movie.poster_path}
-          filmDate={Date.parse(movie.release_date)}
-        />
-      );
-    }
-  );
+  const movies = sortedByDateUpcomingMovies?.map((movie: any) => {
+    return (
+      <ComingSoonFilm
+        key={movie.title}
+        filmTitle={movie.title}
+        filmImage={'http://image.tmdb.org/t/p/w500/' + movie.poster_path}
+        filmDate={Date.parse(movie.release_date)}
+      />
+    );
+  });
 
   return (
     <div className='min-h-screen bg-main-dark py-32'>
