@@ -208,7 +208,7 @@ function EditProfile() {
           <Button
             text='Save'
             addClasses='ml-2'
-            fn={() => updateSingleField({ name: newName })}
+            fn={() => newName.length && updateSingleField({ name: newName })}
           />
         </div>
         <div className='my-5'>
@@ -225,7 +225,9 @@ function EditProfile() {
             <Button
               text='Save'
               addClasses='ml-2'
-              fn={() => updateSingleField({ brief: newBrief })}
+              fn={() =>
+                newBrief.length && updateSingleField({ brief: newBrief })
+              }
             />
           </div>
         </div>
@@ -244,7 +246,7 @@ function EditProfile() {
             text='Add'
             addClasses='ml-2'
             fn={() => {
-              setNewHobbies([...newHobbies, newHobby]);
+              newHobby.length && setNewHobbies([...newHobbies, newHobby]);
               setNewHobby('');
             }}
           />
@@ -288,7 +290,9 @@ function EditProfile() {
             <Button
               text='Save'
               addClasses='ml-2'
-              fn={() => updateSingleField({ facebook: facebook })}
+              fn={() =>
+                facebook.length && updateSingleField({ facebook: facebook })
+              }
             />
           </div>
           <div className='flex items-center'>
@@ -308,6 +312,7 @@ function EditProfile() {
               text='Save'
               addClasses='ml-2'
               fn={() =>
+                instagram.length &&
                 updateSingleField({
                   instagram: instagram,
                 })
@@ -331,6 +336,7 @@ function EditProfile() {
               text='Save'
               addClasses='ml-2'
               fn={() =>
+                twitter.length &&
                 updateSingleField({
                   twitter: twitter,
                 })
@@ -354,6 +360,7 @@ function EditProfile() {
               text='Save'
               addClasses='ml-2'
               fn={() =>
+                tiktok.length &&
                 updateSingleField({
                   tiktok: tiktok,
                 })
@@ -377,6 +384,11 @@ function EditProfile() {
         <div>
           <p className='text-red-400'>*Delete my account</p>
           <Button text='Delete my account' fn={deleteUser} />
+          <Link to={'/profile/' + currentUser?.id}>
+            <p className='text-main-yellow text-sm cursor-pointer mt-5'>
+              Back to your profile
+            </p>
+          </Link>
         </div>
       </div>
       {showTooltip && (

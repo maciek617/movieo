@@ -100,12 +100,24 @@ function AddMovie() {
           .update({ post_length: data[0]?.post_length + 1 })
           .eq('id', currentUser?.id);
 
+        await getGeneralInfo();
         if (!error) {
           setShowSpinner(false);
           navigate('/browse/most-popular/netflix/action');
         }
       }
     }
+  };
+
+  const getGeneralInfo = async () => {
+    const { data } = await supabase.from('general').select('post').eq('id', 1);
+
+    if (!data) return;
+
+    const { error } = await supabase
+      .from('general')
+      .update({ post: data?.[0]?.post + 1 })
+      .eq('id', 1);
   };
 
   // Set movie with validation
@@ -164,7 +176,6 @@ function AddMovie() {
 
     if (!error) await addMovieData();
   };
-
 
   // Get bucket element
   const getBucketItems = async (image: string) => {
@@ -255,8 +266,6 @@ function AddMovie() {
           />
           <AddMovieImageScreen img={img} />
         </div>
-
-        
 
         <AddMovieTextarea
           labelTitle='Enter a brief (min. 20 words, max. 100 words)'

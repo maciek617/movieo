@@ -99,7 +99,7 @@ function Navigation({ ...props }: NavigationProps) {
           className='profile relative'
           onClick={() => setShowDropdown(!showDropdown)}
         >
-          <div className=' w-7 h-7 rounded-full border-2 flex items-center justify-center border-main-yellow cursor-pointer lg:w-9 lg:h-9 xl:w-11 xl:h-11'>
+          <div className=' w-10 h-10 rounded-full border-2 flex items-center justify-center border-main-yellow cursor-pointer lg:w-9 lg:h-9 xl:w-11 xl:h-11'>
             <p className='profile text-white font-bold text-xl'>
               {props.user?.user_metadata.img ? (
                 <img

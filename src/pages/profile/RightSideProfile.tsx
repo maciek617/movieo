@@ -10,11 +10,11 @@ interface RightSideProfileProps {
 }
 
 function RightSideProfile({ ...props }: RightSideProfileProps) {
-  const allHobbies = props.hobby
+  const allHobbies = props.hobby.length
     ? props.hobby
-    : ['Add hobby 1', 'Add hobby 2', 'Add hobby 3'];
+    : ['You can', 'Add hobby', 'In Edit Page'];
 
-  const hobbies = allHobbies.map((hobby: string) => {
+  const hobbies = allHobbies?.map((hobby: string) => {
     return (
       <p key={hobby} className='text-md max-w-3xl'>
         {hobby}
@@ -40,7 +40,6 @@ function RightSideProfile({ ...props }: RightSideProfileProps) {
         </p>
         <p className='text-md max-w-3xl'>Reviews: {props.posts} </p>
         <p className='text-md max-w-3xl'>Comments: {props.comments} </p>
-        <p className='text-md max-w-3xl'>Total active time: </p>
       </div>
       <div className='mt-5'>
         <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>

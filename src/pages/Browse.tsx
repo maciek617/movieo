@@ -158,6 +158,7 @@ function Browse() {
           {!data || data.length < 1 ? (
             <div className='pt-10'>
               <Spinner />
+              <p className='text-center mt-10 font-bold'>No data.</p>
             </div>
           ) : (
             <div className='flex justify-evenly pt-10 flex-wrap gap-5'>

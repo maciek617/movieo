@@ -9,9 +9,11 @@ import ProfileImage from './ProfileImage';
 import ProfileSingleField from './ProfileSingleField';
 import ProfileButtons from './ProfileButtons';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 function Profile() {
   const { id } = useParams();
+  const currentUser = useSelector((state: any) => state.currentUser.value);
   const [userData, setUserData] = useState<any>();
 
   useEffect(() => {
@@ -22,6 +24,7 @@ function Profile() {
         .eq('id', id);
 
       if (!data && error) return;
+
       setUserData(data[0]);
     };
 
@@ -54,8 +57,8 @@ function Profile() {
               bigFont={true}
             />
 
-            <ProfileButtons currentUserId={userData?.id} routeId={id} />
-            
+            <ProfileButtons currentUserId={currentUser?.id} routeId={id} />
+
             <ProfileSocialMedia
               facebook={userData?.facebook}
               instagram={userData?.instagram}

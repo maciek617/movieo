@@ -22,15 +22,15 @@ function App() {
       .select('id')
       .eq('id', currentUser?.id);
 
-    data?.length === 0 ? setUserExist(true) : setUserExist(false);
-
-    return error;
+    if (!data || error) return;
+    return setUserExist(data?.length === 0);
   };
 
   const insertData = async () => {
     if (!currentUser?.id) return;
-
     if (userExist) {
+      console.log('created');
+
       const { error } = await supabase.from('users').insert({
         id: currentUser?.id,
         created_at: currentUser?.created_at,
@@ -53,6 +53,8 @@ function App() {
         tiktok: 'https://www.tiktok.com',
       });
 
+      console.log(error);
+
       localStorage.setItem('user_created', 'true');
       return error;
     }
@@ -65,11 +67,17 @@ function App() {
   }, [location]);
 
   useEffect(() => {
-    if (!currentUser?.confirmed_at || !localStorage.getItem('user_created')) {
-      getData();
-      insertData();
-    }
-  }, []);
+    const getAllInfo = async () => {
+      if (
+        (currentUser?.confirmed_at && currentUser?.id) ||
+        !localStorage.getItem('user_created')
+      ) {
+        await getData();
+        await insertData();
+      }
+    };
+    getAllInfo();
+  }, [userExist, currentUser]);
 
   return (
     <div className='App'>

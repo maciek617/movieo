@@ -8,6 +8,7 @@ import bgSignupCover from '../../assets/signup-bg.jpg';
 import IconToggle from '../../components/IconToggle';
 import Modal from '../../components/Modal';
 import { validateEmail } from '../../helpers/emailValidation';
+import { supabase } from '../../App';
 function Signup() {
   const navigate = useNavigate();
   const disptach = useDispatch();
@@ -20,11 +21,9 @@ function Signup() {
   const [show, setShow] = useState<boolean>(false);
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
-  const signupUserWithPassword = (e: any) => {
+  const signupUserWithPassword = async (e: any) => {
     e.preventDefault();
-    // TODO: Validation
-    // Check if all fields are filled
-    // Setting errors
+
     if (!name || !email || !password || !confirmPassword) {
       setError('All fields must be filled');
       return;
@@ -54,6 +53,18 @@ function Signup() {
 
     setError('');
     registerUser(email, password, name, disptach, updateUser, navigate);
+    await getGeneralInfo();
+  };
+
+  const getGeneralInfo = async () => {
+    const { data } = await supabase.from('general').select('post').eq('id', 1);
+
+    if (!data) return;
+
+    const { error } = await supabase
+      .from('general')
+      .update({ post: data?.[0]?.post + 1 })
+      .eq('id', 1);
   };
 
   //   Set state of each input fields

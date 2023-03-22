@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { supabase } from '../../App';
 interface CommentProps {
   name: string;
   userId: string;
@@ -10,11 +12,30 @@ interface CommentProps {
   creatorId: string;
 }
 function Comment({ ...props }: CommentProps) {
+  const [badge, setBadge] = useState<string>('');
+  useEffect(() => {
+    const fetchUserBadge = async () => {
+      const { data, error } = await supabase
+        .from('users')
+        .select('badge')
+        .eq('id', props.userId);
+
+      if (!data || error) return;
+      setBadge(data[0].badge);
+    };
+
+    fetchUserBadge();
+  }, []);
+
   return (
     <div className='flex py-5'>
       <Link to={'/profile/' + props.userId}>
         {props.userImage ? (
-          <img src={props.userImage} alt='Profile picture' className='w-10 h-10 rounded-full object-cover' />
+          <img
+            src={props.userImage}
+            alt='Profile picture'
+            className='w-10 h-10 rounded-full object-cover'
+          />
         ) : (
           <div className='w-10 h-10 rounded-full flex items-center justify-center border border-main-yellow text-white'>
             {props.name.charAt(0)}
@@ -32,6 +53,11 @@ function Comment({ ...props }: CommentProps) {
               {props.userId === props.creatorId && (
                 <span className='ml-5 text-main-yellow'>
                   <i className='fa-solid fa-check'></i> Author
+                </span>
+              )}
+              {badge === 'Mod' && (
+                <span className='ml-5 text-green-400'>
+                  <i className='fa-solid fa-check'></i> Mod
                 </span>
               )}
             </p>
