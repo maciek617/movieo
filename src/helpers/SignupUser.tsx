@@ -26,5 +26,5 @@ export const registerUser = async (
       'wasLoggedIn=true; expires=Mon, 01 Feb 2024 12:00:00 UTCl path=/';
   }
 
-  navigate('/wait-for-email');
+  if (!error) navigate('/wait-for-email');
 };

@@ -21,7 +21,7 @@ function Comment({ ...props }: CommentProps) {
         .eq('id', props.userId);
 
       if (!data || error) return;
-      setBadge(data[0].badge);
+      setBadge(data[0]?.badge);
     };
 
     fetchUserBadge();

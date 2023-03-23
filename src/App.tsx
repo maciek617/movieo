@@ -54,9 +54,8 @@ function App() {
       });
 
       console.log(error);
-
+      if (!error) return;
       localStorage.setItem('user_created', 'true');
-      return error;
     }
   };
 

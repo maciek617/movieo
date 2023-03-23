@@ -6,83 +6,76 @@ interface RatingProps {
   userId: string;
   user_can_vote: boolean;
 }
+
+interface Rate {
+  id: string;
+  rate: number;
+}
 function Rating({ ...props }: RatingProps) {
-  const [rate, setRate] = useState(0);
-  const [allRates, setAllRates] = useState<any>();
-  const [voted, setVoted] = useState(false);
-  const [usersRating, setUsersRating] = useState<any>(0);
+  const [rate, setRate] = useState<number>(0);
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [showWrongTooltip, setShowWrongTooltip] = useState<boolean>(false);
+  const [allRates, setAllRates] = useState<Rate[]>([]);
+  const [currentUserRate, setCurrentUserRate] = useState<Rate[]>([]);
+  const [sumOfAlLRates, setSumOfAllRates] = useState<number>(0);
   const starsArr = [5, 4, 3, 2, 1];
 
   useEffect(() => {
-    const getAllRates = async () => {
+    const getCurrentUserVotedData = async () => {
       const { data, error } = await supabase
         .from('movies')
         .select('rates')
         .eq('id', props.routeId);
 
-      if (error && !data) return;
-      setAllRates(data[0].rates);
+      setAllRates(data?.[0].rates);
+      setCurrentUserRate(
+        data?.[0].rates.filter((el: any) => el.id === props.userId)
+      );
     };
 
-    const getRating = async () => {
-      const { data, error } = await supabase
-        .from('movies')
-        .select('rating')
-        .eq('id', props.routeId);
-
-      if (error && !data) return;
-      setUsersRating(data[0].rating);
-    };
-    getAllRates();
-    getRating();
-  }, []);
+    getCurrentUserVotedData();
+  }, [props.routeId]);
 
   useEffect(() => {
-    const singleUserRate = allRates?.filter(
-      (e: any) => e.id === props.userId
-    )[0]?.rate;
-
-    return setRate(singleUserRate ? singleUserRate : 0);
+    setRate(currentUserRate?.[0]?.rate);
+    setSumOfAllRates(allRates.reduce((a, b) => a + b.rate, 0));
   }, [allRates]);
 
-  const updateSingleRating = async (userRate: number) => {
-    const { error } = await supabase
-      .from('movies')
-      .update({
-        rating: allRates?.length
-          ? (usersRating + userRate) / (allRates?.length + 1)
-          : usersRating + userRate,
-      })
-      .eq('id', props.routeId);
-  };
-
-  const updateRating = async (userRate: number) => {
-    if (!voted && !allRates.some((e: any) => e.id === props.userId)) {
-      setShowWrongTooltip(false);
-      const { error } = await supabase
-        .from('movies')
-        .update({ rates: [...allRates, { id: props.userId, rate: userRate }] })
-        .eq('id', props.routeId);
-
-      if (error) return;
-      await updateSingleRating(userRate);
-      setShowTooltip(true);
-    } else {
+  const updateRating = async (starCount: number) => {
+    if (rate) {
       setShowWrongTooltip(true);
+      return;
     }
+
+    const updateRates = async () => {
+      await supabase
+        .from('movies')
+        .update({
+          rates: [{ id: props.userId, rate: starCount }, ...allRates],
+        })
+        .eq('id', props.routeId);
+    };
+
+    const updateRating = async () => {
+      await supabase
+        .from('movies')
+        .update({
+          rating: (sumOfAlLRates + starCount) / (allRates?.length + 1),
+        })
+        .eq('id', props.routeId);
+    };
+
+    await updateRates();
+    await updateRating();
+    setRate(starCount);
+    setShowTooltip(true);
   };
 
   const star = starsArr.map((star, index) => {
     return (
       <i
         key={index}
-        onClick={() => {
-          setRate(star);
-          setVoted(true);
-          updateRating(star);
-        }}
+        onClick={async () => await updateRating(star)}
         className={`fa-solid fa-star ${
           rate + 1 > star ? 'text-main-yellow' : ''
         }`}

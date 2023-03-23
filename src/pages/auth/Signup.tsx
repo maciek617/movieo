@@ -63,7 +63,7 @@ function Signup() {
 
     const { error } = await supabase
       .from('general')
-      .update({ post: data?.[0]?.post + 1 })
+      .update({ users: data?.[0]?.post + 1 })
       .eq('id', 1);
   };
 
