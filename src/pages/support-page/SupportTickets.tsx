@@ -35,7 +35,7 @@ function SupportTickets({ ...props }: SupportTicketsProps) {
           if (ticket.is_closed) return;
           navigate('/support/' + ticket.id);
         }}
-        className={`cursor-pointer transition-all ${
+        className={`cursor-pointer transition-all${
           ticket.is_closed
             ? 'cursor-not-allowed bg-gray-900'
             : 'bg-transparent hover:bg-gray-600'
@@ -67,7 +67,7 @@ function SupportTickets({ ...props }: SupportTicketsProps) {
         <>
           <table className='text-center max-w-7xl w-full mx-auto'>
             <tbody className='w-full relative'>
-              <tr className='text-2xl'>
+              <tr className='text-sm'>
                 <th>Id</th>
                 <th>Date</th>
                 <th>Response Status</th>

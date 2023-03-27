@@ -1,15 +1,15 @@
 import { useState } from 'react';
+
 interface FAQProps {
   faqs: Array<any>;
 }
 function FAQ({ ...props }: FAQProps) {
-  // What to expect
   const [clickedIndex, setClickedIndex] = useState<number>(0);
   const allFaqs = props.faqs.map((fq, index) => {
     return (
       <div
         key={index}
-        className='max-w-2xl w-full text-left mx-auto my-10 hover:text-main-yellow'
+        className=' max-w-2xl w-full text-left mx-auto my-10 transition-all hover:text-main-yellow px-4'
       >
         <p
           onClick={() => setClickedIndex(index)}

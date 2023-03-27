@@ -6,6 +6,7 @@ import FAQ from '../components/FAQ';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+import Heading from '../components/Heading';
 
 function WhatToWatch() {
   const currentUser = useSelector((state: any) => state.currentUser.value);
@@ -100,9 +101,11 @@ function WhatToWatch() {
         <div className='bg-main-dark text-white'>
           {generationDate !== null &&
             Date.parse(generationDate) - +today > 0 && (
-              <p className='text-center py-10'>
-                Your next generation will be in: {hours && hours} hours{' '}
-                {minutes && minutes} minutes.
+              <p className='text-center py-10 lg:text-lg'>
+                Your next generation will be in:{' '}
+                <span className='bg-main-yellow text-black block py-2 my-2'>
+                  {hours && hours} hours {minutes && minutes} minutes
+                </span>
               </p>
             )}
 
@@ -110,11 +113,12 @@ function WhatToWatch() {
             Date.parse(generationDate) - +today > 0) ||
             (!randomMovie?.id && (
               <div className='flex items-center justify-center flex-col'>
-                <h1 className='text-2xl max-w-4xl text-center mt-32'>
-                  You cannot decide what to review or watch? We're same but, we
+                <Heading
+                  title="Can't decide what to watch?"
+                  description="You cannot decide what to review or watch? We're same but, we
                   provided movie picker just click button below and start
-                  exploring!
-                </h1>
+                  exploring!"
+                />
                 <Button
                   text={'Pick random movie'}
                   addClasses='mt-10'
@@ -125,7 +129,7 @@ function WhatToWatch() {
 
           {randomMovie?.id && (
             <div className='flex flex-col items-center justify-center'>
-              <h1 className='py-4 text-4xl'>
+              <h1 className='p-4 text-2xl text-center'>
                 Your randomly picked movie is right below:
               </h1>
               <SingleFilmBox
@@ -147,7 +151,11 @@ function WhatToWatch() {
             </div>
           )}
         </div>
-        <div className='bg-main-dark text-white py-20'>
+        <div className='bg-main-dark text-white py-20 border max-w-3xl mx-auto rounded-xl'>
+          <Heading
+            title='Check out this frequently asked questions.'
+            description='You do not see the question you want ask? No problem go to contact page and send us a message.'
+          />
           <FAQ faqs={faqBase} />
         </div>
       </div>

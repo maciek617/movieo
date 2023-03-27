@@ -136,12 +136,12 @@ function EditProfile() {
 
   return (
     <div className='bg-main-dark min-h-screen'>
-      <div className='container mx-auto text-white pt-32'>
+      <div className='container mx-auto text-white pt-28'>
         <div className='mb-10'>
           <h1 className='text-4xl tracking-wide font-bold'>
             My profile{' '}
             <Link to={'/profile/' + currentUser?.id}>
-              <span className='text-main-yellow text-sm cursor-pointer'>
+              <span className='text-main-yellow text-xs cursor-pointer lg:text-sm'>
                 Back to your profile
               </span>
             </Link>
@@ -153,7 +153,7 @@ function EditProfile() {
           <h1 className='text-4xl tracking-wide font-bold'>
             Your profile picture
           </h1>
-          <div className='flex gap-10 mt-5'>
+          <div className='flex gap-10 mt-5 flex-col items-start lg:flex-row lg:items-center'>
             <div className='w-44 h-44'>
               <ProfileImage
                 name={currentUser?.user_metadata?.name}
@@ -180,7 +180,7 @@ function EditProfile() {
               </label>
               <Button text='Remove picture' fn={removePicture} />
             </div>
-            <div className='max-w-lg w-full bg-gray-600 h-52 flex items-center p-4 rounded-md ml-20'>
+            <div className='max-w-lg w-full bg-gray-600 h-52 items-center p-4 rounded-md ml-14 hidden lg:flex'>
               <img
                 src={ManThinkingImage}
                 alt='Man thinking'
@@ -250,7 +250,7 @@ function EditProfile() {
               setNewHobby('');
             }}
           />
-          <div className='flex gap-10 my-5'>
+          <div className='flex gap-10 my-5 flex-wrap'>
             {newHobbies?.map((hobby, index) => {
               return (
                 <div
@@ -370,15 +370,17 @@ function EditProfile() {
         </div>
         <div className='py-5'>
           <p className='tracking-wider pb-2'>Reset your statistics</p>
-          <Button
-            text='Reset comments count'
-            fn={() => updateSingleField({ comments_length: 0 })}
-          />
-          <Button
-            text='Reset post count'
-            addClasses='ml-2'
-            fn={() => updateSingleField({ post_length: 0 })}
-          />
+          <div className='flex flex-col items-start gap-2 lg:flex-row'>
+            <Button
+              text='Reset comments count'
+              fn={() => updateSingleField({ comments_length: 0 })}
+            />
+            <Button
+              text='Reset post count'
+              addClasses='lg:ml-2'
+              fn={() => updateSingleField({ post_length: 0 })}
+            />
+          </div>
           <p className='text-sm mt-2'>*This action cannot be undone!</p>
         </div>
         <div>

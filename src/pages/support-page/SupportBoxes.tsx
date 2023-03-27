@@ -12,17 +12,17 @@ function SupportBoxes({ ...props }: SupportBoxesProps) {
     dispatch(updateDisplayState(title));
 
   return (
-    <div className='flex items-center justify-center gap-10 mt-20'>
+    <div className='flex items-center justify-center gap-10 mt-20 flex-wrap'>
       <div
         onClick={() => updateDisplayBox('contact')}
         className={`${
           props.currentBox === 'contact' ? 'bg-main-yellow' : 'bg-white'
-        } text-black px-6 py-3 rounded-lg cursor-pointer hover:bg-main-yellow transition-all font-semibold`}
+        } text-black px-4 py-3 rounded-lg cursor-pointer hover:bg-main-yellow transition-all font-semibold lg:px-6`}
       >
         Contact
       </div>
       <Link to={'/report'}>
-        <div className='bg-white text-black px-6 py-3 rounded-lg cursor-pointer hover:bg-main-yellow transition-all font-semibold'>
+        <div className='bg-white text-black px-4 py-3 rounded-lg cursor-pointer hover:bg-main-yellow transition-all font-semibold lg:px-6'>
           Report a problem
         </div>
       </Link>
@@ -30,7 +30,7 @@ function SupportBoxes({ ...props }: SupportBoxesProps) {
         onClick={() => updateDisplayBox('ticket')}
         className={`${
           props.currentBox === 'ticket' ? 'bg-main-yellow' : 'bg-white'
-        } text-black px-6 py-3 rounded-lg cursor-pointer hover:bg-main-yellow transition-all font-semibold`}
+        } text-black px-4 py-3 rounded-lg cursor-pointer hover:bg-main-yellow transition-all font-semibold lg:px-6`}
       >
         Your tickets
       </div>

@@ -14,7 +14,7 @@ function LeftSideInfo({ ...props }: LeftSideInfoProps) {
       <img
         src={props.image}
         alt='cover image'
-        className={`max-w-3xl w-full h-full object-cover rounded-md ${
+        className={`max-w-3xl max-h-[500px] w-full h-full object-cover rounded-md ${
           loaded ? 'block' : 'hidden'
         }`}
         onLoad={() => {

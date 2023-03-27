@@ -28,8 +28,8 @@ function SingleFilms() {
   return (
     <div className='pt-32 px-6 bg-main-dark min-h-screen'>
       {filmData?.image ? (
-        <div className='container mx-auto'>
-          <div className='w-full h-96 flex justify-around gap-10 text-white'>
+        <div className='container mx-auto min-h-screen'>
+          <div className='w-full flex flex-col justify-around gap-10 text-white lg:flex-row'>
             <LeftSideInfo
               image={filmData?.image}
               type={filmData?.type}
@@ -50,15 +50,17 @@ function SingleFilms() {
               show_profile={filmData?.show_profile}
             />
           </div>
-          <DownSideInfo
-            desc={filmData?.description}
-            showComments={filmData?.show_comments}
-            showCreated={filmData?.show_created_date}
-            createdDate={filmData?.created_at}
-            creatorId={filmData?.user_id}
-            filmType={filmData?.type}
-            id={id}
-          />
+          <div>
+            <DownSideInfo
+              desc={filmData?.description}
+              showComments={filmData?.show_comments}
+              showCreated={filmData?.show_created_date}
+              createdDate={filmData?.created_at}
+              creatorId={filmData?.user_id}
+              filmType={filmData?.type}
+              id={id}
+            />
+          </div>
         </div>
       ) : (
         <Spinner isDark={true} />

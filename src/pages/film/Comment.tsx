@@ -47,16 +47,16 @@ function Comment({ ...props }: CommentProps) {
           <Link to={'/profile/' + props.userId}>
             <p className='text-white text-sm font-semibold'>
               {props.name}{' '}
-              <span className='tracking-wider text-gray-500 text-sm font-thin ml-5'>
+              <span className='tracking-wider text-gray-500 text-sm font-thin ml-2 lg:ml-5'>
                 {props.when}
               </span>
               {props.userId === props.creatorId && (
-                <span className='ml-5 text-main-yellow'>
+                <span className='text-main-yellow block lg:ml-5 lg:inline-block'>
                   <i className='fa-solid fa-check'></i> Author
                 </span>
               )}
               {badge === 'Mod' && (
-                <span className='ml-5 text-green-400'>
+                <span className='text-green-400 block lg:ml-5 md:inline-block'>
                   <i className='fa-solid fa-check'></i> Mod
                 </span>
               )}

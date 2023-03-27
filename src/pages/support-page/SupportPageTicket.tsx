@@ -22,7 +22,6 @@ function SupportPageTicket() {
     userName: currentUser?.user_metadata.name,
     userId: currentUser?.id,
     date: moment(new Date()).format('MMMM Do YYYY, h:mm:ss a'),
-    userImage: currentUser?.image && null,
     msg: msg,
     writerBadge: badge,
   };
@@ -93,102 +92,103 @@ function SupportPageTicket() {
   };
   return (
     <div className='bg-main-dark min-h-screen'>
-      {allMsg?.[0].user_id === currentUser?.id || badge === 'Mod' ? (
-        <>
-          {showTooltip && (
-            <Tooltip
-              variant='green'
-              text='Closed!'
-              isShow={showTooltip}
-              closeTooltip={setShowTooltip}
-            />
-          )}
+      <div className='container mx-auto px-4'>
+        {allMsg?.[0].user_id === currentUser?.id || badge === 'Mod' ? (
+          <>
+            {showTooltip && (
+              <Tooltip
+                variant='green'
+                text='Closed!'
+                isShow={showTooltip}
+                closeTooltip={setShowTooltip}
+              />
+            )}
 
-          {showEndScreen || allMsg?.[0].is_closed ? (
-            <SupportClosedTicketScreen />
-          ) : null}
+            {showEndScreen || allMsg?.[0].is_closed ? (
+              <SupportClosedTicketScreen />
+            ) : null}
 
-          <div className='flex justify-center'>
-            <div className='pt-32 text-white'>
-              <p className='mb-4'>Problem: {allMsg?.[0].problem}</p>
-              {allMsg?.[0]?.responses.length > 0 ? (
-                allMsg[0]?.responses?.map((res: any) => {
-                  return (
-                    <div className='flex items-start gap-5 my-5' key={res.date}>
-                      <div className='flex flex-col justify-center items-center border-r-2 pr-5 min-w-[150px]'>
-                        <Link
-                          to={'/profile/' + currentUser?.id}
-                          target='_blank'
-                        >
-                          <img
-                            src='https://images.pexels.com/photos/13862328/pexels-photo-13862328.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-                            alt='image'
-                            className={`w-14 h-14 object-cover rounded-full cursor-pointer ${
-                              res.writerBadge === 'Mod'
-                                ? 'border-4 border-main-yellow'
-                                : ''
-                            }`}
-                          />
-                        </Link>
-                        <p>{res.userName}</p>
-                        {res.writerBadge === 'Mod' && (
-                          <p className='text-main-yellow font-bold'>Mod</p>
-                        )}
+            <div className='flex justify-center'>
+              <div className='pt-24 text-white'>
+                <p className='mb-4'>Problem: {allMsg?.[0].problem}</p>
+                {allMsg?.[0]?.responses.length > 0 ? (
+                  allMsg[0]?.responses?.map((res: any) => {
+                    return (
+                      <div
+                        className='flex items-start gap-5 my-5'
+                        key={res.date}
+                      >
+                        <div className='flex flex-col justify-center items-center border-r-2 pr-5'>
+                          <Link
+                            to={'/profile/' + currentUser?.id}
+                            target='_blank'
+                          >
+                            <div
+                              className={`w-12 h-12 border rounded-full flex items-center justify-center ${
+                                res.writerBadge === 'Mod'
+                                  ? 'border border-green-400'
+                                  : 'border border-main-yellow'
+                              }`}
+                            >
+                              <p
+                                className={`${
+                                  res.writerBadge === 'Mod'
+                                    ? 'text-green-400'
+                                    : 'text-main-yellow'
+                                }`}
+                              >
+                                {res.writerBadge === 'Mod' ? 'Mod' : 'You'}
+                              </p>
+                            </div>
+                          </Link>
+                        </div>
+                        <div className='flex flex-col gap-2 max-w-2xl'>
+                          <p className='text-gray-400'>{res.date}</p>
+                          <p>{res.msg}</p>
+                        </div>
                       </div>
-                      <div className='flex flex-col gap-2 max-w-2xl'>
-                        <p className='text-gray-400'>{res.date}</p>
-                        <p>{res.msg}</p>
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <p className='font-bold text-xl'>
-                  Ohhh, snap mod did not answered your question. Wait a little
-                  bit more, please!
-                </p>
-              )}
+                    );
+                  })
+                ) : (
+                  <p className='font-bold text-xl'>
+                    Ohhh, snap mod did not answered your question. Wait a little
+                    bit more, please!
+                  </p>
+                )}
 
-              <div className='mt-32 flex gap-10 items-start'>
-                <div className='flex flex-col items-center'>
-                  <img
-                    src='https://images.pexels.com/photos/13862328/pexels-photo-13862328.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-                    alt='image'
-                    className='w-14 h-14 object-cover rounded-full cursor-pointer'
+                <div className='mt-32 flex gap-10 items-start flex-col lg:items-center'>
+                  <textarea
+                    onChange={(e) => setMsg(e.target.value)}
+                    value={msg}
+                    placeholder='Write here...'
+                    className='border border-main-yellow bg-transparent h-20 w-full p-2'
                   />
-                  <p>{currentUser?.user_metadata.name}</p>
-                </div>
-                <textarea
-                  onChange={(e) => setMsg(e.target.value)}
-                  value={msg}
-                  placeholder='Write here...'
-                  className='ml-5 border border-main-yellow bg-transparent h-20 w-full p-2'
-                />
-                <div className='flex gap-5 w-1/4 justify-center flex-col'>
-                  <Button text='Send' icon={true} fn={addMsg} />
-                  <p>{countSingleWords(msg)} / 1000</p>
+                  <div className='flex gap-5 w-full justify-center'>
+                    <Button text='Send' icon={true} fn={addMsg} />
+                    <p>{countSingleWords(msg)} / 1000</p>
+                  </div>
                 </div>
               </div>
             </div>
+            <div className='text-white text-center py-10'>
+              <p>
+                {badge === 'User'
+                  ? 'Did you get help and your problem was solved? Close the ticket.'
+                  : 'Did you help enough?'}
+              </p>
+              <Button
+                text='Close ticket'
+                addClasses='mt-5'
+                fn={updateCloseTicket}
+              />
+            </div>
+          </>
+        ) : (
+          <div className='pt-32'>
+            <Spinner isDark={true} />
           </div>
-          <div className='text-white text-center mt-20'>
-            <p>
-              {badge === 'User'
-                ? 'Did you get help and your problem was solved? Close the ticket.'
-                : 'Did you help enough?'}
-            </p>
-            <Button
-              text='Close ticket'
-              addClasses='mt-5'
-              fn={updateCloseTicket}
-            />
-          </div>
-        </>
-      ) : (
-        <div className='pt-32'>
-          <Spinner isDark={true} />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

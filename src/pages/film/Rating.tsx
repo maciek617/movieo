@@ -103,7 +103,7 @@ function Rating({ ...props }: RatingProps) {
               closeTooltip={setShowWrongTooltip}
             />
           )}
-          <div className='rating mt-10 text-xl gap-2 flex cursor-pointer text-white hover'>
+          <div className='rating mt-3 mb-10 text-xl gap-2 flex cursor-pointer text-white hover'>
             {star}
           </div>
         </>

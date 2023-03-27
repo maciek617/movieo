@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Button from './Button';
 import { useState } from 'react';
 import { validateEmail } from '../helpers/emailValidation';
-import Modal from './Modal';
 import Tooltip from './Tooltip';
 function Footer() {
   const [email, setEmail] = useState<string>('');

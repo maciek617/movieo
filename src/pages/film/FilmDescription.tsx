@@ -6,10 +6,11 @@ interface FilmDescriptionProps {
 }
 function FilmDescription({ ...props }: FilmDescriptionProps) {
   return (
-    <div>
-      <p className='text-white py-10'>{props.desc}</p>
+    <div className='py-10 text-white'>
+      <h1 className='text-2xl font-semibold'>Description:</h1>
+      <p>{props.desc}</p>
       {props.showCreated && props.createdDate && (
-        <p className='text-gray-500'>
+        <p className='text-gray-500 mt-5'>
           Created {moment(props.createdDate).format('LL')}
         </p>
       )}

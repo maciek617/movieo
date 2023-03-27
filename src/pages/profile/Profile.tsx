@@ -32,9 +32,9 @@ function Profile() {
   }, [id]);
 
   return (
-    <div className='pt-32 min-h-screen bg-main-dark text-white'>
+    <div className='pt-24 min-h-screen bg-main-dark text-white px-6'>
       {userData ? (
-        <div className='container mx-auto flex justify-center gap-52 items-start'>
+        <div className='container mx-auto flex justify-center items-start flex-col lg:gap-52 lg:flex-row'>
           <div className='flex flex-col'>
             <div className='relative h-52 w-52'>
               <ProfileImage

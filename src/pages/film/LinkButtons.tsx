@@ -11,7 +11,7 @@ interface LinkButtonsProps {
 
 function LinkButtons({ ...props }: LinkButtonsProps) {
   return (
-    <div className='mt-10'>
+    <div className='mt-5 flex flex-col gap-3 lg:flex-row'>
       <a
         href={`https://www.${props.platform.replaceAll(' ', '')}.com`}
         target='_blank'

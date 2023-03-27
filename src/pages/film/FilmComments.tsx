@@ -147,16 +147,14 @@ function FilmComments({ ...props }: FilmCommentsProps) {
             value={commentText}
           />
         </div>
-        <div className='flex justify-between items-center'>
+        <div className='w-full flex items-end flex-col md:flex-row'>
           <Button
             text='Comment'
             addClasses='ml-14 mt-2'
             icon={true}
             fn={addComment}
           />
-          <p className='text-white mr-36'>
-            {countSingleWords(commentText)}/100
-          </p>
+          <p className='text-white ml-5'>{countSingleWords(commentText)}/100</p>
         </div>
       </div>
       <div>

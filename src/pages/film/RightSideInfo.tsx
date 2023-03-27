@@ -23,10 +23,15 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
   return (
     <div className='w-full'>
       {showTooltip && (
-        <Tooltip text='Copied!' variant='green' closeTooltip={setShowTooltip} isShow={showTooltip}/>
+        <Tooltip
+          text='Copied!'
+          variant='green'
+          closeTooltip={setShowTooltip}
+          isShow={showTooltip}
+        />
       )}
-      <div className='flex items-center justify-between'>
-        <p className='text-3xl font-bold'>{props.name}</p>
+      <div className='flex justify-between absolute top-20 left-0 w-full px-6 mt-1'>
+        <p>Back</p>
         <i
           onClick={() => {
             navigator.clipboard.writeText(window.location.href);
@@ -35,13 +40,25 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
           className='fa-solid fa-share cursor-pointer text-main-yellow text-xl mr-3'
         ></i>
       </div>
+      <div className='flex items-center justify-between'>
+        <p className='text-3xl font-bold'>{props.name}</p>
+      </div>
       <p className='text-sm pt-3'>{props.brief}</p>
       {props.user_can_vote && (
-        <p className='py-6 text-2xl'>
+        <p className='pt-6 text-2xl'>
           <i className='fa-solid fa-star text-main-yellow mr-2'></i>
           {props.ratingScore} / 5{' '}
           <span className='text-sm'>({props.allUsersRates})</span>
         </p>
+      )}
+      {props.currentUserId ? (
+        <Rating
+          userId={props.currentUserId}
+          routeId={props.routeId}
+          user_can_vote={props.user_can_vote}
+        />
+      ) : (
+        <p className='text-red-400 mt-5'>Log in to vote.</p>
       )}
       <div className={`flex gap-5 ${!props.user_can_vote && 'mt-5'}`}>
         {props.actors?.map((actor: any) => {
@@ -58,6 +75,7 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
           );
         })}
       </div>
+
       <LinkButtons
         platform={props.platform}
         user_id={props.user_id}
@@ -65,15 +83,6 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
         show_profile={props.show_profile}
         routeId={props.routeId}
       />
-      {props.currentUserId ? (
-        <Rating
-          userId={props.currentUserId}
-          routeId={props.routeId}
-          user_can_vote={props.user_can_vote}
-        />
-      ) : (
-        <p className='text-red-400 mt-5'>Log in to vote.</p>
-      )}
     </div>
   );
 }

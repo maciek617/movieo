@@ -53,7 +53,6 @@ function App() {
         tiktok: 'https://www.tiktok.com',
       });
 
-      console.log(error);
       if (!error) return;
       localStorage.setItem('user_created', 'true');
     }
