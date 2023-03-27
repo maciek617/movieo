@@ -65,3 +65,7 @@
   background-attachment: fixed;
   background-size: cover;
 }
+
+.test {
+  color: red;
+}
