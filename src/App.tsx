@@ -77,6 +77,32 @@ function App() {
     getAllInfo();
   }, [userExist, currentUser]);
 
+  const updateIsActive = async () => {
+    const { error } = await supabase
+      .from('users')
+      .update({ isActive: true })
+      .eq('id', currentUser?.id);
+
+    return error;
+  };
+
+  useEffect(() => {
+    const updateIsActive = async () => {
+      const { error } = await supabase
+        .from('users')
+        .update({ isActive: true })
+        .eq('id', currentUser?.id);
+
+      console.log(currentUser?.id);
+
+      console.log(error);
+
+      return error;
+    };
+
+    updateIsActive();
+  }, [currentUser]);
+
   return (
     <div className='App'>
       <PagesLinks />

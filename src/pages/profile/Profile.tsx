@@ -10,6 +10,8 @@ import ProfileSingleField from './ProfileSingleField';
 import ProfileButtons from './ProfileButtons';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import ProfileQuote from './ProfileQuote';
+import ProfileActive from './ProfileActive';
 
 function Profile() {
   const { id } = useParams();
@@ -34,15 +36,16 @@ function Profile() {
   return (
     <div className='pt-24 min-h-screen bg-main-dark text-white px-6'>
       {userData ? (
-        <div className='container mx-auto flex justify-center items-start flex-col lg:gap-52 lg:flex-row'>
+        <div className='container mx-auto flex justify-center lg:justify-start items-start flex-col lg:gap-10 lg:flex-row'>
           <div className='flex flex-col'>
-            <div className='relative h-52 w-52'>
+            <div className='relative h-52 w-52 lg:w-60 lg:h-60'>
               <ProfileImage
                 image={userData?.image}
                 name={userData?.name}
                 rounded={true}
               />
               <ProfileBadge badge={userData?.badge} />
+              <ProfileActive isActive={userData?.isActive}/>
             </div>
 
             <ProfileSingleField
@@ -52,7 +55,7 @@ function Profile() {
             />
 
             <ProfileSingleField
-              title='last active'
+              title='last login'
               title_depth={moment(userData?.last_active).fromNow()}
               bigFont={true}
             />
@@ -73,6 +76,25 @@ function Profile() {
             comments={userData?.comments_length}
             comment={userData?.last_comment}
           />
+          <div className='mt-5 flex flex-col gap-5'>
+            <ProfileQuote
+              title='Quote of the person.'
+              desc='The greatest glory in living lies not in never falling, but in rising every time we fall.'
+              showQoutes={true}
+            />
+
+            <ProfileQuote
+              title='Additional titles.'
+              desc='Review Champion, Addicted movie researcher'
+              showQoutes={false}
+            />
+
+            <ProfileQuote
+              title='Recommendations.'
+              desc='Scream VI, The Rain, Outer Banks.'
+              showQoutes={false}
+            />
+          </div>
         </div>
       ) : (
         <Spinner />

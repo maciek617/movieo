@@ -13,22 +13,26 @@ interface SideCategoryProps {
 function SideCategory({ ...props }: SideCategoryProps) {
   const elements = props.categoriesToChoose.map((cat, index) => {
     return (
-      <p
-        className={`font-semibold py-1 cursor-pointer hover:text-main-yellow transition-all ${
-          props.clickedIndex === index ? 'text-main-yellow' : null
-        }`}
+      <div
         key={index}
-        onClick={() => props.setClickedIndex(index)}
+        className='border border-main-yellow light-yellow p-2 rounded-full my-2 max-w-[300px]'
       >
-        <i className={cat.icon}></i>
-        {cat.name}
-      </p>
+        <p
+          className={`py-1 cursor-pointer hover:text-main-yellow transition-all text-base lg:text-sm xl:text-base ${
+            props.clickedIndex === index ? 'text-main-yellow' : null
+          }`}
+          onClick={() => props.setClickedIndex(index)}
+        >
+          <i className={cat.icon}></i>
+          {cat.name}
+        </p>
+      </div>
     );
   });
   return (
     <div>
       <h1 className='text-2xl font-bold pt-6'>{props.categoryTitle}</h1>
-      {elements}
+      <div>{elements}</div>
     </div>
   );
 }

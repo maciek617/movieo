@@ -137,7 +137,9 @@ function Navigation({ ...props }: NavigationProps) {
             </Link>
             <li
               className='list-none cursor-pointer hover:text-main-yellow transition-all p-2 border-t-2'
-              onClick={() => signoutUser(navigate, dispatch, updateUser)}
+              onClick={() =>
+                signoutUser(navigate, dispatch, updateUser, props.user?.id)
+              }
             >
               <i className='fa-solid fa-right-from-bracket mr-2'></i>
               Logout

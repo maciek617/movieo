@@ -151,7 +151,7 @@ function WhatToWatch() {
             </div>
           )}
         </div>
-        <div className='bg-main-dark text-white py-20 border max-w-3xl mx-auto rounded-xl'>
+        <div className='bg-main-dark text-white py-20 border max-w-3xl mx-auto rounded-xl mt-5'>
           <Heading
             title='Check out this frequently asked questions.'
             description='You do not see the question you want ask? No problem go to contact page and send us a message.'

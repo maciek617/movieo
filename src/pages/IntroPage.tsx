@@ -24,9 +24,7 @@ function IntroPage() {
           <p className='text-6xl md:text-8xl font-semibold'>
             Movie<span className='text-main-yellow'>o</span>
           </p>
-          <h1 className='font-bold text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl'>
-            Recommend, Review, Rate & Share
-          </h1>
+          <p>Join to the best community of reviewers!</p>
           <Button text='Join in!' addClasses='mt-10' fn={navigateToProperTab} />
         </div>
         <CookiesInfo />

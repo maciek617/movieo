@@ -11,7 +11,7 @@ interface RightSideProfileProps {
 function RightSideProfile({ ...props }: RightSideProfileProps) {
   const allHobbies = props.hobby.length
     ? props.hobby
-    : ['You can', 'Add hobby', 'In Edit Page'];
+    : ['You can', 'Add hobby', 'In edit Page'];
 
   const hobbies = allHobbies?.map((hobby: string) => {
     return (
@@ -28,14 +28,14 @@ function RightSideProfile({ ...props }: RightSideProfileProps) {
         bigFont={false}
       />
       <div className='mt-5'>
-        <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
-          <i className='fa-solid fa-gamepad'></i> hobby
+        <p className='uppercase font-semibold text-sm tracking-wider text-gray-400 lg:text-base'>
+          <i className='fa-solid fa-gamepad text-main-yellow'></i> hobby
         </p>
         {hobbies}
       </div>
       <div className='mt-5'>
-        <p className='uppercase font-semibold text-sm tracking-wider text-gray-400'>
-          <i className='fa-solid fa-chart-line'></i> statistics
+        <p className='uppercase font-semibold text-sm tracking-wider text-gray-400 lg:text-base'>
+          <i className='fa-solid fa-chart-line text-main-yellow'></i> statistics
         </p>
         <p className='text-md max-w-3xl'>Reviews: {props.posts} </p>
         <p className='text-md max-w-3xl'>Comments: {props.comments} </p>
@@ -53,3 +53,6 @@ function RightSideProfile({ ...props }: RightSideProfileProps) {
 }
 
 export default RightSideProfile;
+// first login => set user active flag to true 
+// logout => set user flag to false
+// user close browser => set user flag to false

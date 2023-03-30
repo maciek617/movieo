@@ -129,8 +129,8 @@ function Browse() {
 
   return (
     <div className='w-full bg-main-dark'>
-      <div className='container mx-auto pt-20 w-full flex text-white'>
-        <div className='sidebar-left w-1/5'>
+      <div className='container mx-auto pt-20 w-full px-4 flex text-white flex-col-reverse justify-center items-center lg:flex-row lg:items-start'>
+        <div className='sidebar-left w-full lg:w-1/5'>
           <SideCategory
             categoryTitle='Menu'
             categoriesToChoose={menuCategories}
@@ -142,32 +142,31 @@ function Browse() {
               <Link to={'/add-movie'}>
                 <Button
                   text='Add movie'
-                  icon={true}
                   addClasses='mt-5'
                   fn={createNewBucket}
                 />
               </Link>
               <Link to={'/report'}>
-                <Button text='Report a problem' addClasses='mt-5' />
+                <Button text='Report problem' addClasses='mt-5 ml-5 lg:ml-0' />
               </Link>
             </div>
           )}
         </div>
 
-        <div className='main-board w-3/4 border border-black rounded-md shadow-lg mx-8'>
+        <div className='main-board w-3/4 rounded-md shadow-lg mx-12 px-[1px]'>
           {!data || data.length < 1 ? (
             <div className='pt-10'>
               <Spinner />
               <p className='text-center mt-10 font-bold'>No data.</p>
             </div>
           ) : (
-            <div className='flex justify-evenly pt-10 flex-wrap gap-5'>
+            <div className='flex pt-10 flex-wrap gap-5 justify-center lg:justify-start'>
               {eachFilm}
             </div>
           )}
         </div>
 
-        <div className='sidebar-right w-1/5'>
+        <div className='sidebar-right w-full lg:w-1/5'>
           <SideCategory
             categoryTitle='Platform'
             categoriesToChoose={streamingCategories}

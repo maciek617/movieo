@@ -12,7 +12,7 @@ function Button({ ...props }: ButtonProps) {
   return (
     <button
       onClick={props.fn}
-      className={`px-6 py-2 rounded-lg font-semibold bg-main-yellow text-main-dark ${props.addClasses} hover:bg-yellow-300`}
+      className={`px-6 py-2 rounded-lg font-semibold bg-main-yellow text-main-dark text-xs lg:text-sm xl:text-base ${props.addClasses} hover:bg-yellow-300`}
     >
       {props.text}
       {props.icon ? (

@@ -20,7 +20,7 @@ function SingleFilmBox({ ...props }: SingleFilmBoxProps) {
         src={props.image}
         alt='Film image cover'
         className={`${
-          props.small ? 'w-52 h-52' : 'w-80 h-96'
+          props.small ? 'w-52 h-52' : 'w-72 h-72'
         } object-cover shadow-lg ${loaded ? 'block' : 'hidden'}`}
         onLoad={() => setLoaded(true)}
       />

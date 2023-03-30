@@ -25,8 +25,18 @@ export const signInUser = async (
     return error;
   };
 
+  const updateIsActive = async () => {
+    const { error } = await supabase
+      .from('users')
+      .update({ isActive: true })
+      .eq('id', data.user?.id);
+
+    return error;
+  };
+
   dispatch(updateUser(data.user));
   await updateUserLastActive();
+  await updateIsActive();
 
   localStorage.setItem('isLoggedIn', 'true');
   document.cookie =
