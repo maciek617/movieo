@@ -132,14 +132,16 @@ function WhatToWatch() {
               <h1 className='p-4 text-2xl text-center'>
                 Your randomly picked movie is right below:
               </h1>
-              <SingleFilmBox
-                filmTitle={randomMovie.name}
-                image={randomMovie.image}
-                filmType={randomMovie.type}
-                streamingPlatform={randomMovie.platform}
-                rating={randomMovie.rating}
-                user_can_vote={randomMovie.user_can_vote}
-              />
+              <Link to={'/movie/' + randomMovie.id}>
+                <SingleFilmBox
+                  filmTitle={randomMovie.name}
+                  image={randomMovie.image}
+                  filmType={randomMovie.type}
+                  streamingPlatform={randomMovie.platform}
+                  rating={randomMovie.rating}
+                  user_can_vote={randomMovie.user_can_vote}
+                />
+              </Link>
               <div className='flex items-center gap-5'>
                 <Link to={'/movie/' + randomMovie.id}>
                   <Button text='Go to review' addClasses='mt-5' icon={true} />
