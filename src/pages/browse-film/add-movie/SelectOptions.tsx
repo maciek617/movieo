@@ -15,7 +15,7 @@ function SelectOptions({ ...props }: SelectOptionProps) {
   const selectTypeOption = [
     'Action',
     'Comedy',
-    'Science fiction',
+    'S. Fiction',
     'Drama',
     'Thriller',
     'Western',

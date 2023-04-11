@@ -5,19 +5,29 @@ import {
   typeCategories,
 } from './browse-film/categories';
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { createBucket } from '../helpers/createBucket';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { supabase } from '../App';
 import SideCategory from './browse-film/SideCategory';
 import SingleFilmBox from './browse-film/SingleFilmBox';
 import Spinner from '../components/Spinner';
 import Button from '../components/Button';
+import {
+  updateData,
+  updateMenu,
+  updatePlatform,
+  updateType,
+} from '../features/browseFilters';
 
 function Browse() {
-  const navigate = useNavigate();
   const currentUser = useSelector((state: any) => state.currentUser.value);
-  const [data, setData] = useState<any>();
+  const dispatch = useDispatch();
+  const [allMovies, setAllMovies] = useState<any>();
+  const type = useSelector((state: any) => state.browse.type);
+  const platform = useSelector((state: any) => state.browse.platform);
+  const menu = useSelector((state: any) => state.browse.menu);
+  const dataFilms = useSelector((state: any) => state.browse.data);
 
   const createNewBucket = async () => {
     if (!currentUser) return;
@@ -31,101 +41,75 @@ function Browse() {
   const [clickedPlatformIndex, setClickedPlatformIndex] = useState<number>(0);
   const [clickedTypeIndex, setClickedTypeIndex] = useState<number>(0);
 
-  // Initial string types
-  const [m, setM] = useState<string>('most-popular');
-  const [p, setP] = useState<string>('netflix');
-  const [t, setT] = useState<string>('action');
-
   useEffect(() => {
-    setM(
-      menuCategories[clickedMenuIndex].name.toLowerCase().replaceAll(' ', '-')
-    );
-
-    setP(
-      streamingCategories[clickedPlatformIndex].name
-        .toLowerCase()
-        .replaceAll(' ', '-')
-    );
-
-    setT(
-      typeCategories[clickedTypeIndex].name.toLowerCase().replaceAll(' ', '-')
-    );
-
-    return;
+    dispatch(updateMenu(menuCategories[clickedMenuIndex].name));
+    dispatch(updatePlatform(streamingCategories[clickedPlatformIndex].name));
+    dispatch(updateType(typeCategories[clickedTypeIndex].name));
   }, [clickedMenuIndex, clickedPlatformIndex, clickedTypeIndex]);
 
+  // Get all movies on page load
   useEffect(() => {
-    setData([]);
-    const fetchData = async () => {
+    setAllMovies([]);
+    const fetchAllMovies = async () => {
       const { data, error } = await supabase
         .from('movies')
         .select('*')
-        .eq(
-          'type',
-          t !== 'science-fiction'
-            ? t.charAt(0).toUpperCase() + t.slice(1)
-            : 'Science fiction'
-        )
-        .eq(
-          'platform',
-          p !== 'prime-video'
-            ? p.charAt(0).toUpperCase() + p.slice(1)
-            : 'Prime Video'
-        )
         .limit(10);
 
-      if (!error) {
-        setData(data);
-      }
+      if (error || !data) return;
+      setAllMovies(data);
+      dispatch(updateData(data));
     };
-
-    if (m || p || t) {
-      navigate('/browse/' + m + '/' + p + '/' + t);
-      // Fetch data from database, based on these parameters m,p,t, after navigation
-      fetchData();
-    }
-  }, [m, t, p]);
-
-  useEffect(() => {
-    setData([]);
-    const fetchData = async () => {
-      const { data, error } = await supabase
-        .from('movies')
-        .select('*')
-        .eq(
-          'type',
-          t !== 'science-fiction'
-            ? t.charAt(0).toUpperCase() + t.slice(1)
-            : 'Science fiction'
-        )
-        .eq(
-          'platform',
-          p !== 'prime-video'
-            ? p.charAt(0).toUpperCase() + p.slice(1)
-            : 'Prime Video'
-        )
-        .limit(10);
-
-      if (error && !data) return;
-      setData(data);
-    };
-    fetchData();
+    fetchAllMovies();
   }, []);
 
-  const eachFilm = data?.map((film: any) => {
-    return (
-      <Link to={'/movie/' + film.id} key={film.id}>
-        <SingleFilmBox
-          image={film.image}
-          filmTitle={film.name}
-          filmType={film.type}
-          streamingPlatform={film.platform}
-          rating={film.rating.toFixed(1)}
-          user_can_vote={film.user_can_vote}
-        />
-      </Link>
+  const sortArrayBasedOnRating = () => {
+    setAllMovies([...allMovies].sort((a: any, b: any) => b.rating - a.rating));
+  };
+
+  const sortArrayBasedOnDate = () => {
+    if (!allMovies) return;
+    setAllMovies(
+      [...allMovies].sort(
+        (a: any, b: any) => +new Date(b.created_at) - +new Date(a.created_at)
+      )
     );
-  });
+  };
+
+  const sortArrayBasedOnPlatform = () => {
+    setAllMovies(
+      [...dataFilms].filter(
+        (item: any) => item.platform === platform && item.type === type
+      )
+    );
+  };
+
+  const sortArrayBasedOnType = () => {
+    setAllMovies(
+      [...dataFilms].filter(
+        (item: any) => item.type === type && item.platform === platform
+      )
+    );
+  };
+
+  useEffect(() => {
+    menu === 'Most Popular'
+      ? sortArrayBasedOnRating()
+      : menu === 'Recent'
+      ? sortArrayBasedOnDate()
+      : null;
+  }, [menu]);
+
+  useEffect(() => {
+    if (!allMovies) return;
+    sortArrayBasedOnPlatform();
+  }, [platform]);
+
+  useEffect(() => {
+    if (!allMovies) return;
+
+    sortArrayBasedOnType();
+  }, [type]);
 
   return (
     <div className='w-full bg-main-dark'>
@@ -154,14 +138,27 @@ function Browse() {
         </div>
 
         <div className='main-board w-3/4 rounded-md shadow-lg mx-12 px-[1px]'>
-          {!data || data.length < 1 ? (
+          {!allMovies || allMovies.length < 1 ? (
             <div className='pt-10'>
               <Spinner />
               <p className='text-center mt-10 font-bold'>No data.</p>
             </div>
           ) : (
             <div className='flex pt-10 flex-wrap gap-5 justify-center lg:justify-start'>
-              {eachFilm}
+              {allMovies?.map((film: any) => {
+                return (
+                  <Link to={'/movie/' + film.id} key={film.id}>
+                    <SingleFilmBox
+                      image={film.image}
+                      filmTitle={film.name}
+                      filmType={film.type}
+                      streamingPlatform={film.platform}
+                      rating={film.rating.toFixed(1)}
+                      user_can_vote={film.user_can_vote}
+                    />
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>

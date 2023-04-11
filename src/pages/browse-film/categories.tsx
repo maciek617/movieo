@@ -1,13 +1,13 @@
 export const menuCategories = [
-  { name: 'Most popular', icon: 'fa-solid fa-fire pr-2' },
-  { name: 'Recent', icon: 'fa-solid fa-tower-broadcast pr-2' },
-  { name: 'Top rated', icon: 'fa-solid fa-face-smile pr-2' },
-  { name: 'Liked movies', icon: 'fa-solid fa-heart pr-2' },
   { name: 'All movies', icon: 'fa-solid fa-globe pr-2' },
+  { name: 'Most Popular', icon: 'fa-solid fa-fire pr-2' },
+  { name: 'Recent', icon: 'fa-solid fa-tower-broadcast pr-2' },
+  { name: 'Liked movies', icon: 'fa-solid fa-heart pr-2' },
 ];
+
 export const streamingCategories = [
   { name: 'Netflix', icon: 'fa-solid fa-video pr-2' },
-  { name: 'Prime video', icon: 'fa-solid fa-video pr-2' },
+  { name: 'Prime Video', icon: 'fa-solid fa-video pr-2' },
   { name: 'Hbo', icon: 'fa-solid fa-video pr-2' },
   { name: 'Hulu', icon: 'fa-solid fa-video pr-2' },
   { name: 'Disney+', icon: 'fa-solid fa-video pr-2' },
