@@ -24,7 +24,6 @@ function WhatToWatch() {
 
     // Get random movie and save it to randomMovie variable
     setRandomMovie(data[Math.floor(Math.random() * data.length)]);
-    setPageLoad(true);
   };
 
   const faqBase = [
@@ -60,6 +59,7 @@ function WhatToWatch() {
   };
 
   useEffect(() => {
+    setPageLoad(true);
     const fetchNextGenerationDate = async () => {
       const { data, error } = await supabase
         .from('users')
@@ -68,7 +68,6 @@ function WhatToWatch() {
 
       if (error && !data) return;
       setGenerationDate(data[0]?.date_to_next_generation);
-      setPageLoad(true);
     };
 
     currentUser?.id && fetchNextGenerationDate();
@@ -95,7 +94,7 @@ function WhatToWatch() {
     updateTime();
   }, [generationDate]);
 
-  return currentUser?.confirmed_at || localStorage.getItem('isLoggedIn') ? (
+  return currentUser?.confirmed_at && localStorage.getItem('isLoggedIn') ? (
     <div className='min-h-screen h-full bg-main-dark pt-32'>
       <div className={`${pageLoad ? 'block' : 'hidden'}`}>
         <div className='bg-main-dark text-white'>
@@ -165,19 +164,23 @@ function WhatToWatch() {
     </div>
   ) : (
     <div
-      className={`h-screen bg-main-dark text-white flex items-center justify-center flex-col ${
-        pageLoad || !localStorage.getItem('isLoggedIn') ? 'block' : 'hidden'
-      }`}
+      className={`h-screen bg-main-dark text-white  items-center justify-center flex-col`}
     >
-      <h1 className='text-2xl text-center'>
-        You have to be logged in to use this feature.
-      </h1>
-      <Link
-        to={document.cookie.includes('wasLoggedIn') ? '/login' : '/signup'}
-        replace
+      <div
+        className={`items-center justify-center flex-col h-screen ${
+          pageLoad || !localStorage.getItem('isLoggedIn') ? 'flex' : 'hidden'
+        }`}
       >
-        <Button text='Get started' addClasses='mt-5' />
-      </Link>
+        <h1 className='text-2xl text-center'>
+          You have to be logged in to use this feature.
+        </h1>
+        <Link
+          to={document.cookie.includes('wasLoggedIn') ? '/login' : '/signup'}
+          replace
+        >
+          <Button text='Get started' addClasses='mt-5' />
+        </Link>
+      </div>
     </div>
   );
 }

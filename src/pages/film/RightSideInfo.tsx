@@ -3,7 +3,7 @@ import Rating from './Rating';
 import LinkButtons from './LinkButtons';
 import Tooltip from '../../components/Tooltip';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 interface RightSideInfoProps {
   name: string;
   brief: string;
@@ -19,6 +19,7 @@ interface RightSideInfoProps {
 }
 
 function RightSideInfo({ ...props }: RightSideInfoProps) {
+  const navigate = useNavigate();
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   return (
     <div className='w-full'>
@@ -30,8 +31,10 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
           isShow={showTooltip}
         />
       )}
-      <div className='flex justify-between absolute top-20 left-0 w-full px-6 mt-1'>
-        <p>Back</p>
+      <div className='flex justify-between absolute top-20 left-1/2 -translate-x-1/2 w-full px-6 container mx-auto mt-1 sm:px-0'>
+        <p onClick={() => navigate(-1)} className='cursor-pointer'>
+          <i className='fa-solid fa-arrow-left mr-2'></i>Back
+        </p>
         <i
           onClick={() => {
             navigator.clipboard.writeText(window.location.href);
@@ -58,7 +61,7 @@ function RightSideInfo({ ...props }: RightSideInfoProps) {
           user_can_vote={props.user_can_vote}
         />
       ) : (
-        <p className='text-red-400 mt-5'>Log in to vote.</p>
+        <p className='text-red-400 my-5'>Log in to vote.</p>
       )}
       <div className={`flex gap-5 ${!props.user_can_vote && 'mt-5'}`}>
         {props.actors?.map((actor: any) => {

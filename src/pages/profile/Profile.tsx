@@ -45,7 +45,7 @@ function Profile() {
                 rounded={true}
               />
               <ProfileBadge badge={userData?.badge} />
-              <ProfileActive isActive={userData?.isActive}/>
+              <ProfileActive isActive={userData?.isActive} />
             </div>
 
             <ProfileSingleField
@@ -69,31 +69,33 @@ function Profile() {
               tiktok={userData?.tiktok}
             />
           </div>
-          <RightSideProfile
-            brief={userData?.brief}
-            hobby={userData?.hobbies}
-            posts={userData?.post_length}
-            comments={userData?.comments_length}
-            comment={userData?.last_comment}
-          />
-          <div className='mt-5 flex flex-col gap-5'>
-            <ProfileQuote
-              title='Quote of the person.'
-              desc='The greatest glory in living lies not in never falling, but in rising every time we fall.'
-              showQoutes={true}
+          <div>
+            <RightSideProfile
+              brief={userData?.brief}
+              hobby={userData?.hobbies}
+              posts={userData?.post_length}
+              comments={userData?.comments_length}
+              comment={userData?.last_comment}
             />
+            <div className='mt-5 flex flex-col gap-5'>
+              <ProfileQuote
+                title='Quote of the person.'
+                desc='The greatest glory in living lies not in never falling, but in rising every time we fall.'
+                showQoutes={true}
+              />
 
-            <ProfileQuote
-              title='Additional titles.'
-              desc='Review Champion, Addicted movie researcher'
-              showQoutes={false}
-            />
+              <ProfileQuote
+                title='Additional titles.'
+                desc='Review Champion, Addicted movie researcher'
+                showQoutes={false}
+              />
 
-            <ProfileQuote
-              title='Recommendations.'
-              desc='Scream VI, The Rain, Outer Banks.'
-              showQoutes={false}
-            />
+              <ProfileQuote
+                title='Recommendations.'
+                desc='Scream VI, The Rain, Outer Banks.'
+                showQoutes={false}
+              />
+            </div>
           </div>
         </div>
       ) : (

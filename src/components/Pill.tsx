@@ -7,7 +7,7 @@ interface PillProps {
 
 function Pill({ ...props }: PillProps) {
   return (
-    <div className='bg-red-900 px-4 py-1 rounded-md cursor-pointer'>
+    <div className='bg-red-900 px-4 py-1 rounded-md cursor-pointer hover:bg-red-800 transition-colors'>
       <p>
         {props.text}{' '}
         {props.icon && (
