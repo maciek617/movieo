@@ -6,9 +6,6 @@ export const signoutUser = async (
   updateUser: any,
   id: string
 ) => {
-  const { error } = await supabase.auth.signOut();
-  if (error) return;
-
   const updateIsActive = async () => {
     const { error } = await supabase
       .from('users')
@@ -21,8 +18,13 @@ export const signoutUser = async (
   };
 
   await updateIsActive();
+
+  const { error } = await supabase.auth.signOut();
+  if (error) return;
   // Add last active update to database
   localStorage.clear();
   navigate('/');
   dispatch(updateUser(null));
+  console.log('hell yeah');
+  
 };

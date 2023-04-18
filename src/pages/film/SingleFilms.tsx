@@ -25,6 +25,21 @@ function SingleFilms() {
     fetchData(id);
   }, [id]);
 
+  useEffect(() => {
+    const updateViews = async () => {
+      await supabase
+        .from('movies')
+        .update({ views: filmData.views + 1 })
+        .eq('id', id);
+    };
+
+    if (filmData.views >= 0) {
+      updateViews();
+      console.log('fired');
+      
+    }
+  }, [filmData.views]);
+
   return (
     <div className='pt-32 px-6 bg-main-dark min-h-screen'>
       {filmData?.image ? (
@@ -59,6 +74,7 @@ function SingleFilms() {
               creatorId={filmData?.user_id}
               filmType={filmData?.type}
               id={id}
+              views={filmData?.views}
             />
           </div>
         </div>

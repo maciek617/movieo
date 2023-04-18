@@ -59,12 +59,13 @@ function ReportModal({ ...props }: ReportModalProps) {
       <div className='bg-white text-black p-4 rounded-md'>
         <p className='text-2xl pt-2'>Select a category</p>
         <select onChange={(e: any) => setCategoryProblem(e.target.value)}>
-          <option value='problem with signing'>Problem with signing</option>
-          <option value='problem with login'>Problem with login</option>
-          <option value='problem with account'>Problem with account</option>
           <option value='problem with movie'>
             Problem with movie (add, edit, remove)
           </option>
+          <option value='problem with what-to-watch page'>
+            Problem with what to watch page
+          </option>
+          <option value='problem with account'>Problem with account</option>
           <option value='other'>Other</option>
         </select>
         <div className='flex flex-col mt-5'>

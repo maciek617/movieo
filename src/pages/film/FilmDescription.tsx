@@ -3,6 +3,7 @@ interface FilmDescriptionProps {
   desc: string;
   showCreated: boolean;
   createdDate: string;
+  views: number;
 }
 function FilmDescription({ ...props }: FilmDescriptionProps) {
   return (
@@ -14,6 +15,10 @@ function FilmDescription({ ...props }: FilmDescriptionProps) {
           Created {moment(props.createdDate).format('LL')}
         </p>
       )}
+      <p>
+        Views: <i className='fa-solid fa-eye text-sm mr-1'></i>
+        {props.views}
+      </p>
     </div>
   );
 }

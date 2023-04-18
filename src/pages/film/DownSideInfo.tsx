@@ -14,6 +14,7 @@ interface DownSideInfoProps {
   creatorId: string;
   filmType: string;
   id: string | undefined;
+  views: number
 }
 function DownSideInfo({ ...props }: DownSideInfoProps) {
   const currentUser = useSelector((state: any) => state.currentUser.value);
@@ -63,6 +64,7 @@ function DownSideInfo({ ...props }: DownSideInfoProps) {
         desc={props.desc}
         showCreated={props.showCreated}
         createdDate={props.createdDate}
+        views={props.views}
       />
       {props.showComments && currentUser?.id ? (
         <>

@@ -6,6 +6,8 @@ module.exports = {
       colors: {
         'main-yellow': '#FFC700',
         'main-dark': '#222222',
+        'custom-green' : 'rgba(100, 200, 100, 0.4)',
+        'custom-red' : 'rgba(200, 100, 100, 0.4)'
       },
       minHeight: {
         'min-h-screen': '100vh',

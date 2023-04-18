@@ -20,6 +20,8 @@ function Signup() {
   const [error, setError] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+  const [acceptTerms, setAcceptTerms] = useState<boolean>(false);
+  const [needHelp, setNeedHelp] = useState<boolean>(false);
 
   const signupUserWithPassword = async (e: any) => {
     e.preventDefault();
@@ -51,10 +53,16 @@ function Signup() {
       return;
     }
 
+    if (!acceptTerms) {
+      setError('Terms must be read and accepted.');
+      return;
+    }
+
     setError('');
     registerUser(email, password, name, disptach, updateUser, navigate);
     await getGeneralInfo();
   };
+
 
   const getGeneralInfo = async () => {
     const { data } = await supabase.from('general').select('post').eq('id', 1);
@@ -127,6 +135,24 @@ function Signup() {
                 value={confirmPassword}
                 placeholder='Confirm password'
               />
+              <div className='flex items-center gap-2 mt-2'>
+                <input
+                  type='checkbox'
+                  id='terms'
+                  className='cursor-pointer'
+                  onChange={() => setAcceptTerms((prev) => (prev = !prev))}
+                />
+                <label htmlFor='terms' className='text-sm'>
+                  Accept:
+                  <Link
+                    to={'/terms-and-conditions'}
+                    target='_blank'
+                    className='text-main-yellow ml-2 hover:underline'
+                  >
+                    terms & conditions
+                  </Link>
+                </label>
+              </div>
             </div>
             {error && (
               <div>
@@ -135,20 +161,31 @@ function Signup() {
                 </p>
               </div>
             )}
-            <div className='text-sm cursor-pointer max-w-xs'>
+            <div className='text-sm max-w-xs'>
               <p>
                 I already have an account.{' '}
                 <Link to={'/login'}>
-                  <span className='text-main-yellow hover:underline transition-all'>
+                  <span className='cursor-pointer text-main-yellow hover:underline transition-all'>
                     Login instead
                   </span>
                 </Link>
               </p>
-              <p className='hover:text-main-yellow transition-all'>
+              <p
+                onClick={() => setNeedHelp((prev) => (prev = !prev))}
+                className='w-fit cursor-pointer hover:text-main-yellow transition-all'
+              >
                 <span className='hover:text-main-yellow'>
                   I need help with account creation.
                 </span>
               </p>
+              <div className='text-black'>
+                {needHelp && (
+                  <Modal
+                    text='Fill up the fields in order: name, email it must be valid, Password should be at least 8 characters, contains at least 1 digit, 1 special char and 1 uppercase, and the same password must be filled in the last section "Confirm password" and then click "Create account" button '
+                    fn={setNeedHelp}
+                  />
+                )}
+              </div>
             </div>
             <Button
               text='Create account'

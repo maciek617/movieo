@@ -17,7 +17,7 @@ function Login() {
   const [password, setPassword] = useState<string>('');
   const [show, setShow] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-
+  const [needHelp, setNeedHelp] = useState<boolean>(false);
   const signCurrentUserIn = async (e: any) => {
     e.preventDefault();
     setError('');
@@ -45,63 +45,76 @@ function Login() {
   return (
     <>
       <div className='bg-filtr h-screen pt-32 px-4 relative w-full'>
-        <img
-          src={LoginBG}
-          alt='background photo'
-          className='absolute -z-10 h-full w-full object-cover top-0 left-0'
-        />
-        <h1 className='text-white text-center text-3xl lg:text-5xl xl:text-6xl 2xl:text-8xl'>
-          Login to Movie
-          <span className='text-main-yellow font-semibold'>o</span> Universe and
-          start exploring!
-        </h1>
-        <form className='pt-10 max-w-sm  container mx-auto lg:pt-20'>
-          <div className='flex flex-col'>
-            <label className='text-white'>Email</label>
-            <input
-              type='email'
-              placeholder='Enter an e-mail'
-              className='border-2 border-black text-black px-4 py-2 outline-none rounded-lg transition-all focus:border-main-yellow focus:border-4'
-              onChange={(e) => updateEmailFields(e, setEmail)}
-              value={email}
-            />
-          </div>
-          <div className='flex flex-col relative'>
-            <label className='text-white'>Password</label>
-            <input
-              type={!show ? 'password' : 'text'}
-              placeholder='Enter a password'
-              className='border-2 border-black text-black px-4 py-2 outline-none rounded-lg transition-all focus:border-main-yellow focus:border-4'
-              onChange={(e) => updateEmailFields(e, setPassword)}
-              value={password}
-            />
-            <IconToggle show={show} setShow={setShow} />
-          </div>
-
-          <Button
-            text='Signup'
-            icon={true}
-            fn={signCurrentUserIn}
-            addClasses='mt-5'
+        <div className='container mx-auto'>
+          <img
+            src={LoginBG}
+            alt='background photo'
+            className='absolute -z-10 h-full w-full object-cover top-0 left-0'
           />
-          <div className='text-white text-sm cursor-pointer max-w-xs mt-5'>
-            <p>
-              I do not have an account.{' '}
-              <Link to={'/signup'}>
-                <span className='text-main-yellow hover:underline transition-all'>
-                  Signup instead
-                </span>
-              </Link>
-            </p>
-            <p className='hover:text-main-yellow transition-all'>
-              <span className='hover:text-main-yellow'>
-                I need help with login.
-              </span>
-            </p>
-          </div>
-        </form>
+          <h1 className='text-white text-center text-3xl lg:text-5xl xl:text-6xl 2xl:text-8xl'>
+            Login to Movie
+            <span className='text-main-yellow font-semibold'>o</span> Universe
+            and start exploring!
+          </h1>
+          <form className='pt-10 max-w-sm  container mx-auto lg:pt-20'>
+            <div className='flex flex-col'>
+              <label className='text-white'>Email</label>
+              <input
+                type='email'
+                placeholder='Enter an e-mail'
+                className='border-2 border-black text-black px-4 py-2 outline-none rounded-lg transition-all focus:border-main-yellow focus:border-4'
+                onChange={(e) => updateEmailFields(e, setEmail)}
+                value={email}
+              />
+            </div>
+            <div className='flex flex-col relative'>
+              <label className='text-white'>Password</label>
+              <input
+                type={!show ? 'password' : 'text'}
+                placeholder='Enter a password'
+                className='border-2 border-black text-black px-4 py-2 outline-none rounded-lg transition-all focus:border-main-yellow focus:border-4'
+                onChange={(e) => updateEmailFields(e, setPassword)}
+                value={password}
+              />
+              <IconToggle show={show} setShow={setShow} />
+            </div>
 
-        {error && <Modal text={error} fn={setError} />}
+            <Button
+              text='Signup'
+              icon={true}
+              fn={signCurrentUserIn}
+              addClasses='mt-5'
+            />
+            <div className='text-white text-sm w-fit max-w-xs mt-5'>
+              <p>
+                I do not have an account:{' '}
+                <Link to={'/signup'}>
+                  <span className='text-main-yellow hover:underline transition-all'>
+                    Signup instead
+                  </span>
+                </Link>
+              </p>
+              <p
+                onClick={() => setNeedHelp((prev) => (prev = !prev))}
+                className='w-fit hover:text-main-yellow transition-all'
+              >
+                <span className='cursor-pointer hover:text-main-yellow'>
+                  I need help with login.
+                </span>
+              </p>
+              <div className='text-black'>
+                {needHelp && (
+                  <Modal
+                    text='Fill up your credential, the same as you provided on signup. If you still have a problem with login make sure that you confirmed your e-mail address and try again!'
+                    fn={setNeedHelp}
+                  />
+                )}
+              </div>
+            </div>
+          </form>
+
+          {error && <Modal text={error} fn={setError} />}
+        </div>
       </div>
       <div className='h-screen'></div>
     </>

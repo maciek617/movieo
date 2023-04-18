@@ -36,7 +36,7 @@ function Modal({ ...props }: ModalProps) {
   }, []);
   return (
     <div className='fixed top-0 left-0 h-screen w-full flex items-center justify-center darken-bg flex-col'>
-      <div className='relative bg-white px-10 py-4 rounded-md max-w-xl'>
+      <div className='relative bg-white px-3 py-4 rounded-md max-w-xl lg:px-10'>
         {props.error && (
           <div className='mt-8 flex items-center justify-center flex-col'>
             <i className='fa-solid fa-face-frown text-6xl'></i>
